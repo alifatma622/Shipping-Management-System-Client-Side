@@ -1,0 +1,26 @@
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+<table *ngIf="!isLoading && !error" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Phone No.</th>
+      <th>Branch</th>
+      <th>Cities</th>
+      <th>Orders Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let man of deliveryMen">
+      <td>{{ man.fullName }}</td>
+      <td>{{ man.email }}</td>
+      <td>{{ man.userName }}</td>
+      <td>{{ man.phoneNumber }}</td>
+      <td>{{ man.branchName }}</td>
+      <td>{{ man.cities }}</td>
+      <td>{{ man.activeOrdersCount }}</td>
+    </tr>
+  </tbody>
+</table>
