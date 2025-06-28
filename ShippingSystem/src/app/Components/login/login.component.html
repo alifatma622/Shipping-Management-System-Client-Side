@@ -1,0 +1,78 @@
+<div class="login-page">
+  <div class="login-container">
+    <div class="image-section">
+      <img src="assets/Images/Shpping Register.avif" alt="Login Image" />
+    </div>
+
+    <div class="form-section">
+      <form
+        #loginForm="ngForm"
+        (ngSubmit)="onLoginSubmit(loginForm)"
+        class="login-form"
+        novalidate
+      >
+        <h2 class="title">Login</h2>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            ngModel
+            required
+            #usernameRef="ngModel"
+            class="form-control"
+            placeholder="Enter your username"
+          />
+          <small
+            class="text-danger"
+            *ngIf="usernameRef.invalid && usernameRef.touched"
+          >
+            Username is required
+          </small>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ngModel
+            required
+            minlength="6"
+            #passwordRef="ngModel"
+            class="form-control"
+            placeholder="Enter your password"
+          />
+          <small
+            class="text-danger"
+            *ngIf="passwordRef.errors?.['required'] && passwordRef.touched"
+          >
+            Password is required
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched"
+          >
+            Password must be at least 6 characters
+          </small>
+        </div>
+
+        <button
+          type="submit"
+          class="btn-submit mt-3"
+          [disabled]="!loginForm.valid"
+        >
+          Login
+        </button>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+          {{ errorMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
