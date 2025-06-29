@@ -1,0 +1,90 @@
+.register-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e3f2f5;
+}
+
+.register-container {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  max-width: 1200px;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 10px 20px rgba(58, 51, 98, 0.2);
+}
+
+.form-section {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form {
+  width: 100%;
+  max-width: 500px;
+}
+
+.image-section {
+  flex: 1;
+  height: 100%;
+}
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.title {
+  text-align: center;
+  color: #3a3362;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  color: #055866;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #daf87a;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.btn-submit {
+  background-color: #055866;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:disabled {
+  background-color: #8faeb3;
+  cursor: not-allowed;
+}
