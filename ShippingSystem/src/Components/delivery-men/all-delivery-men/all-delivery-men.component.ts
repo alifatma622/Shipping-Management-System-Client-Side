@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeliveryManService } from './../../../Services/deliveryMan_Service/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/deliveryMan_models/IDeliveryMan_model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-delivery-men',
@@ -15,8 +16,9 @@ export class AllDeliveryMenComponent implements OnInit {
   deliveryMen: IReadDeliveryMan[] = [];
   isLoading = true;
   errorMsg = '';
+  routes: any;
 
-  constructor(private deliveryManService: DeliveryManService) {}
+  constructor(private deliveryManService: DeliveryManService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllDeliveryMen();
@@ -37,12 +39,13 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onEdit(id: number) {
-    // هنا تروح لصفحة التعديل
-    // مثال: this.router.navigate(['/delivery-men/edit', id]);
+    this.router.navigate(['/delivery-men/edit', id]);
   }
 
   onDelete(id: number) {
-    // هنا ممكن تفتح Dialog تأكيد ثم تنفذ الحذف
-    // this.deliveryManService.softDelete(id).subscribe(() => this.getAllDeliveryMen());
+    this.deliveryManService.softDelete(id).subscribe(() => this.getAllDeliveryMen());
   }
-}
+  onAdd() {
+    this.router.navigate(['/delivery-men/add']);
+  }
+  }

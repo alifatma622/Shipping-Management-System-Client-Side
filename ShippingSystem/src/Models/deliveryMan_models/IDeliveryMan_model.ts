@@ -12,8 +12,6 @@ export interface IReadDeliveryMan {
   activeOrdersCount?: number;
    isDeleted?: boolean;
 }
-
-// AddDeliveryMan
 export interface IAddDeliveryMan {
   name: string;
   email: string;
