@@ -5,22 +5,17 @@ import { MainEmployeeComponent } from "../Employee/MainEmployee/MainEmployee.com
 
 @Component({
   selector: 'app-Main',
-  imports: [ CommonModule, MainEmployeeComponent],
+  imports: [ CommonModule, RouterOutlet],
   templateUrl: './Main.component.html',
   styleUrls: ['./Main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent {
  isLeftSidebarCollapsed = input.required<boolean>();
   screenWidth = input.required<number>();
-  constructor() { }
-
-  ngOnInit() {
-  }
-
   sizeClass = computed(() => {
     const isLeftSidebarCollapsed = this.isLeftSidebarCollapsed();
     if (isLeftSidebarCollapsed) {
-      return 'sidebar-collapsed';
+      return '';
     }
     return this.screenWidth() > 768 ? 'body-trimmed' : 'body-md-screen';
   });

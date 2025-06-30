@@ -9,25 +9,23 @@ import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEm
 import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
+
 export const routes: Routes = [
-  // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
-  { path: 'Landing', component: LandingComponent},
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent},
-  {
-    path: '',
-    component: MainComponent,
+  { 
+    path: 'dashboard', 
+    component: DashboardComponent,
     children: [
+      { path: '', component: MainComponent },
       { path: 'employee', component: MainEmployeeComponent },
-      // Add more child routes here if needed
+      { path: 'delivery-men', component: AllDeliveryMenComponent },
+      { path: 'delivery-men/add', component: AddDeliveryManComponent },
+      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent }
     ]
-  },
-  // Delivery Men Routes
-  { path: 'delivery-men', component: AllDeliveryMenComponent },
-  { path: 'delivery-men/add', component: AddDeliveryManComponent },
-  { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-
+  }
 ];
 
 @NgModule({
