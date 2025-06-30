@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegisterModel } from './../../Models/auth_models/register-model';
+import { RegisterModel } from './../Models/register-model';
 import { Observable } from 'rxjs';
-import { LoginModel } from './../../Models/auth_models/login-model';
+import { LoginModel } from './../Models/login-model';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({

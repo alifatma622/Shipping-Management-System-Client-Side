@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeliveryManService } from './../../../Services/deliveryMan_Service/delivery-man.service';
-import { BranchService, IBranch } from './../../../Services/Branch_Service/branch.service';
-import { CityService, ICity } from './../../../Services/City_Service/city.service';
-import { IUpdateDeliveryMan, IReadDeliveryMan } from './../../../Models/deliveryMan_models/IDeliveryMan_model';
+import { DeliveryManService } from './../../../Services/delivery-man.service';
+import { BranchService, IBranch } from './../../../Services/branch.service';
+import { CityService, ICity } from './../../../Services/city.service';
+import { IUpdateDeliveryMan, IReadDeliveryMan } from './../../../Models/IDeliveryMan_model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
