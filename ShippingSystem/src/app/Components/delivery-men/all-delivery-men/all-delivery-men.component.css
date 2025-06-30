@@ -217,8 +217,20 @@ body {
   color: #d32f2f !important;
 }
 .delete-btn:hover {
-  background: #e2e1e5;
-  color: #fff;
+  background: #ffebee;
+  color: #d32f2f;
+  box-shadow: 0 2px 8px #d32f2f33;
+}
+.delete-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: none;
+  color: #ccc;
+}
+.delete-btn:disabled:hover {
+  background: none;
+  color: #ccc;
+  box-shadow: none;
 }
 
 .branch-link {

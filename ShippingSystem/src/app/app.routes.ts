@@ -7,6 +7,7 @@ import { AddDeliveryManComponent } from './../Components/delivery-men/add-delive
 import { EditDeliveryManComponent } from './../Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
 import { AllSellerComponent } from '../Components/seller/all-seller/all-seller/all-seller.component';
 
+
 export const routes: Routes = [
   { path: 'Landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },

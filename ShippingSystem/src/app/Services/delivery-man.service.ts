@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan } from '../../Models/deliveryMan_models/IDeliveryMan_model';
+import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan } from '../Models/IDeliveryMan_model';
 
 @Injectable({
   providedIn: 'root'

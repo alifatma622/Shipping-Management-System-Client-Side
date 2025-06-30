@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DeliveryManService } from './../../../Services/deliveryMan_Service/delivery-man.service';
-import { IReadDeliveryMan } from '../../../Models/deliveryMan_models/IDeliveryMan_model';
+import { DeliveryManService } from './../../../Services/delivery-man.service';
+import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-all-delivery-men',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './all-delivery-men.component.html',
   styleUrls: ['./all-delivery-men.component.css'],
 
@@ -17,6 +18,7 @@ export class AllDeliveryMenComponent implements OnInit {
   isLoading = true;
   errorMsg = '';
   routes: any;
+  searchUserName: string = '';
 
   constructor(private deliveryManService: DeliveryManService, private router: Router) {}
 
@@ -45,7 +47,19 @@ export class AllDeliveryMenComponent implements OnInit {
   onDelete(id: number) {
     this.deliveryManService.softDelete(id).subscribe(() => this.getAllDeliveryMen());
   }
+
   onAdd() {
     this.router.navigate(['/delivery-men/add']);
   }
+
+  get filteredDeliveryMen(): IReadDeliveryMan[] {
+    if (!this.searchUserName.trim()) return this.deliveryMen;
+    return this.deliveryMen.filter(man =>
+      man.userName?.toLowerCase().includes(this.searchUserName.trim().toLowerCase())
+    );
   }
+  onSearchChange(value: string) {
+    this.searchUserName = value;
+  }
+
+}

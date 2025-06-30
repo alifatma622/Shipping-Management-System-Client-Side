@@ -1,3 +1,3 @@
 export const environment = {
-  baseUrl: 'http://localhost', // هنا هكتب URL بتاع API
+  baseUrl: 'https://localhost:7294', // هنا هكتب URL بتاع API
 };
