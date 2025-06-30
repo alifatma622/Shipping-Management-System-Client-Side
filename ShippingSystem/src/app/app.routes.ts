@@ -9,11 +9,13 @@ import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEm
 import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
-import { AllSellerComponent } from '../Components/seller/all-seller/all-seller/all-seller.component';
+import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
+import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
+import { GovernratesListComponent  } from './Components/Governrate/all-governrates/all-governrates.component';
 
 export const routes: Routes = [
   // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
-  { path: 'Landing', component: LandingComponent},
+  { path: '', component: LandingComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent},
@@ -22,15 +24,15 @@ export const routes: Routes = [
     component: MainComponent,
     children: [
       { path: 'employee', component: MainEmployeeComponent },
+      {path: 'general-settings', component: GeneralSettingsComponent},
+      {path: 'governrates', component: GovernratesListComponent},
+      { path: 'delivery-men', component: AllDeliveryMenComponent },
+      { path: 'delivery-men/add', component: AddDeliveryManComponent },
+      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
+      { path: 'seller', component: AllSellerComponent }
       // Add more child routes here if needed
     ]
-  },
-  // Delivery Men Routes
-  { path: 'seller', component: AllSellerComponent },
-   // Delivery Men Routes
-  { path: 'delivery-men', component: AllDeliveryMenComponent },
-  { path: 'delivery-men/add', component: AddDeliveryManComponent },
-  { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
+  }
 
 ];
 
