@@ -1,0 +1,35 @@
+export interface Employee {
+     Id: number;
+     BranchId: number;
+     UserId: number;
+     firstName: string;
+     lastName: string;
+     email: string;
+     phoneNumber: string;
+     address: string ;
+     SpecificRole: string;
+     password: string;
+     
+}
+export interface AddEmployeeDTO {
+  branchId?: number | null;
+  userName: string;
+  email: string;
+  password: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  phoneNumber?: string | null;
+  specificRole: string; 
+}
+
+export interface ReadEmployeeDTO {
+  id: number;
+  branch?: string | null;
+  userName: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  createdAt: Date;
+  specificRole: string;
+}

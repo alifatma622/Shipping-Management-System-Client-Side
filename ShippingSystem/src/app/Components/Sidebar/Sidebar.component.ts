@@ -22,42 +22,42 @@ export class SidebarComponent {
       icon: 'fal fa-user-tie',
       label: 'Employees',
       isOpen: false,
-      subItems : [{label:'Employees dashboard' , routeLink:''},{label:'New employee', routeLink:''}]
+      subItems : [{label:'Employees list' , routeLink:''},{label:'New employee', routeLink:''}]
     },
     {
       routeLink: 'sellers',
       icon: 'fal fa-store',
       label: 'Sellers',
       isOpen: false,
-      subItems : [{label:'Sellers dashboard', routeLink:''} ,{label:'New seller', routeLink:''}]
+      subItems : [{label:'Sellers list', routeLink:''} ,{label:'New seller', routeLink:''}]
     },
     {
       routeLink: 'deliveragent',
       icon: 'fal fa-truck',
       label: 'Delivery Agents',
        isOpen: false,
-      subItems : [{label:'Deliver agents dashboard', routeLink:''} ,{label:'New delivery agent ', routeLink:''}]
+      subItems : [{label:'Deliver agents list', routeLink:''} ,{label:'New delivery agent ', routeLink:''}]
     },
     {
       routeLink: 'governorates',
       icon: 'fal fa-globe',
       label: 'Governorates',
        isOpen: false,
-      subItems : [{label:'Governorates dashboard', routeLink:''} ,{label:'New Governorate', routeLink:''}]
+      subItems : [{label:'Governorates list', routeLink:''} ,{label:'New Governorate', routeLink:''}]
     },
     {
       routeLink: 'cities',
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
-      subItems : [{label:'Cities dashboard', routeLink:''} ,{label:'New City', routeLink:''}]
+      subItems : [{label:'Cities list', routeLink:''} ,{label:'New City', routeLink:''}]
     },
     {
       routeLink: 'branches',
       icon: 'fal fa-building',
       label: 'Branches',
        isOpen: false,
-      subItems : [{label:'Branches dashboard', routeLink:'' },{label:'New Branch' , routeLink:''}]
+      subItems : [{label:'Branches list', routeLink:'' },{label:'New Branch' , routeLink:''}]
     },
     // {
     //   routeLink: 'products',
