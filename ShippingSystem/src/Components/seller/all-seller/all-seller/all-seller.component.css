@@ -1,0 +1,121 @@
+:root {
+  --main-bg: #e3f2f5;
+  --main-white: #fff;
+  --main-dark: #055866;
+  --main-accent: #daf87a;
+  --main-gray: #3a3362;
+  --glass: rgba(255, 255, 255, 0.85);
+  --border: #e3f2f5;
+}
+
+.seller-page
+{
+  height: 100vh ;
+  background-color: #e3f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.all-sellers-container {
+  max-width: 1100px;
+  margin: 32px auto 0 auto;
+  margin-top: -100px ;
+  background: var(--glass);
+  background-color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22;
+  padding: 28px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(2.5px);
+  border: 1.5px solid var(--border);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  gap: 18px;
+}
+
+.header h2 {
+  font-size: 2.2rem;
+  color: #055866;
+  font-weight: bold;
+  border-bottom: 3px solid #3a3362;
+  padding-bottom: 6px;
+}
+
+
+.add-btn {
+  color: #FFF;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 26px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  background: #055866;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+.add-btn:hover {
+  background: var(--main-accent);
+  transition: background 0.3s ease;
+  color: #000;
+  box-shadow: 0 4px 18px #daf87a55;
+  transform: translateY(-2px) scale(1.05);
+}
+
+
+
+
+.seller-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--main-white);
+  border: 1.5px solid var(--main-dark);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.seller-table th,
+.seller-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e3f2f5;
+}
+
+.seller-table th {
+  background-color: #f0f7f7;
+  color: var(--main-dark);
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.edit-btn:hover {
+  background: #daf87a44;
+  border-radius: 6px;
+}
+
+.delete-btn:hover {
+  background: #ffdada;
+  border-radius: 6px;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+  font-weight: 500;
+}
