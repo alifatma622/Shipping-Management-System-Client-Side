@@ -9,6 +9,8 @@ import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEm
 import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
+import { AllSellerComponent } from '../Components/seller/all-seller/all-seller/all-seller.component';
+
 export const routes: Routes = [
   // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
   { path: 'Landing', component: LandingComponent},
@@ -24,6 +26,8 @@ export const routes: Routes = [
     ]
   },
   // Delivery Men Routes
+  { path: 'seller', component: AllSellerComponent },
+   // Delivery Men Routes
   { path: 'delivery-men', component: AllDeliveryMenComponent },
   { path: 'delivery-men/add', component: AddDeliveryManComponent },
   { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
