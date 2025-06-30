@@ -6,7 +6,9 @@ import { LandingComponent } from './Components/landing/landing.component';
 import { DashboardComponent } from './Components/Dashboard/Dashboard.component';
 import { MainComponent } from './Components/Main/Main.component';
 import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEmployee.component';
-
+import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
+import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
+import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
 export const routes: Routes = [
   // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
   { path: 'Landing', component: LandingComponent},
@@ -20,7 +22,12 @@ export const routes: Routes = [
       { path: 'employee', component: MainEmployeeComponent },
       // Add more child routes here if needed
     ]
-  }
+  },
+  // Delivery Men Routes
+  { path: 'delivery-men', component: AllDeliveryMenComponent },
+  { path: 'delivery-men/add', component: AddDeliveryManComponent },
+  { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
+
 ];
 
 @NgModule({

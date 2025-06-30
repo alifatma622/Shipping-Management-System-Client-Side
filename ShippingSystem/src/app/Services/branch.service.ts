@@ -1,0 +1,21 @@
+
+// branch.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface IBranch {
+  id: number;
+  name: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class BranchService {
+  private apiUrl = 'https://localhost:7294/api/Branch';
+
+  constructor(private http: HttpClient) {}
+
+  getAllBranches(): Observable<IBranch[]> {
+    return this.http.get<IBranch[]>(this.apiUrl);
+  }
+}

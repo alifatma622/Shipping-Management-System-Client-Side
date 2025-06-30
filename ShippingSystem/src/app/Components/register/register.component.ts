@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../Services/auth-service.service';
-import { RegisterModel } from '../../Models/register-model';
+import { RegisterModel } from './../../Models/register-model';
 
 @Component({
   selector: 'app-register',
