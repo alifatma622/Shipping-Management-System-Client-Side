@@ -1,0 +1,44 @@
+<div class="container">
+  <h2>City List</h2>
+
+  <div class="toolbar">
+    <button class="add-btn" (click)="onAddCity()">
+      <i class="fa-solid fa-plus"></i> Add City
+    </button>
+
+    <input
+      type="text"
+      placeholder="Search by name..."
+      [(ngModel)]="searchTerm"
+      class="search-input"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Normal Price</th>
+        <th>Pickup Price</th>
+        <th>Governorate</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let city of filteredCities()">
+        <td>{{ city.name }}</td>
+        <td>{{ city.normalPrice }}</td>
+        <td>{{ city.pickupPrice }}</td>
+        <td>{{ city.governorateName }}</td>
+        <td>
+          <button class="edit" (click)="onEdit(city)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="delete" (click)="onDelete(city.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

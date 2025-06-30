@@ -1,0 +1,172 @@
+/* ====== Reset & Base ====== */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #e3f2f5;
+  font-family: "Quicksand", sans-serif;
+  color: #3a3362;
+  transition: background-color 0.5s ease;
+}
+
+/* ====== Container ====== */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  animation: fadeInUp 0.6s ease-out;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== Heading ====== */
+h2 {
+  color: #055866;
+  font-size: 28px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: #daf87a;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -10px;
+  border-radius: 5px;
+}
+
+/* ====== Table ====== */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  transition: all 0.3s ease;
+}
+
+thead {
+  background-color: #055866;
+  color: white;
+}
+
+th {
+  padding: 14px 16px;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+td {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+tbody tr:hover td {
+  transform: scale(1.01);
+  background-color: #f0faff;
+}
+
+/* ====== Action Buttons ====== */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+button.edit i {
+  color: #3a3362;
+}
+
+button.delete i {
+  color: #daf87a;
+}
+
+button.edit:hover {
+  background-color: #daf87a20;
+  transform: scale(1.1);
+}
+
+button.delete:hover {
+  background-color: #ff000020;
+  transform: scale(1.1);
+}
+
+button.edit:hover i {
+  color: #055866;
+}
+
+button.delete:hover i {
+  color: red;
+}
+/* ====== Toolbar (Search + Add Button) ====== */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 10px 15px;
+  border: 2px solid #daf87a;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  transition: 0.3s ease;
+  width: 230px;
+}
+
+.search-input:focus {
+  border-color: #055866;
+  box-shadow: 0 0 6px rgba(5, 88, 102, 0.2);
+}
+
+.add-btn {
+  background-color: #055866;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-btn i {
+  margin-right: 6px;
+}
+
+.add-btn:hover {
+  background-color: #3a3362;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

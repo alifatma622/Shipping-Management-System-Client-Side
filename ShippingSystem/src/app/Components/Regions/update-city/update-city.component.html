@@ -1,0 +1,87 @@
+<div class="update-container">
+  <h2 class="form-title">Update City</h2>
+
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="city-form">
+    <div class="mb-3">
+      <label for="name" class="form-label">City Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        [(ngModel)]="cityData.name"
+        required
+        minlength="2"
+        #nameRef="ngModel"
+      />
+      <div *ngIf="nameRef.invalid && nameRef.touched" class="text-danger">
+        <small *ngIf="nameRef.errors?.['required']">Name is required.</small>
+        <small *ngIf="nameRef.errors?.['minlength']"
+          >Minimum 2 characters.</small
+        >
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="normalPrice" class="form-label">Normal Price</label>
+      <input
+        type="number"
+        id="normalPrice"
+        name="normalPrice"
+        class="form-control"
+        [(ngModel)]="cityData.normalPrice"
+        required
+        min="1"
+        #npRef="ngModel"
+      />
+      <div *ngIf="npRef.invalid && npRef.touched" class="text-danger">
+        <small *ngIf="npRef.errors?.['required']">Required.</small>
+        <small *ngIf="npRef.errors?.['min']">Must be > 0.</small>
+      </div>
+    </div>
+
+    <!-- Pickup Price -->
+    <div class="mb-3">
+      <label for="pickupPrice" class="form-label">Pickup Price</label>
+      <input
+        type="number"
+        id="pickupPrice"
+        name="pickupPrice"
+        class="form-control"
+        [(ngModel)]="cityData.pickupPrice"
+        required
+        min="1"
+        #ppRef="ngModel"
+      />
+      <div *ngIf="ppRef.invalid && ppRef.touched" class="text-danger">
+        <small *ngIf="ppRef.errors?.['required']">Required.</small>
+        <small *ngIf="ppRef.errors?.['min']">Must be > 0.</small>
+      </div>
+    </div>
+
+    <!-- Governorate ID -->
+    <div class="mb-3">
+      <label for="governorateId" class="form-label">Governorate</label>
+      <select
+        id="governorateId"
+        name="governorateId"
+        class="form-select"
+        [(ngModel)]="cityData.governorateId"
+        required
+        #govRef="ngModel"
+      >
+        <option value="" disabled selected>Select Governorate</option>
+        <option *ngFor="let gov of governorates" [value]="gov.id">
+          {{ gov.name }}
+        </option>
+      </select>
+      <div *ngIf="govRef.invalid && govRef.touched" class="text-danger">
+        <small>Governorate is required.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-update" [disabled]="form.invalid">
+      Update City
+    </button>
+  </form>
+</div>

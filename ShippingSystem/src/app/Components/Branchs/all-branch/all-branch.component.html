@@ -1,0 +1,43 @@
+<!-- branch-list.component.html -->
+<div class="container">
+  <h2>Branch List</h2>
+
+  <div class="toolbar">
+    <button class="add-btn" (click)="onAddBranch()">
+      <i class="fa-solid fa-plus"></i> Add Branch
+    </button>
+
+    <input
+      type="text"
+      placeholder="Search by name..."
+      [(ngModel)]="searchTerm"
+      class="search-input"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Creation Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let branch of filteredBranches()">
+        <td>{{ branch.name }}</td>
+        <td>{{ branch.city }}</td>
+        <td>{{ branch.creationDate | date: 'shortDate' }}</td>
+        <td>
+          <button class="edit" (click)="onEdit(branch)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="delete" (click)="onDelete(branch.id)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
