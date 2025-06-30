@@ -99,7 +99,7 @@ export class EditDeliveryManComponent implements OnInit {
           phoneNumber: data.phoneNumber || '',
           branchId: data.branchId ? Number(data.branchId) : null,
           cityIds: data.cityIds ? data.cityIds.map(Number) : [],
-          isActive: data.isDeleted === false
+          isActive: !data.isDeleted
         });
         this.isLoading = false;
       },

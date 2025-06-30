@@ -11,7 +11,6 @@ export interface IReadDeliveryMan {
   cityIds?: number[];
   activeOrdersCount?: number;
   isDeleted?: boolean;
-  isActive?: boolean;
 }
 export interface IAddDeliveryMan {
   name: string;

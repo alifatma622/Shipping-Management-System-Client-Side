@@ -47,6 +47,7 @@ export class AllDeliveryMenComponent implements OnInit {
   onDelete(id: number) {
     this.deliveryManService.softDelete(id).subscribe(() => this.getAllDeliveryMen());
   }
+
   onAdd() {
     this.router.navigate(['/delivery-men/add']);
   }
@@ -60,4 +61,5 @@ export class AllDeliveryMenComponent implements OnInit {
   onSearchChange(value: string) {
     this.searchUserName = value;
   }
+
 }
