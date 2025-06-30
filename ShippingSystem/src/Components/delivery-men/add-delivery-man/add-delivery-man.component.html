@@ -6,7 +6,7 @@
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
     <div class="form-group">
       <label for="name">Name</label>
-      <input id="name" formControlName="name" [class.invalid]="addForm.get('name')?.invalid && addForm.get('name')?.touched" />
+      <input id="name" formControlName="name" placeholder="Name" [class.invalid]="addForm.get('name')?.invalid && addForm.get('name')?.touched" />
       <div class="error" *ngIf="addForm.get('name')?.invalid && addForm.get('name')?.touched">
         Name is required (3-50 chars).
       </div>
@@ -14,7 +14,7 @@
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" [class.invalid]="addForm.get('email')?.invalid && addForm.get('email')?.touched" />
+      <input id="email" formControlName="email" type="email" placeholder="Email" [class.invalid]="addForm.get('email')?.invalid && addForm.get('email')?.touched" />
       <div class="error" *ngIf="addForm.get('email')?.invalid && addForm.get('email')?.touched">
         Valid email is required.
       </div>
@@ -22,7 +22,7 @@
 
     <div class="form-group">
       <label for="userName">Username</label>
-      <input id="userName" formControlName="userName" [class.invalid]="addForm.get('userName')?.invalid && addForm.get('userName')?.touched" />
+      <input id="userName" formControlName="userName" placeholder="Username" [class.invalid]="addForm.get('userName')?.invalid && addForm.get('userName')?.touched" />
       <div class="error" *ngIf="addForm.get('userName')?.invalid && addForm.get('userName')?.touched">
         Username is required (4-30 chars).
       </div>
@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" formControlName="password" type="password" [class.invalid]="addForm.get('password')?.invalid && addForm.get('password')?.touched" />
+      <input id="password" formControlName="password" type="password" placeholder="Password" [class.invalid]="addForm.get('password')?.invalid && addForm.get('password')?.touched" />
       <div class="error" *ngIf="addForm.get('password')?.invalid && addForm.get('password')?.touched">
         Password must be at least 8 chars, include uppercase, lowercase, number, and symbol.
       </div>
@@ -38,7 +38,7 @@
 
     <div class="form-group">
       <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" formControlName="phoneNumber" [class.invalid]="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched" />
+      <input id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" [class.invalid]="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched" />
       <div class="error" *ngIf="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched">
         Valid Egyptian phone number required.
       </div>
@@ -47,7 +47,7 @@
     <div class="form-group">
       <label for="branchId">Branch</label>
       <select id="branchId" formControlName="branchId" [class.invalid]="addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched">
-        <option value="" disabled selected hidden>Select branch</option>
+        <option value="" disabled hidden>Select branch</option>
         <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
       </select>
       <div class="error" *ngIf="addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched">

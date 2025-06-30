@@ -10,7 +10,8 @@ export interface IReadDeliveryMan {
   cities?: string;
   cityIds?: number[];
   activeOrdersCount?: number;
-   isDeleted?: boolean;
+  isDeleted?: boolean;
+  isActive?: boolean;
 }
 export interface IAddDeliveryMan {
   name: string;
@@ -30,4 +31,6 @@ export interface IUpdateDeliveryMan {
   phoneNumber: string;
   branchId: number;
   cityIds: number[];
+  password?: string;
+  isDeleted?: boolean;
 }
