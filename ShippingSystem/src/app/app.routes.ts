@@ -23,5 +23,4 @@ export const routes: Routes = [
   { path: 'AllBranch', component: AllBranchComponent },
   { path: 'UpdateBranch/:id', component: UpdateBranchComponent },
   { path: 'AddBranch', component: AddBranchComponent },
-
 ];
