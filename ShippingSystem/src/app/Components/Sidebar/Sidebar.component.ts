@@ -44,21 +44,21 @@ export class SidebarComponent {
       icon: 'fal fa-globe',
       label: 'Governorates',
        isOpen: false,
-      subItems : [{label:'Governorates list', routeLink:''} ,{label:'New Governorate', routeLink:''}]
+      subItems : [{label:'Governorates', routeLink:'governrates'} ,{label:'Add Governorate', routeLink:'add-governrate'}]
     },
     {
       routeLink: 'cities',
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
-      subItems : [{label:'Cities list', routeLink:''} ,{label:'New City', routeLink:''}]
+      subItems : [{label:'Cities dashboard', routeLink:''} ,{label:'New City', routeLink:''}]
     },
     {
       routeLink: 'branches',
       icon: 'fal fa-building',
       label: 'Branches',
        isOpen: false,
-      subItems : [{label:'Branches list', routeLink:'' },{label:'New Branch' , routeLink:''}]
+      subItems : [{label:'Branches dashboard', routeLink:'' },{label:'New Branch' , routeLink:''}]
     },
     // {
     //   routeLink: 'products',
@@ -94,10 +94,4 @@ export class SidebarComponent {
   });
   selectedItem.isOpen = !selectedItem.isOpen;
 }
-
-// navigateToSubItem(subItem: any, event: Event) {
-//     event.stopPropagation(); // Prevent the parent click handler from triggering
-//     this.router.navigateByUrl(subItem.routeLink);
-    
-// } 
 }

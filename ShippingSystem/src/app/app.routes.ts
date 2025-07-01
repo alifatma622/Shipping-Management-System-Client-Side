@@ -26,7 +26,10 @@ export const routes: Routes = [
       { path: 'employee/edit/:id', component: EditDeliveryManComponent },
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
-      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent }
+      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
+       {path: 'general-settings', component: GeneralSettingsComponent},
+      {path: 'governrates', component: GovernratesListComponent},
+      { path: 'seller', component: AllSellerComponent }
     ]
   }
 ];
