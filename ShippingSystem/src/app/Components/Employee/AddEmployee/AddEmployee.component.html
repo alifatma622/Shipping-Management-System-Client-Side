@@ -1,14 +1,23 @@
 <div class="add-delivery-man-container">
   <div class="header">
-    <h2>Add Delivery Man</h2>
+    <h2>Add Employee
+
+    </h2>
   </div>
 
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
     <div class="form-group">
-      <label for="name">Name</label>
-      <input id="name" formControlName="name" placeholder="Name" [class.invalid]="addForm.get('name')?.invalid && addForm.get('name')?.touched" />
+      <label for="firstName">First name</label>
+      <input id="firstName" formControlName="firstName" placeholder="First name" [class.invalid]="addForm.get('firstName')?.invalid && addForm.get('firstName')?.touched" />
       <div class="error" *ngIf="addForm.get('name')?.invalid && addForm.get('name')?.touched">
-        Name is required (3-50 chars).
+        First name is required (3-50 chars).
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last name</label>
+      <input id="lastName" formControlName="lastName" placeholder="Last name" [class.invalid]="addForm.get('lastName')?.invalid && addForm.get('lastName')?.touched" />
+      <div class="error" *ngIf="addForm.get('lastName')?.invalid && addForm.get('lastName')?.touched">
+        Last name is required (3-50 chars).
       </div>
     </div>
 
@@ -55,13 +64,13 @@
       </div>
     </div>
 
-<div class="form-group">
-      <label for="departmentId">Department</label>
-      <select id="departmentId" formControlName="departmentId" [class.invalid]="addForm.get('departmentId')?.invalid && addForm.get('departmentId')?.touched">
+    <div class="form-group">
+      <label for="specificRole">Department</label>
+      <select id="specificRole" formControlName="specificRole" [class.invalid]="addForm.get('specificRole')?.invalid && addForm.get('specificRole')?.touched">
         <option value="" disabled hidden>Select department</option>
-        <option *ngFor="let department of departments" [value]="department.id">{{ department.name }}</option>
+        <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
       </select>
-      <div class="error" *ngIf="addForm.get('departmentId')?.invalid && addForm.get('departmentId')?.touched">
+      <div class="error" *ngIf="addForm.get('specificRole')?.invalid && addForm.get('specificRole')?.touched">
         Department is required.
       </div>
     </div>

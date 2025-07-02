@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { ReadEmployeeDTO } from '../../../Models/employee';
+import { ReadEmployeeDTO } from '../../../Models/IEmployee';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
@@ -17,6 +17,7 @@ export class MainEmployeeComponent implements OnInit {
   errorMsg = '';
   routes: any;
   searchUserName: string = '';
+  selectedEmpId: number =0;
 
   constructor(private EmployeeService:EmployeeService,private router: Router) { }
 ngOnInit(): void {
@@ -38,15 +39,15 @@ ngOnInit(): void {
   }
 
   onEdit(id: number) {
-    this.router.navigate(['/employee/edit', id]);
+    this.router.navigate(['dashboard/employee/edit', id]);
   }
 
   onDelete(id: number) {
-    this.EmployeeService.softDeleteEmployee(id).subscribe(() => this.getAllEmployees());
+    this.EmployeeService.hardDeleteEmployee(id).subscribe(() => this.getAllEmployees());
   }
 
   onAdd() {
-    this.router.navigate(['/employee/add']);
+    this.router.navigate(['dashboard/employee/add']);
   }
 
   get filteredEmployees(): ReadEmployeeDTO[] {
@@ -59,3 +60,6 @@ ngOnInit(): void {
     this.searchUserName = value;
   }
 }
+
+
+

@@ -1,43 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddEmployeeComponent } from '../AddEmployee/AddEmployee.component';
+import { AddEmployeeDTO, ReadEmployeeDTO } from '../../../Models/IEmployee';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BranchService, IBranch } from '../../../Services/branch.service';
+import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DeliveryManService } from './../../../Services/deliveryMan_Service/delivery-man.service';
-import { BranchService, IBranch } from './../../../Services/Branch_Service/branch.service';
-import { CityService, ICity } from './../../../Services/City_Service/city.service';
-import { IUpdateDeliveryMan, IReadDeliveryMan } from './../../../Models/deliveryMan_models/IDeliveryMan_model';
-import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { RoleService } from '../../../Services/Role-Services/Role.service';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-delivery-man',
-  templateUrl: './edit-delivery-man.component.html',
-  styleUrls: ['./edit-delivery-man.component.css'],
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  selector: 'app-EditEmployee',
+  imports :[NgIf, NgFor, ReactiveFormsModule,CommonModule],
+  templateUrl: './EditEmployee.component.html',
+  styleUrls: ['./EditEmployee.component.css']
 })
-export class EditDeliveryManComponent implements OnInit {
-goToDeliveryMenList() {
-throw new Error('Method not implemented.');
-}
-  editForm: FormGroup;
+export class EditEmployeeComponent implements OnInit {
+ editForm: FormGroup;
   isSubmitting = false;
   isLoading = false;
   errorMsg = '';
   successMsg = '';
+  // department:string = '' ;
   branches: IBranch[] = [];
-  cities: ICity[] = [];
-  deliveryManId: number | null = null;
+  departments:string[] = [];
+  employeeId: number | null = null;
+  excludedDepts = ['DeliveryAgent', 'Seller','Employee']
 
   constructor(
     private fb: FormBuilder,
-    private deliveryManService: DeliveryManService,
+    private employeeService: EmployeeService,
     private branchService: BranchService,
-    private cityService: CityService,
+    private roleService:RoleService,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.editForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z\\s]+$')]],
+      firstName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z\\s]+$')]],
+      lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z\\s]+$')]],
       email: ['', [Validators.required, Validators.email]],
       userName: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30), Validators.pattern('^[a-zA-Z0-9_]+$')]],
       password: ['', [
@@ -46,14 +45,14 @@ throw new Error('Method not implemented.');
       ]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')]],
       branchId: [null, [Validators.required, Validators.min(1)]],
-      cityIds: [[], [Validators.required, Validators.minLength(1)]],
-      isActive: [true] // Status field
+      specificRole: [[], [Validators.required, Validators.min(1)]],
+      isActive: [true]
     });
   }
 
   ngOnInit(): void {
     this.loadInitialData();
-    this.loadDeliveryManData();
+    this.loadEmployeeData();
   }
 
   private loadInitialData(): void {
@@ -66,43 +65,50 @@ throw new Error('Method not implemented.');
       }
     });
 
-    // Load cities
-    this.cityService.getAllCities().subscribe({
-      next: (data) => this.cities = data,
+    // Load roles
+    this.roleService.getAllRoles().subscribe({
+      next: (data) => (this.departments = data,this.departments = this.departments.filter(dept => !this.excludedDepts.includes(dept)), console.log(this.departments)),
       error: (err) => {
-        console.error('Error loading cities:', err);
-        this.errorMsg = 'Error loading cities. Please refresh the page.';
+        console.error('Error loading departments:', err);
+        this.errorMsg = 'Error loading departments. Please refresh the page.';
       }
     });
   }
 
-  private loadDeliveryManData(): void {
+  private loadEmployeeData(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
+      if(id ==='1'){
+        this.errorMsg = 'You cannot edit the main admin account.';
+        setTimeout(() => this.router.navigate(['dashboard/employee']), 2000);
+        return;
+      }
       if (id) {
-        this.deliveryManId = +id;
-        this.loadDeliveryMan(+id);
+        this.employeeId = +id;
+        this.loadEmployee(+id);
       } else {
-        this.errorMsg = 'Invalid delivery man ID.';
-        setTimeout(() => this.router.navigate(['/delivery-men']), 2000);
+        this.errorMsg = 'Invalid employee ID.';
+        setTimeout(() => this.router.navigate(['dashboard/employee']), 2000);
       }
     });
   }
 
-  loadDeliveryMan(id: number) {
+  loadEmployee(id: number) {
     this.isLoading = true;
     this.errorMsg = '';
 
-    this.deliveryManService.getById(id).subscribe({
-      next: (data: IReadDeliveryMan) => {
+    this.employeeService.getEmployeeById(id).subscribe({
+      next: (data: ReadEmployeeDTO) => {
         this.editForm.patchValue({
-          name: data.fullName || '',
+          firstName: data.firstName || '',
+          lastName: data.firstName || '',
           email: data.email || '',
           userName: data.userName || '',
           phoneNumber: data.phoneNumber || '',
           branchId: data.branchId ? Number(data.branchId) : null,
-          cityIds: data.cityIds ? data.cityIds.map(Number) : [],
-          isActive: !data.isDeleted // Convert IsDeleted to IsActive
+          specificRole: data.specificRole,
+          isActive: !data.isDeleted,
+          password:data.password
         });
         this.isLoading = false;
       },
@@ -110,7 +116,7 @@ throw new Error('Method not implemented.');
         console.error('Error loading delivery man:', err);
         this.errorMsg = 'Failed to load delivery man data. Please try again.';
         this.isLoading = false;
-        setTimeout(() => this.router.navigate(['/delivery-men']), 2000);
+        setTimeout(() => this.router.navigate(['dashboard/employee']), 2000);
       }
     });
   }
@@ -119,31 +125,31 @@ throw new Error('Method not implemented.');
     this.errorMsg = '';
     this.successMsg = '';
 
-    if (this.editForm.invalid || !this.deliveryManId) {
+    if (this.editForm.invalid || !this.employeeId) {
       this.editForm.markAllAsTouched();
       return;
     }
 
     this.isSubmitting = true;
 
-    const data: IUpdateDeliveryMan = {
+    const data: AddEmployeeDTO = {
       ...this.editForm.value,
       branchId: Number(this.editForm.value.branchId),
-      cityIds: this.editForm.value.cityIds.map((id: any) => Number(id)).filter((id: number) => !!id)
+      department: this.editForm.value.department,
+      isActive: this.editForm.value.isActive
     };
 
-    // إذا لم يدخل باسورد جديد، احذفه من الـ object
-    if (!data.password || data.password.trim() === '') {
-      delete data.password;
-    }
+    // if (!data.password || data.password.trim() === '') {
+    //   delete data.password;
+    // }
 
     console.log('Sending data to backend:', data);
 
-    this.deliveryManService.update(this.deliveryManId, data).subscribe({
+    this.employeeService.updateEmployee(this.employeeId, data).subscribe({
       next: (res) => {
-        this.successMsg = res?.message || 'Delivery man updated successfully!';
+        this.successMsg = ' Employee updated successfully!';
         this.isSubmitting = false;
-        setTimeout(() => this.router.navigate(['/delivery-men']), 1200);
+        setTimeout(() => this.router.navigate(['dashboard/employee']), 1200);
       },
       error: (err) => {
         console.error('Backend error:', err);
@@ -158,7 +164,7 @@ throw new Error('Method not implemented.');
         } else if (err?.status === 409) {
           this.errorMsg = 'Username or email already exists.';
         } else {
-          this.errorMsg = 'Error updating delivery man. Please try again.';
+          this.errorMsg = 'Error updating employee. Please try again.';
         }
       }
     });
@@ -184,4 +190,9 @@ throw new Error('Method not implemented.');
 
     return `${fieldName} is invalid.`;
   }
+
+  goToEmployeeList() {
+    this.router.navigate(['dashboard/employee']);
+  }
+
 }

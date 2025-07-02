@@ -5,31 +5,44 @@ import { IBranch } from '../../../Services/branch.service';
 import { ICity } from '../../../Services/city.service';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { BranchService } from '../../../Services/branch.service';
-import { AddEmployeeDTO } from '../../../Models/employee';
+import { AddEmployeeDTO } from '../../../Models/IEmployee';
 import { NgFor, NgIf } from '@angular/common';
-import{ReactiveFormsModule} from '@angular/forms';; 
+import{ReactiveFormsModule} from '@angular/forms';import { IRole } from '../../../Models/IRole';
+import { RoleService } from '../../../Services/Role-Services/Role.service';
+; 
 @Component({
   selector: 'app-AddEmployee',
   imports: [RouterModule, NgIf, NgFor, ReactiveFormsModule],
   templateUrl: './AddEmployee.component.html',
   styleUrls: ['./AddEmployee.component.css']
 })
+
 export class AddEmployeeComponent implements OnInit {
-addForm: FormGroup;
+  addForm: FormGroup;
   isSubmitting = false;
   errorMsg = '';
   successMsg = '';
   branches: IBranch[] = [];
-  departments: ICity[] = [];
+  departments: string[] = [];
+  excludedDepts = ['DeliveryAgent', 'Seller','Employee']
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private branchService: BranchService,
+    private roleService: RoleService,
     private router: Router
   ) {
     this.addForm = this.fb.group({
-      name: [
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern('^[a-zA-Z\\s]+$'),
+        ],
+      ],lastName: [
         '',
         [
           Validators.required,
@@ -63,14 +76,19 @@ addForm: FormGroup;
         [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
       ],
       branchId: ['', [Validators.required, Validators.min(1)]],
-      cityIds: [[], [Validators.required, Validators.minLength(1)]],
+      specificRole: ['', [Validators.required, Validators.min(1)]],
     });
   }
 
   ngOnInit(): void {
     this.branchService.getAllBranches().subscribe({
-      next: (data) => (this.branches = data),
+      next: (data) => (this.branches = data,console.log(data)),
       error: () => (this.errorMsg = 'Error loading branches'),
+    });
+     this.roleService.getAllRoles().subscribe({
+      next: (data) => (this.departments = data,this.departments = this.departments.filter(dept => !this.excludedDepts.includes(dept)), console.log(this.departments)),
+      
+      error: () => (this.errorMsg = 'Error loading departments'),
     });
   }
 
@@ -83,18 +101,24 @@ addForm: FormGroup;
     }
     this.isSubmitting = true;
 
-    // تحويل branchId و cityIds لأرقام والتأكد من صحتهم
+    // تحويل branchId و roleId لأرقام والتأكد من صحتهم
     const branchId = Number(this.addForm.value.branchId);
-
+    const specificRole = this.addForm.value.specificRole;
     if (!branchId) {
       this.errorMsg = 'Please select a valid branch.';
+      this.isSubmitting = false;
+      return;
+    }
+    if (!specificRole) {
+      this.errorMsg = 'Please select a valid department.';
       this.isSubmitting = false;
       return;
     }
 
     const data: AddEmployeeDTO = {
       ...this.addForm.value,
-      branchId
+      branchId,
+      specificRole
     };
 
     console.log(data);
@@ -102,7 +126,7 @@ addForm: FormGroup;
     this.employeeService.addEmployee(data).subscribe({
       next: () => {
         this.successMsg = 'Employee added successfully!';
-        setTimeout(() => this.router.navigate(['/employee']), 1200);
+        setTimeout(() => this.router.navigate(['employee']), 1200);
       },
     error: (err) => {
   console.log('Backend error:', err);

@@ -10,6 +10,10 @@ import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
 import { AddEmployeeComponent } from './Components/Employee/AddEmployee/AddEmployee.component';
+import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
+import { GovernratesListComponent } from './Components/Governrate/all-governrates/all-governrates.component';
+import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
+import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -23,7 +27,7 @@ export const routes: Routes = [
       { path: '', component: MainComponent },
       { path: 'employee', component: MainEmployeeComponent },
       { path: 'employee/add', component: AddEmployeeComponent },
-      { path: 'employee/edit/:id', component: EditDeliveryManComponent },
+      { path: 'employee/edit/:id', component: EditEmployeeComponent },
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
