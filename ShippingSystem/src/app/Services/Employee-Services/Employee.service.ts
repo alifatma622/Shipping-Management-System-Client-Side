@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AddEmployeeDTO, ReadEmployeeDTO } from '../../Models/employee';
+import { AddEmployeeDTO, ReadEmployeeDTO } from '../../Models/IEmployee';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class EmployeeService {
+
 private apiUrl = `${environment.baseUrl}/api/Employee`;
 constructor(private http:HttpClient) { }
  // Get all employees
@@ -21,13 +22,10 @@ constructor(private http:HttpClient) { }
   }
 
   // Add new employee
-  addEmployee(employee: AddEmployeeDTO): Observable<ReadEmployeeDTO> {
-    // Set default role if not provided
-    const payload = {
-      ...employee,
-      specificRole: employee.specificRole || 'Admin'
-    };
-    return this.http.post<ReadEmployeeDTO>(this.apiUrl, payload);
+  addEmployee(employee: AddEmployeeDTO): Observable<void> {
+
+    employee.specificRole ='Admin';
+    return this.http.post<void>(this.apiUrl, employee);
   }
 
   // Update employee

@@ -116,7 +116,7 @@ export class AddDeliveryManComponent implements OnInit {
       },
     error: (err) => {
   console.log('Backend error:', err);
-  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery man!';
+  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery agent!';
   this.isSubmitting = false;
       },
     });
