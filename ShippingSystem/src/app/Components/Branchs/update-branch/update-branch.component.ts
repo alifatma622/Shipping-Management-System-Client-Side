@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BranchService } from '../../../Services/branch.service';
-import { CityServiceService } from '../../../Services/city-service.service';
 import { CityModel } from '../../../Models/CityModels/city-model';
 import {
   FormBuilder,
@@ -13,6 +12,7 @@ import {
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { AllBranch } from '../../../Models/Branch/all-branch';
+import { CityServiceService } from '../../../Services/city-service.service';
 
 @Component({
   selector: 'app-update-branch',
@@ -46,9 +46,27 @@ export class UpdateBranchComponent implements OnInit {
 
     // ✅ Fake Cities
     this.cities = [
-      { id: 1, name: 'Cairo', normalPrice: 0, pickupPrice: 0, governorateName: '' },
-      { id: 2, name: 'Alexandria', normalPrice: 0, pickupPrice: 0, governorateName: '' },
-      { id: 3, name: 'Giza', normalPrice: 0, pickupPrice: 0, governorateName: '' },
+      {
+        id: 1,
+        name: 'Cairo',
+        normalPrice: 0,
+        pickupPrice: 0,
+        governorateName: '',
+      },
+      {
+        id: 2,
+        name: 'Alexandria',
+        normalPrice: 0,
+        pickupPrice: 0,
+        governorateName: '',
+      },
+      {
+        id: 3,
+        name: 'Giza',
+        normalPrice: 0,
+        pickupPrice: 0,
+        governorateName: '',
+      },
     ];
 
     // ✅ Fake Branch For Testing
@@ -58,7 +76,7 @@ export class UpdateBranchComponent implements OnInit {
       { id: 3, name: 'Branch C', city: 'Giza', creationDate: '' },
     ];
 
-    const selectedBranch = fakeBranches.find(b => b.id === this.branchId);
+    const selectedBranch = fakeBranches.find((b) => b.id === this.branchId);
 
     if (selectedBranch) {
       this.branchForm.patchValue({
@@ -92,7 +110,9 @@ export class UpdateBranchComponent implements OnInit {
   }
 
   getCityIdByName(name: string): number | null {
-    const city = this.cities.find((c) => c.name.toLowerCase() === name.toLowerCase());
+    const city = this.cities.find(
+      (c) => c.name.toLowerCase() === name.toLowerCase()
+    );
     return city ? city.id : null;
   }
 

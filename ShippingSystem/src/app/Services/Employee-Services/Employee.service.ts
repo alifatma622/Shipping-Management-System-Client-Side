@@ -1,0 +1,47 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { AddEmployeeDTO, ReadEmployeeDTO } from '../../Models/employee';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+private apiUrl = `${environment.baseUrl}/api/Employee`;
+constructor(private http:HttpClient) { }
+ // Get all employees
+  getAllEmployees(): Observable<ReadEmployeeDTO[]> {
+    return this.http.get<ReadEmployeeDTO[]>(this.apiUrl);
+  }
+
+  // Get employee by ID
+  getEmployeeById(id: number): Observable<ReadEmployeeDTO> {
+    return this.http.get<ReadEmployeeDTO>(`${this.apiUrl}/${id}`);
+  }
+
+  // Add new employee
+  addEmployee(employee: AddEmployeeDTO): Observable<ReadEmployeeDTO> {
+    // Set default role if not provided
+    const payload = {
+      ...employee,
+      specificRole: employee.specificRole || 'Admin'
+    };
+    return this.http.post<ReadEmployeeDTO>(this.apiUrl, payload);
+  }
+
+  // Update employee
+  updateEmployee(id: number, employee: AddEmployeeDTO): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, employee);
+  }
+
+  // Soft delete employee
+  softDeleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/SoftDelete/${id}`);
+  }
+
+  // Hard delete employee
+  hardDeleteEmployee(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/HardDelete/${id}`);
+  }
+}

@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="text-left" style="padding: 10px;">Employees List</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <button class="btn btn-primary mb-3" (click)="addEmployee()">Add Employee</button> -->
+        </div>
+    </div>
+<div class="bd-example table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Branch</th>
+                <th scope="col">Department</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Join date</th>
+                <th scope="col">Actions</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+     @for (employee of employees; track employee.id){
+        <tr>
+            <th scope="row">((employee.Id))</th>
+            <td>{{employee.firstName + employee.lastName}}</td>
+            <td>{{employee.userName}}</td>
+            <td>{{employee.branch}}</td>
+            <td>{{employee.specificRole}}</td>
+            <td>{{employee.email}}</td>
+            <td>{{employee.phoneNumber}}</td>
+            <td>{{employee.createdAt}}</td>
+            <td><i class="fa-solid fa-user-pen"></i></td>
+            <td></td>
+            
+        </tr>
+    }
+            </tbody>
+        </table>
+    </div>
+    </div>

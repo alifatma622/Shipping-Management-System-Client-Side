@@ -1,0 +1,60 @@
+<div
+  class="sidenav"
+  [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
+>
+  
+  <div class="logo-container">
+    
+    <button class="logo" (click)="toggleCollapse()">
+      <!-- <i class="fal fa-bars"></i> -->
+      <img src="assets/Images/logo-Pica.png" width="40" height="40" alt="Logo">
+    </button>
+    @if (!isLeftSidebarCollapsed()) {
+      <div class="logo-text">Shipping</div>
+      <button class="btn-close" (click)="closeSidenav()">
+        <i class="fal fa-times close-icon"></i>
+      </button>
+    }
+  </div>
+  <div class="sidenav-nav-wrapper">
+    <div class="sidenav-nav">
+    @for (item of items; track $index) {
+       <li class="sidenav-nav-item" [class.open]="item.isOpen" >
+        <a
+          class="sidenav-nav-link"
+          [routerLink]="item.routeLink || '#'"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggleSubItems(item)"
+        >
+          <i class="sidenav-link-icon" [class]="item.icon"></i>
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text" >{{ item.label }}</span>
+            @if (item.subItems && item.subItems.length > 0) {
+              <i class="fas" [class.fa-angle-down]="item.isOpen" [class.fa-angle-right]="!item.isOpen" style="position: absolute; right: 23px;"></i>
+            }
+          }
+        </a>
+
+        @if (!isLeftSidebarCollapsed() && item.subItems && item.subItems.length > 0) {
+        <ul class="submenu">
+          @for (subItem of item.subItems; track $index) {
+            <li >
+              <a
+                class="submenu-link"
+                [routerLink]="subItem.routeLink"
+               
+              >
+                @if (!isLeftSidebarCollapsed()) {
+                  <span>{{ subItem.label }}</span>
+                }
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </li>
+  }
+    </div>
+  </div>
+</div>
