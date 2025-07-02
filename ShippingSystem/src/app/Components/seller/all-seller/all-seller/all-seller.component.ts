@@ -3,6 +3,7 @@ import { SellerServiceService } from '../../../../Services/Seller_Service/seller
 import { ISellerModels } from '../../../../Models/seller_models/iseller-models';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-seller',
@@ -14,7 +15,7 @@ export class AllSellerComponent implements OnInit {
 
   sellers: ISellerModels[] = [];
 
-  constructor(private sellerService  :SellerServiceService) { }
+  constructor(private sellerService  :SellerServiceService, private router :Router) { }
 
   ngOnInit(): void {
     this.getAllSellers();
@@ -34,6 +35,28 @@ export class AllSellerComponent implements OnInit {
         }
 
       });
+  }
+
+
+  Add(){
+    this.router.navigate(['/seller/add']);
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/seller/edit', id]);
+  }
+
+  delete(id: number) {
+    if (confirm('Are you sure you want to delete this seller?')) {
+      this.sellerService.deleteSeller(id).subscribe({
+        next: () => {
+          this.getAllSellers();
+        },
+        error: (error) => {
+          console.error('Error deleting seller:', error);
+        }
+      });
+    }
   }
 
 

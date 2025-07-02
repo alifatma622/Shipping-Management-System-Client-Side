@@ -12,6 +12,8 @@ import { EditDeliveryManComponent } from './Components/delivery-men/edit-deliver
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
 import { GovernratesListComponent  } from './Components/Governrate/all-governrates/all-governrates.component';
+import { AddSellerComponent } from './Components/seller/add-seller/add-seller.component';
+import { EditSellerComponent } from './Components/seller/edit-seller/edit-seller.component';
 
 export const routes: Routes = [
   // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
@@ -19,8 +21,12 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent},
+  { path: 'seller', component: AllSellerComponent },
+  { path: 'seller/add', component: AddSellerComponent },
+  { path: 'seller/edit/:id', component: EditSellerComponent },
+
   {
-    path: '',
+    path: 'main',
     component: MainComponent,
     children: [
       { path: 'employee', component: MainEmployeeComponent },
@@ -29,7 +35,7 @@ export const routes: Routes = [
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-      { path: 'seller', component: AllSellerComponent }
+      // { path: 'seller', component: AllSellerComponent }
       // Add more child routes here if needed
     ]
   }

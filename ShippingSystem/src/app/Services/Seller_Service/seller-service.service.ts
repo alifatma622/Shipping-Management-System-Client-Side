@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISellerModels } from '../../Models/seller_models/iseller-models';
+import { IAddSeller } from '../../Models/seller_models/IAddseller-models';
+import { IUpdateseller } from '../../Models/seller_models/IUpdateseller-models';
+import { ICity } from '../city.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +18,23 @@ export class SellerServiceService {
     return this.http.get<ISellerModels[]>(`${this.apiUrl}`);
   }
 
+  addSeller(seller: IAddSeller): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, seller);
+  }
+
+  updateSeller(id :number ,seller: IUpdateseller): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, seller);
+  }
+
+  deleteSeller(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/SoftDelete/${id}`);
+  }
+
+  getSellerById(id: number): Observable<ISellerModels> {
+    return this.http.get<ISellerModels>(`${this.apiUrl}/${id}`);
+  }
 
 }
+
+
+
