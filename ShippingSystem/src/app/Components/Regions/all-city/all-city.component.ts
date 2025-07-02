@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CityServiceService } from '../../../Services/city-service.service';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 import { CityModel } from '../../../Models/CityModels/city-model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

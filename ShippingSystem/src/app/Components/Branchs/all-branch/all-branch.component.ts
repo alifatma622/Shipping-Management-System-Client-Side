@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { BranchService } from '../../../Services/branch.service';
+import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { Router } from '@angular/router';
 import { AllBranch } from '../../../Models/Branch/all-branch';
 @Component({

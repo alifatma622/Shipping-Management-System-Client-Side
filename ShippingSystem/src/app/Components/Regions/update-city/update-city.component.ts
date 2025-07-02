@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UpdateCity } from '../../../Models/CityModels/update-city';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CityServiceService } from '../../../Services/city-service.service';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

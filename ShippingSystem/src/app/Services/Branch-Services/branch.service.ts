@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
-import { AllBranch } from '../Models/Branch/all-branch';
-import { AddBranch } from '../Models/Branch/add-branch';
+import { environment } from '../../../environments/environment.development';
+import { AllBranch } from '../../Models/Branch/all-branch';
+import { AddBranch } from '../../Models/Branch/add-branch';
+import { Observable } from 'rxjs';
+
+export interface IBranch {
+  id: number;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +16,10 @@ import { AddBranch } from '../Models/Branch/add-branch';
 export class BranchService {
   constructor(private _httpClient: HttpClient) {}
 
+  private apiUrl = 'https://localhost:7294/api/Branch';
+  getAllBranches(): Observable<IBranch[]> {
+    return this._httpClient.get<IBranch[]>(this.apiUrl);
+  }
   getAllBranch() {
     return this._httpClient.get<AllBranch[]>(`${environment.baseUrl}/endpoint`);
   }

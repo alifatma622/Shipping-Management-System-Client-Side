@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeliveryManService } from './../../../Services/delivery-man.service';
-import { BranchService, IBranch } from './../../../Services/branch.service';
+import {
+  BranchService,
+  IBranch,
+} from '../../../Services/Branch-Services/branch.service';
 import { CityService, ICity } from './../../../Services/city.service';
-import { IUpdateDeliveryMan, IReadDeliveryMan } from './../../../Models/IDeliveryMan_model';
+import {
+  IUpdateDeliveryMan,
+  IReadDeliveryMan,
+} from './../../../Models/IDeliveryMan_model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -13,7 +19,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './edit-delivery-man.component.html',
   styleUrls: ['./edit-delivery-man.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule],
 })
 export class EditDeliveryManComponent implements OnInit {
   editForm: FormGroup;
@@ -34,17 +40,41 @@ export class EditDeliveryManComponent implements OnInit {
     private router: Router
   ) {
     this.editForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern('^[a-zA-Z\\s]+$')]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern('^[a-zA-Z\\s]+$'),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
-      userName: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(30), Validators.pattern('^[a-zA-Z0-9_]+$')]],
-      password: ['', [
-        Validators.minLength(8),
-        Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}:;<>.,?]).+$')
-      ]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')]],
+      userName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(30),
+          Validators.pattern('^[a-zA-Z0-9_]+$'),
+        ],
+      ],
+      password: [
+        '',
+        [
+          Validators.minLength(8),
+          Validators.pattern(
+            '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}:;<>.,?]).+$'
+          ),
+        ],
+      ],
+      phoneNumber: [
+        '',
+        [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
+      ],
       branchId: [null, [Validators.required, Validators.min(1)]],
       cityIds: [[], [Validators.required, Validators.minLength(1)]],
-      isActive: [true]
+      isActive: [true],
     });
   }
 
@@ -56,25 +86,25 @@ export class EditDeliveryManComponent implements OnInit {
   private loadInitialData(): void {
     // Load branches
     this.branchService.getAllBranches().subscribe({
-      next: (data) => this.branches = data,
+      next: (data) => (this.branches = data),
       error: (err) => {
         console.error('Error loading branches:', err);
         this.errorMsg = 'Error loading branches. Please refresh the page.';
-      }
+      },
     });
 
     // Load cities
     this.cityService.getAllCities().subscribe({
-      next: (data) => this.cities = data,
+      next: (data) => (this.cities = data),
       error: (err) => {
         console.error('Error loading cities:', err);
         this.errorMsg = 'Error loading cities. Please refresh the page.';
-      }
+      },
     });
   }
 
   private loadDeliveryManData(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
         this.deliveryManId = +id;
@@ -99,7 +129,7 @@ export class EditDeliveryManComponent implements OnInit {
           phoneNumber: data.phoneNumber || '',
           branchId: data.branchId ? Number(data.branchId) : null,
           cityIds: data.cityIds ? data.cityIds.map(Number) : [],
-          isActive: !data.isDeleted
+          isActive: !data.isDeleted,
         });
         this.isLoading = false;
       },
@@ -108,7 +138,7 @@ export class EditDeliveryManComponent implements OnInit {
         this.errorMsg = 'Failed to load delivery man data. Please try again.';
         this.isLoading = false;
         setTimeout(() => this.router.navigate(['/delivery-men']), 2000);
-      }
+      },
     });
   }
 
@@ -126,8 +156,10 @@ export class EditDeliveryManComponent implements OnInit {
     const data: IUpdateDeliveryMan = {
       ...this.editForm.value,
       branchId: Number(this.editForm.value.branchId),
-      cityIds: this.editForm.value.cityIds.map((id: any) => Number(id)).filter((id: number) => !!id),
-      isActive: this.editForm.value.isActive
+      cityIds: this.editForm.value.cityIds
+        .map((id: any) => Number(id))
+        .filter((id: number) => !!id),
+      isActive: this.editForm.value.isActive,
     };
 
     if (!data.password || data.password.trim() === '') {
@@ -157,7 +189,7 @@ export class EditDeliveryManComponent implements OnInit {
         } else {
           this.errorMsg = 'Error updating delivery man. Please try again.';
         }
-      }
+      },
     });
   }
 
@@ -174,10 +206,13 @@ export class EditDeliveryManComponent implements OnInit {
 
     if (field.errors['required']) return `${fieldName} is required.`;
     if (field.errors['email']) return 'Please enter a valid email address.';
-    if (field.errors['minlength']) return `${fieldName} must be at least ${field.errors['minlength'].requiredLength} characters.`;
-    if (field.errors['maxlength']) return `${fieldName} must be at most ${field.errors['maxlength'].requiredLength} characters.`;
+    if (field.errors['minlength'])
+      return `${fieldName} must be at least ${field.errors['minlength'].requiredLength} characters.`;
+    if (field.errors['maxlength'])
+      return `${fieldName} must be at most ${field.errors['maxlength'].requiredLength} characters.`;
     if (field.errors['pattern']) return `${fieldName} format is invalid.`;
-    if (field.errors['min']) return `${fieldName} must be at least ${field.errors['min'].min}.`;
+    if (field.errors['min'])
+      return `${fieldName} must be at least ${field.errors['min'].min}.`;
 
     return `${fieldName} is invalid.`;
   }

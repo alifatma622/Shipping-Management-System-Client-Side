@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CityServiceService } from '../../../Services/city-service.service';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 import { CityModel } from '../../../Models/CityModels/city-model';
-import { BranchService } from '../../../Services/branch.service';
+import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -68,43 +68,43 @@ export class AddBranchComponent implements OnInit {
     });
   }
 
-onSubmit() {
-  if (this.branchForm.valid) {
-    const newBranch: AddBranch = this.branchForm.value;
+  onSubmit() {
+    if (this.branchForm.valid) {
+      const newBranch: AddBranch = this.branchForm.value;
 
-    this._branchService.addNewBranch(newBranch).subscribe({
-      next: (res) => {
-        Swal.fire({
-          title: 'Success!',
-          text: 'Branch has been added successfully.',
-          icon: 'success',
-          confirmButtonColor: '#055866',
-        });
+      this._branchService.addNewBranch(newBranch).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'Success!',
+            text: 'Branch has been added successfully.',
+            icon: 'success',
+            confirmButtonColor: '#055866',
+          });
 
-        this.branchForm.reset();
-        this._router.navigate(['/AllBranch']);
-      },
-      error: (err) => {
-        console.error('Error adding branch:', err);
+          this.branchForm.reset();
+          this._router.navigate(['/AllBranch']);
+        },
+        error: (err) => {
+          console.error('Error adding branch:', err);
 
-        // محاولة استخراج رسالة الخطأ من السيرفر
-        if (err.error && typeof err.error === 'string') {
-          this.serverError = err.error; // API رجّع نص مباشر
-        } else if (err.error?.message) {
-          this.serverError = err.error.message; // API فيه message مخصصة
-        } else {
-          this.serverError = 'Unexpected error occurred.';
-        }
+          // محاولة استخراج رسالة الخطأ من السيرفر
+          if (err.error && typeof err.error === 'string') {
+            this.serverError = err.error; // API رجّع نص مباشر
+          } else if (err.error?.message) {
+            this.serverError = err.error.message; // API فيه message مخصصة
+          } else {
+            this.serverError = 'Unexpected error occurred.';
+          }
 
-        // تنبيه SweetAlert بالأعلى
-        Swal.fire({
-          title: 'Error!',
-          text: this.serverError,
-          icon: 'error',
-          confirmButtonColor: '#3a3362',
-        });
-      },
-    });
+          // تنبيه SweetAlert بالأعلى
+          Swal.fire({
+            title: 'Error!',
+            text: this.serverError,
+            icon: 'error',
+            confirmButtonColor: '#3a3362',
+          });
+        },
+      });
+    }
   }
-}
 }

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../../Services/auth-service.service';
+import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
 import { RegisterModel } from '../../../Models/Auht-Models/register-model';
 
 @Component({

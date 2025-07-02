@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BranchService } from '../../../Services/branch.service';
+import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { CityModel } from '../../../Models/CityModels/city-model';
 import {
   FormBuilder,
@@ -12,7 +12,7 @@ import {
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { AllBranch } from '../../../Models/Branch/all-branch';
-import { CityServiceService } from '../../../Services/city-service.service';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 
 @Component({
   selector: 'app-update-branch',

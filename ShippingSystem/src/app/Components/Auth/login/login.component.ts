@@ -5,9 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
 
-
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../../Services/auth-service.service';
+import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
 
 @Component({
   selector: 'app-login',

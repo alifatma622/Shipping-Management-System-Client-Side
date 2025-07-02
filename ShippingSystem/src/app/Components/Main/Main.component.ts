@@ -1,22 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AddDeliveryManComponent } from "../delivery-men/add-delivery-man/add-delivery-man.component";
-
+import { AddDeliveryManComponent } from '../delivery-men/add-delivery-man/add-delivery-man.component';
 
 @Component({
   selector: 'app-Main',
   imports: [CommonModule, RouterOutlet],
   templateUrl: './Main.component.html',
-  styleUrls: ['./Main.component.css']
+  styleUrls: ['./Main.component.css'],
 })
 export class MainComponent implements OnInit {
- isLeftSidebarCollapsed = input.required<boolean>();
+  isLeftSidebarCollapsed = input.required<boolean>();
   screenWidth = input.required<number>();
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   sizeClass = computed(() => {
     const isLeftSidebarCollapsed = this.isLeftSidebarCollapsed();

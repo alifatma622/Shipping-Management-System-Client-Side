@@ -2,7 +2,7 @@ import { AllGovernorate } from '../../../Models/GovernorateModels/all-governorat
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CreateCityModel } from '../../../Models/CityModels/create-city-model';
-import { CityServiceService } from '../../../Services/city-service.service';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 import { CommonModule } from '@angular/common';
 
 import Swal from 'sweetalert2';
