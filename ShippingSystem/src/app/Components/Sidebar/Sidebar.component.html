@@ -40,15 +40,14 @@
         <ul class="submenu">
           @for (subItem of item.subItems; track $index) {
             <li >
-              <a
-                class="submenu-link"
-                [routerLink]="subItem.routeLink"
-               
-              >
-                @if (!isLeftSidebarCollapsed()) {
-                  <span>{{ subItem.label }}</span>
-                }
-              </a>
+             <a class="submenu-link"
+                     [routerLink]="subItem.routeLink"
+                     routerLinkActive="active"
+                     [routerLinkActiveOptions]="{ exact: true }"
+                     
+                     >
+                    <span>{{ subItem.label }}</span>
+                  </a>
             </li>
           }
         </ul>

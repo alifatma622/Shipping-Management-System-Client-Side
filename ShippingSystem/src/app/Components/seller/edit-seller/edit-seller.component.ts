@@ -102,7 +102,7 @@ export class EditSellerComponent implements OnInit {
         next: () => {
           this.successMsg = 'Seller updated successfully';
           setTimeout(() => {
-            this.router.navigate(['/seller']);
+            this.router.navigate(['/dashboard/seller']);
           }, 2000);
         },
         error: (err) => {

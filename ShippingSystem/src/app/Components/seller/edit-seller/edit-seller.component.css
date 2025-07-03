@@ -127,8 +127,13 @@
   font-weight: 500;
 }
 
+
 @media (max-width: 900px) {
-  .delivery-form {
+  .seller-form {
     grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    justify-content: center;
   }
 }

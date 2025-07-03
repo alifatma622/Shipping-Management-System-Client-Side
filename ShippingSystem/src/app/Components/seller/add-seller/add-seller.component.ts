@@ -65,7 +65,7 @@ export class AddSellerComponent implements OnInit {
     this.sellerService.addSeller(data).subscribe({
       next: () => {
         this.successMsg = 'Seller added successfully!';
-        setTimeout(() => this.router.navigate(['/seller']), 1500);
+        setTimeout(() => this.router.navigate(['/dashboard/seller']), 1500);
       },
       error: (err) => {
         console.error('Backend error:', err);

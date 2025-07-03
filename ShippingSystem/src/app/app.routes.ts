@@ -15,31 +15,27 @@ import { GovernratesListComponent  } from './Components/Governrate/all-governrat
 import { AddSellerComponent } from './Components/seller/add-seller/add-seller.component';
 import { EditSellerComponent } from './Components/seller/edit-seller/edit-seller.component';
 
+
 export const routes: Routes = [
-  // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
-  { path: '', component: LandingComponent},
+  { path: '', redirectTo: 'Landing', pathMatch: 'full' },
+  { path: 'Landing', component: LandingComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'dashboard', component: DashboardComponent},
-  { path: 'seller', component: AllSellerComponent },
-  { path: 'seller/add', component: AddSellerComponent },
-  { path: 'seller/edit/:id', component: EditSellerComponent },
-
   {
-    path: 'main',
-    component: MainComponent,
+    path: 'dashboard',
+    component: DashboardComponent,
     children: [
+      { path: '', component: MainComponent },
       { path: 'employee', component: MainEmployeeComponent },
-      {path: 'general-settings', component: GeneralSettingsComponent},
-      {path: 'governrates', component: GovernratesListComponent},
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-      // { path: 'seller', component: AllSellerComponent }
-      // Add more child routes here if needed
+      { path: 'seller', component: AllSellerComponent },
+      { path: 'seller/add', component: AddSellerComponent },
+      { path: 'seller/edit/:id', component: EditSellerComponent }
+
     ]
   }
-
 ];
 
 @NgModule({

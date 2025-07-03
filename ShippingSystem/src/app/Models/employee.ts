@@ -32,4 +32,5 @@ export interface ReadEmployeeDTO {
   phoneNumber: string;
   createdAt: Date;
   specificRole: string;
+  isDeleted: boolean;
 }

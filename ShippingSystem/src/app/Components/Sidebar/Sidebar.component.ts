@@ -1,6 +1,6 @@
 import { Component, OnInit,input,output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-Sidebar',
   imports: [CommonModule, RouterModule],
@@ -8,6 +8,7 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrls: ['./Sidebar.component.css']
 })
 export class SidebarComponent {
+  constructor(private router: Router) {}
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
@@ -18,25 +19,25 @@ export class SidebarComponent {
       label: 'Dashboard'
     },
     {
-      routeLink: 'employees',
+
       icon: 'fal fa-user-tie',
       label: 'Employees',
       isOpen: false,
-      subItems : [{label:'Employees dashboard' , routeLink:''},{label:'New employee', routeLink:''}]
+      subItems : [{label:'Employees list' , routeLink:''},{label:'New employee', routeLink:''}]
     },
     {
-      routeLink: 'sellers',
+      routeLink: 'seller',
       icon: 'fal fa-store',
       label: 'Sellers',
       isOpen: false,
-      subItems : [{label:'Sellers dashboard', routeLink:''} ,{label:'New seller', routeLink:''}]
+      subItems : [{label:'Sellers list', routeLink:'seller'} ,{label:'New seller', routeLink:'seller/add'}]
     },
     {
       routeLink: 'deliveragent',
       icon: 'fal fa-truck',
       label: 'Delivery Agents',
        isOpen: false,
-      subItems : [{label:'Deliver agents dashboard', routeLink:''} ,{label:'New delivery agent ', routeLink:''}]
+      subItems : [{label:'Deliver agents list', routeLink:'delivery-men'} ,{label:'New delivery agent ', routeLink:'delivery-men/add'}]
     },
     {
       routeLink: 'governorates',
@@ -94,3 +95,10 @@ export class SidebarComponent {
   selectedItem.isOpen = !selectedItem.isOpen;
 }
 }
+
+// navigateToSubItem(subItem: any, event: Event) {
+//     event.stopPropagation(); // Prevent the parent click handler from triggering
+//     this.router.navigateByUrl(subItem.routeLink);
+
+// }
+

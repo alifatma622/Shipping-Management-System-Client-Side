@@ -4,6 +4,7 @@
     <button class="add-btn" (click)="Add()">Add Seller</button>
   </div>
 
+  <div class="table-responsive">
   <table *ngIf="sellers.length" class="seller-table">
     <thead>
       <tr>
@@ -49,6 +50,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 
   <div *ngIf="!sellers.length" class="no-data">
     No sellers found.

@@ -39,11 +39,11 @@ export class AllSellerComponent implements OnInit {
 
 
   Add(){
-    this.router.navigate(['/seller/add']);
+    this.router.navigate(['/dashboard/seller/add']);
   }
 
   edit(id: number) {
-    this.router.navigate(['/seller/edit', id]);
+    this.router.navigate(['/dashboard/seller/edit', id]);
   }
 
   delete(id: number) {
