@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CityModel } from '../Models/CityModels/city-model';
-import { environment } from '../../environments/environment.development';
-import { CreateCityModel } from '../Models/CityModels/create-city-model';
-import { UpdateCity } from '../Models/CityModels/update-city';
+import { CityModel } from '../../Models/CityModels/city-model';
+import { environment } from '../../../environments/environment.development';
+import { CreateCityModel } from '../../Models/CityModels/create-city-model';
+import { UpdateCity } from '../../Models/CityModels/update-city';
 
 @Injectable({
   providedIn: 'root',

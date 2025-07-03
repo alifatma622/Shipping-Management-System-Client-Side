@@ -71,7 +71,7 @@ export class AllBranchComponent implements OnInit {
   }
 
   onEdit(branch: AllBranch) {
-    this._router.navigate(['UpdateBranch', branch.id]);
+    this._router.navigate(['dashboard/UpdateBranch', branch.id]);
   }
 
   onDelete(id: number) {

@@ -44,7 +44,7 @@ export class AllCityComponent implements OnInit {
   }
 
   onEdit(city: CityModel) {
-    this._router.navigate(['Updatecity', city.id]);
+    this._router.navigate(['dashboard/Updatecity', city.id]);
   }
 
   onDelete(id: number) {
