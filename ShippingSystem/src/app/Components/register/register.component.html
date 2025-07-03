@@ -6,27 +6,33 @@
         [formGroup]="registerForm"
         (ngSubmit)="onSubmit()"
         class="register-form"
-      >
+        >
         <h2 class="title mb-4">Register</h2>
 
         <div class="row">
           <div class="col-md-6 form-group">
             <label>User Name</label>
             <input class="form-control" formControlName="userName" />
-            <small class="text-danger" *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched">
-              Username is required
-            </small>
+            @if (registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched) {
+              <small class="text-danger">
+                Username is required
+              </small>
+            }
           </div>
 
           <div class="col-md-6 form-group">
             <label>Email</label>
             <input class="form-control" formControlName="email" />
-            <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched">
-              Email is required
-            </small>
-            <small class="text-danger" *ngIf="registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched">
-              Invalid email format
-            </small>
+            @if (registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched) {
+              <small class="text-danger">
+                Email is required
+              </small>
+            }
+            @if (registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched) {
+              <small class="text-danger">
+                Invalid email format
+              </small>
+            }
           </div>
         </div>
 
@@ -34,54 +40,78 @@
           <div class="col-md-6 form-group">
             <label>First Name</label>
             <input class="form-control" formControlName="firstName" />
-            <small class="text-danger" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
-              First Name is required
-            </small>
+            @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
+              <small class="text-danger">
+                First Name is required
+              </small>
+            }
           </div>
 
           <div class="col-md-6 form-group">
             <label>Last Name</label>
             <input class="form-control" formControlName="lastName" />
-            <small class="text-danger" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
-              Last Name is required
-            </small>
+            @if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
+              <small class="text-danger">
+                Last Name is required
+              </small>
+            }
           </div>
         </div>
 
         <div class="form-group">
           <label>Password</label>
           <input type="password" class="form-control" formControlName="password" />
-          <small class="text-danger" *ngIf="registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched">
-            Password is required
-          </small>
-          <small class="text-danger" *ngIf="registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched">
-            Password must be at least 6 characters
-          </small>
+          @if (registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched) {
+            <small class="text-danger">
+              Password is required
+            </small>
+          }
+          @if (registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched) {
+            <small class="text-danger">
+              Password must be at least 6 characters
+            </small>
+          }
         </div>
 
         <!-- ✅ Phone Numbers -->
         <div formArrayName="phones">
           <label>Phone Numbers</label>
-          <div *ngFor="let phone of phones.controls; let i = index" class="mb-3">
-            <div class="d-flex align-items-center">
-              <input [formControlName]="i" class="form-control me-2" />
-              <button type="button" class="btn btn-danger btn-sm me-1" (click)="removePhone(i)" *ngIf="phones.length > 1">−</button>
-              <button type="button" class="btn btn-success btn-sm" (click)="addPhone()" *ngIf="i === phones.length - 1">+</button>
+          @for (phone of phones.controls; track phone; let i = $index) {
+            <div class="mb-3">
+              <div class="d-flex align-items-center">
+                <input [formControlName]="i" class="form-control me-2" />
+                @if (phones.length > 1) {
+                  <button type="button" class="btn btn-danger btn-sm me-1" (click)="removePhone(i)">−</button>
+                }
+                @if (i === phones.length - 1) {
+                  <button type="button" class="btn btn-success btn-sm" (click)="addPhone()">+</button>
+                }
+              </div>
+              @if (phone.invalid && phone.touched) {
+                <small class="text-danger d-block mt-1">
+                  @if (phone.errors?.['required']) {
+                    <span>Phone number is required</span>
+                  }
+                  @if (phone.errors?.['minlength']) {
+                    <span>Phone number must be at least 11 digits</span>
+                  }
+                  @if (phone.errors?.['pattern']) {
+                    <span>Phone must start with 010, 011, 012, or 015 and contain 11 digits</span>
+                  }
+                </small>
+              }
             </div>
-            <small class="text-danger d-block mt-1" *ngIf="phone.invalid && phone.touched">
-              <span *ngIf="phone.errors?.['required']">Phone number is required</span>
-              <span *ngIf="phone.errors?.['minlength']">Phone number must be at least 11 digits</span>
-              <span *ngIf="phone.errors?.['pattern']">Phone must start with 010, 011, 012, or 015 and contain 11 digits</span>
-            </small>
-          </div>
+          }
         </div>
 
         <button type="submit" class="btn-submit mt-3" [disabled]="registerForm.invalid">Register</button>
 
         <!-- Error From API -->
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-          {{ errorMessage }}
-        </div>
+        @if (errorMessage) {
+          <div class="alert alert-danger mt-3">
+            {{ errorMessage }}
+          </div>
+        }
       </form>
     </div>
 

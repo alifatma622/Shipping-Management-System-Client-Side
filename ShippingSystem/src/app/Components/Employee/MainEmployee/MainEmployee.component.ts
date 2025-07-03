@@ -3,11 +3,11 @@ import { Router, RouterModule } from '@angular/router';
 import { ReadEmployeeDTO } from '../../../Models/IEmployee';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-MainEmployee',
-  imports: [RouterModule,FormsModule,FormsModule, NgIf,NgFor ,CommonModule], 
+  imports: [RouterModule, FormsModule, FormsModule, CommonModule], 
   templateUrl: './MainEmployee.component.html',
   styleUrls: ['./MainEmployee.component.css']
 })
