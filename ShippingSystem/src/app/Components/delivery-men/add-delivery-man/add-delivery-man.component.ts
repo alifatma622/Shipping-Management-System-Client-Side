@@ -117,20 +117,10 @@ export class AddDeliveryManComponent implements OnInit {
         this.successMsg = 'Delivery man added successfully!';
         setTimeout(() => this.router.navigate(['/delivery-men']), 1200);
       },
-<<<<<<< HEAD
-      error: (err) => {
-        console.log('Backend error:', err);
-        this.errorMsg =
-          err?.error?.error ||
-          JSON.stringify(err?.error) ||
-          'Error adding delivery man!';
-        this.isSubmitting = false;
-=======
     error: (err) => {
   console.log('Backend error:', err);
   this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery agent!';
   this.isSubmitting = false;
->>>>>>> origin/sara
       },
     });
   }

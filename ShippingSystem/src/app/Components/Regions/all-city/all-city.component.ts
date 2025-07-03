@@ -95,6 +95,6 @@ export class AllCityComponent implements OnInit {
   onAddCity() {
     console.log('Add City clicked');
 
-    this._router.navigate(['Addcity']);
+    this._router.navigate(['dashboard/Addcity']);
   }
 }

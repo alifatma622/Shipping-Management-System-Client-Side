@@ -67,7 +67,7 @@ export class AllBranchComponent implements OnInit {
   }
 
   onAddBranch() {
-    this._router.navigate(['AddBranch']);
+    this._router.navigate(['dashboard/AddBranch']);
   }
 
   onEdit(branch: AllBranch) {

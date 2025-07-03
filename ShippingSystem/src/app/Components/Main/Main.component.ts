@@ -9,19 +9,9 @@ import { AddDeliveryManComponent } from '../delivery-men/add-delivery-man/add-de
   templateUrl: './Main.component.html',
   styleUrls: ['./Main.component.css'],
 })
-<<<<<<< HEAD
-export class MainComponent implements OnInit {
-  isLeftSidebarCollapsed = input.required<boolean>();
-  screenWidth = input.required<number>();
-  constructor() {}
-
-  ngOnInit() {}
-
-=======
 export class MainComponent {
  isLeftSidebarCollapsed = input.required<boolean>();
   screenWidth = input.required<number>();
->>>>>>> origin/sara
   sizeClass = computed(() => {
     const isLeftSidebarCollapsed = this.isLeftSidebarCollapsed();
     if (isLeftSidebarCollapsed) {

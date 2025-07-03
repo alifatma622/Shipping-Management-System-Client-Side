@@ -19,11 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './edit-delivery-man.component.html',
   styleUrls: ['./edit-delivery-man.component.css'],
   standalone: true,
-<<<<<<< HEAD
-  imports: [ReactiveFormsModule, CommonModule],
-=======
   imports: [ReactiveFormsModule]
->>>>>>> origin/sara
 })
 export class EditDeliveryManComponent implements OnInit {
   editForm: FormGroup;

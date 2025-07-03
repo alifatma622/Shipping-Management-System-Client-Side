@@ -76,7 +76,10 @@ export class SidebarComponent {
       icon: 'fal fa-building',
       label: 'Branches',
       isOpen: false,
-      subItems: [{ label: 'Branches dashboard', routeLink: 'AllBranch' }],
+      subItems: [
+        { label: 'Branches dashboard', routeLink: 'AllBranch' },
+        { label: 'New Branch', routeLink: 'AddBranch' },
+      ],
     },
     //   label: 'Products',
     // },
