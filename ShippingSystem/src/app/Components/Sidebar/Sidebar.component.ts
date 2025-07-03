@@ -1,6 +1,6 @@
 import { Component, OnInit, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-Sidebar',
   imports: [CommonModule, RouterModule],
@@ -8,6 +8,8 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrls: ['./Sidebar.component.css'],
 })
 export class SidebarComponent {
+  constructor(private router: Router) {}
+
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
   items = [
@@ -17,47 +19,51 @@ export class SidebarComponent {
       label: 'Dashboard',
     },
     {
-      routeLink: 'employees',
       icon: 'fal fa-user-tie',
       label: 'Employees',
       isOpen: false,
       subItems: [
-        { label: 'Employees dashboard', routeLink: '' },
-        { label: 'New employee', routeLink: '' },
+        { label: 'Employees list', routeLink: 'employee' },
+        { label: 'New employee', routeLink: 'employee/add' },
       ],
     },
     {
-      routeLink: 'sellers',
       icon: 'fal fa-store',
       label: 'Sellers',
       isOpen: false,
       subItems: [
-        { label: 'Sellers dashboard', routeLink: '' },
-        { label: 'New seller', routeLink: '' },
+        { label: 'Sellers list', routeLink: 'seller' },
+        { label: 'New seller', routeLink: 'seller/add' },
       ],
     },
     {
-      routeLink: 'deliveragent',
       icon: 'fal fa-truck',
       label: 'Delivery Agents',
       isOpen: false,
       subItems: [
-        { label: 'Deliver agents dashboard', routeLink: '' },
-        { label: 'New delivery agent ', routeLink: '' },
+        { label: 'Deliver agents list', routeLink: 'delivery-men' },
+        { label: 'New delivery agent ', routeLink: 'delivery-men/add' },
       ],
     },
     {
-      routeLink: 'governorates',
+      icon: 'fal fa-box-open',
+      label: 'Orders',
+      isOpen: false,
+      subItems: [
+        { label: 'Orders list', routeLink: 'order' },
+        { label: 'Add order', routeLink: 'order/add' },
+      ],
+    },
+    {
       icon: 'fal fa-globe',
       label: 'Governorates',
       isOpen: false,
       subItems: [
-        { label: 'Governorates', routeLink: 'governrates' },
+        { label: 'Governorates list', routeLink: 'governrates' },
         { label: 'Add Governorate', routeLink: 'add-governrate' },
       ],
     },
     {
-      routeLink: 'cities',
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
@@ -67,18 +73,11 @@ export class SidebarComponent {
       ],
     },
     {
-      routeLink: 'branches',
       icon: 'fal fa-building',
       label: 'Branches',
       isOpen: false,
-      subItems: [
-        { label: 'Branches dashboard', routeLink: 'AllBranch' },
-        { label: 'New Branch', routeLink: 'AddBranch' },
-      ],
+      subItems: [{ label: 'Branches dashboard', routeLink: 'AllBranch' }],
     },
-    // {
-    //   routeLink: 'products',
-    //   icon: 'fal fa-box-open',
     //   label: 'Products',
     // },
     // {

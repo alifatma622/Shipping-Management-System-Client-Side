@@ -7,7 +7,7 @@ export interface Employee {
      email: string;
      phoneNumber: string;
      address: string ;
-     SpecificRole: string;
+     specificRole: string;
      password: string;
      
 }
@@ -24,12 +24,15 @@ export interface AddEmployeeDTO {
 
 export interface ReadEmployeeDTO {
   id: number;
+  branchId:number;
   branch?: string | null;
   userName: string;
   email: string;
   firstName: string;
   lastName: string;
+  password?:string;
   phoneNumber: string;
   createdAt: Date;
   specificRole: string;
+  isDeleted: boolean;
 }

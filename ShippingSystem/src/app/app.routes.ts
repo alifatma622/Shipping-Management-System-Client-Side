@@ -15,45 +15,38 @@ import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEm
 import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
-import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
+import { AddEmployeeComponent } from './Components/Employee/AddEmployee/AddEmployee.component';
 import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
 import { GovernratesListComponent } from './Components/Governrate/all-governrates/all-governrates.component';
+import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
+import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
+import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 
 export const routes: Routes = [
-  // { path: '', redirectTo: 'Landing', pathMatch: 'full' },
-  { path: '', component: LandingComponent },
+  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
-  // { path: 'dashboard', component: DashboardComponent},
-  // {
-  //   path: '',
-  //   component: MainComponent,
-  //   children: [
-  //     { path: 'employee', component: MainEmployeeComponent },
-  //     {path: 'general-settings', component: GeneralSettingsComponent},
-  //     {path: 'governrates', component: GovernratesListComponent},
-  //     { path: 'delivery-men', component: AllDeliveryMenComponent },
-  //     { path: 'delivery-men/add', component: AddDeliveryManComponent },
-  //     { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-
-  //   ]
-  // }
   {
     path: 'dashboard',
     component: DashboardComponent,
     children: [
       { path: '', component: MainComponent },
+      { path: 'employee', component: MainEmployeeComponent },
+      { path: 'employee/add', component: AddEmployeeComponent },
+      { path: 'employee/edit/:id', component: EditEmployeeComponent },
+      { path: 'order', component: OrdersListComponent },
       { path: 'Allcity', component: AllCityComponent },
       { path: 'Addcity', component: AddCityComponent },
       { path: 'Updatecity/:id', component: UpdateCityComponent },
       { path: 'AllBranch', component: AllBranchComponent },
       { path: 'UpdateBranch/:id', component: UpdateBranchComponent },
       { path: 'AddBranch', component: AddBranchComponent },
-      { path: 'employee', component: MainEmployeeComponent },
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
+      { path: 'general-settings', component: GeneralSettingsComponent },
+      { path: 'governrates', component: GovernratesListComponent },
       { path: 'seller', component: AllSellerComponent },
     ],
   },

@@ -5,10 +5,11 @@ import { AddDeliveryManComponent } from '../delivery-men/add-delivery-man/add-de
 
 @Component({
   selector: 'app-Main',
-  imports: [CommonModule, RouterOutlet],
+  imports: [ CommonModule, RouterOutlet],
   templateUrl: './Main.component.html',
   styleUrls: ['./Main.component.css'],
 })
+<<<<<<< HEAD
 export class MainComponent implements OnInit {
   isLeftSidebarCollapsed = input.required<boolean>();
   screenWidth = input.required<number>();
@@ -16,10 +17,15 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {}
 
+=======
+export class MainComponent {
+ isLeftSidebarCollapsed = input.required<boolean>();
+  screenWidth = input.required<number>();
+>>>>>>> origin/sara
   sizeClass = computed(() => {
     const isLeftSidebarCollapsed = this.isLeftSidebarCollapsed();
     if (isLeftSidebarCollapsed) {
-      return 'sidebar-collapsed';
+      return '';
     }
     return this.screenWidth() > 768 ? 'body-trimmed' : 'body-md-screen';
   });

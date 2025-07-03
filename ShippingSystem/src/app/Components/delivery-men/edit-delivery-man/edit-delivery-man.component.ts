@@ -12,14 +12,18 @@ import {
   IReadDeliveryMan,
 } from './../../../Models/IDeliveryMan_model';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-edit-delivery-man',
   templateUrl: './edit-delivery-man.component.html',
   styleUrls: ['./edit-delivery-man.component.css'],
   standalone: true,
+<<<<<<< HEAD
   imports: [ReactiveFormsModule, CommonModule],
+=======
+  imports: [ReactiveFormsModule]
+>>>>>>> origin/sara
 })
 export class EditDeliveryManComponent implements OnInit {
   editForm: FormGroup;

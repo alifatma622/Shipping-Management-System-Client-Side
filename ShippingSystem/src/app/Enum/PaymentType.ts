@@ -1,4 +1,4 @@
-enum PaymentType
+export enum PaymentType
     {
         
         CashOnDelivery = 1,  // واجبة التحصيل

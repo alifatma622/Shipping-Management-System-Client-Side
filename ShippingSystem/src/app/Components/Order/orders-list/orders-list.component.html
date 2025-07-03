@@ -1,7 +1,7 @@
 <div class="all-delivery-men-container">
   <div class="header">
-    <h2>Delivery Agents</h2>
-    <button class="add-btn" (click)="onAdd()">Add Delivery Agent</button>
+    <h2>Orders</h2>
+    <button class="add-btn" (click)="onAdd()">Add Order</button>
   </div>
 
   <div class="search-bar-row">
@@ -24,48 +24,57 @@
     <div class="error">{{ errorMsg }}</div>
   }
 
-  @if (!isLoading && filteredDeliveryMen.length) {
+  @if (!isLoading && filteredOrders.length) {
     <table class="delivery-table">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Username</th>
-          <th>Phone No.</th>
+          <th>Order id</th>
+          <th>Weight</th>
+          <th>Cost</th>
+          <th>Address</th>
           <th>Branch</th>
           <th style="width: 80px;">Status</th>
-          <th style="width: 90px;">Setting</th>
+           <th style="width: 100px;">Details</th>
+          <th style="width: 120px;">Setting</th>
         </tr>
       </thead>
       <tbody>
-        @for (man of filteredDeliveryMen; track man) {
+        @for (order of filteredOrders; track order.orderID) {
           <tr>
-            <td>{{ man.fullName }}</td>
-            <td>{{ man.email }}</td>
-            <td>{{ man.userName }}</td>
-            <td>{{ man.phoneNumber }}</td>
+            <td>{{ order.orderID }}</td>
+            <td>{{order.totalWeight+' Kg'}}</td>
+            <td>{{ order.totalCost+' LE' }}</td>
+            <td>{{ order.address }}</td>
             <td>
-              <span class="branch-link">{{ man.branchName }}</span>
+              <span class="branch-link">{{ order.branchName }}</span>
             </td>
-            <td>
-              <span
-          [ngClass]="{
-            'status-active': !man.isDeleted,
-            'status-inactive': man.isDeleted
-          }"
-                >
-                {{ man.isDeleted ? 'Inactive' : 'Active' }}
-              </span>
-            </td>
-            <td>
-              <button class="edit-btn" (click)="onEdit(man.id)" title="Edit">
+           <td>
+  <span class="status-badge" 
+        [ngClass]="getStatusClass(order.status)">
+    {{ getStatusText(order.status) }}
+  </span>
+</td>
+<td>
+  <button class="details-btn" (click)="viewDetails(order.orderID)" title="View Details">
+    <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    Details
+  </button>
+</td>
+<td>
+              <button class="assign-btn" (click)="assignOrder(order)" [textContent]="order.status!=='Pending'? 'Assigned':'Assign'" title="Assign to Agent" [disabled]="order.status !== 'Pending'"> 
+              </button>
+            
+              <button class="edit-btn" (click)="onEdit(order.orderID)" title="Edit">
                 <!-- SVG edit icon -->
                 <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
                   <path d="M12 20h9"/>
                   <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/>
                 </svg>
               </button>
-              <button class="delete-btn" (click)="onDelete(man.id)" [disabled]="man.isDeleted" title="Delete">
+              <button class="delete-btn" (click)="onDelete(order.orderID)" [disabled]="order.isDeleted" title="Delete">
                 <!-- SVG delete icon -->
                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <rect x="3" y="6" width="18" height="15" rx="2"/>
@@ -80,9 +89,9 @@
     </table>
   }
 
-  @if (!isLoading && !filteredDeliveryMen.length) {
+  @if (!isLoading && !filteredOrders.length) {
     <div class="no-data">
-      No delivery agents found.
+      No orders found.
     </div>
   }
 </div>
