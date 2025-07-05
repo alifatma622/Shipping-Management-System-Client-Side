@@ -41,7 +41,7 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onEdit(id: number) {
-    this.router.navigate(['/delivery-men/edit', id]);
+    this.router.navigate(['dashboard/delivery-men/edit', id]);
   }
 
   onDelete(id: number) {

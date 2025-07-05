@@ -56,8 +56,51 @@
 
 /* Adjust action buttons container */
 .delivery-table td:last-child {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-content: center; */
   gap: 6px;
-  min-height: 66px;
 }
+.agent-table {
+  padding: 30px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--main-gray);
+  /* box-shadow: 0 4px 18px #05586622; */
+  margin: 18px 0 0 0;
+}
+.agent-table th{
+ background: #fff;
+  color: #055866;
+  font-weight: 600;
+  padding: 14px 10px;
+  font-size: 1.11rem;
+  border: none;
+  letter-spacing: 1px;
+  text-align: left;
+  /* box-shadow: 0 2px 12px #daf87a22; */
+  border-bottom: 3px solid #055866;
+  position: relative;
+}
+.agent-table td {
+  background: var(--main-white);
+  color: var(--main-gray);
+  padding: 13px 10px;
+  font-size: .93rem;
+  border-bottom: 1px solid #e3f2f5;
+  border-radius: 0;
+  vertical-align: middle;
+
+}
+
+.agent-table tr:hover td {
+  background: #f8fbfd;
+  cursor: pointer;
+}
+
+/* Selected row style */
+.agent-table tr.selected td {
+  background-color: white;
+  border: #daf87a;
+  color: #055866;
+}
+

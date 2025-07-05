@@ -12,6 +12,11 @@ export class SidebarComponent {
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
+  logout = { routeLink: 'logout',
+    icon: 'fal fa-sign-out',
+    isOpen: false,
+    label: 'Log out'
+  }
   items = [
     {
       routeLink: 'dashboard',
