@@ -14,6 +14,7 @@ import { GeneralSettingsComponent } from './Components/general-settings/general-
 import { GovernratesListComponent  } from './Components/Governrate/all-governrates/all-governrates.component';
 import { AddSellerComponent } from './Components/seller/add-seller/add-seller.component';
 import { EditSellerComponent } from './Components/seller/edit-seller/edit-seller.component';
+import { AddOrderComponent } from './Components/Orders/add-order/add-order.component';
 
 
 export const routes: Routes = [
@@ -32,7 +33,8 @@ export const routes: Routes = [
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
       { path: 'seller', component: AllSellerComponent },
       { path: 'seller/add', component: AddSellerComponent },
-      { path: 'seller/edit/:id', component: EditSellerComponent }
+      { path: 'seller/edit/:id', component: EditSellerComponent },
+      { path: 'order/add', component: AddOrderComponent },
 
     ]
   }
