@@ -4,7 +4,7 @@ import { UpdateCityComponent } from './Components/Regions/update-city/update-cit
 import { AllBranchComponent } from './Components/Branchs/all-branch/all-branch.component';
 import { UpdateBranchComponent } from './Components/Branchs/update-branch/update-branch.component';
 import { AddBranchComponent } from './Components/Branchs/add-branch/add-branch.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/Auth/login/login.component';
 import { RegisterComponent } from './Components/Auth/register/register.component';
@@ -21,6 +21,7 @@ import { GovernratesListComponent } from './Components/Governrate/all-governrate
 import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
+import { OrderDetailsComponent } from './Components/Order/order-details/order-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -36,6 +37,7 @@ export const routes: Routes = [
       { path: 'employee/add', component: AddEmployeeComponent },
       { path: 'employee/edit/:id', component: EditEmployeeComponent },
       { path: 'order', component: OrdersListComponent },
+      { path: 'Details/:id', component: OrderDetailsComponent },
       { path: 'Allcity', component: AllCityComponent },
       { path: 'Addcity', component: AddCityComponent },
       { path: 'Updatecity/:id', component: UpdateCityComponent },

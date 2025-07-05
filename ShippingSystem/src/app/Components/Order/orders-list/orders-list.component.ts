@@ -83,7 +83,7 @@ getStatusClass(status: string): string {
   switch(status) {
     case 'Pending': return 'status-pending';
     case 'AcceptedByDeliveryCompany': return 'status-accepted';
-    case 'RejectedByDeliveryCompany': 
+    case 'RejectedByDeliveryCompany':
     case 'RejectWithPayment':
     case 'RejectWithoutPayment':
     case 'RejectWithPartiallyPaid':
@@ -100,7 +100,7 @@ getStatusClass(status: string): string {
 
 // In your component class
 viewDetails(orderId: number): void {
-  this.router.navigate(['/orders', orderId]);
+  this.router.navigate(['/dashboard/Details', orderId]);
 }
 
 assignOrder(order: ReadOrderDTO): void {
