@@ -8,6 +8,7 @@ import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan } from '../Models
 })
 export class DeliveryManService {
   private apiUrl = 'https://localhost:7294/api/DeliveryMan';
+  // https://localhost:7294/
 
   constructor(private http: HttpClient) {}
 
