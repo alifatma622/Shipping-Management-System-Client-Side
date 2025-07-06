@@ -15,9 +15,49 @@ export class AllBranchComponent implements OnInit {
   branches: AllBranch[] = [];
   searchTerm: string = '';
   constructor(private _branchService: BranchService, private _router: Router) {}
+
+  // for test pagination before API Working
+
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  itemsPerPageOptions: number[] = [5, 10, 15];
+
+  get pagedBranches(): any[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredBranches().slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredBranches().length / this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  onItemsPerPageChange(): void {
+    this.currentPage = 1;
+  }
+
+  /* /// this Is Removing When API Working //// */
+
   ngOnInit(): void {
     // this.getBranches();
     const fakeData: AllBranch[] = [
+      {
+        id: 1,
+        name: 'Main Branch',
+        city: 'Cairo',
+        creationDate: '2024-01-10',
+      },
+      {
+        id: 1,
+        name: 'Main Branch',
+        city: 'Cairo',
+        creationDate: '2024-01-10',
+      },
       {
         id: 1,
         name: 'Main Branch',

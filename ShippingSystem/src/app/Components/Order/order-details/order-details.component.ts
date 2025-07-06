@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { OrderService } from '../../../Services/Order-Services/Order.service';
 
 @Component({
   selector: 'app-order-details',
@@ -9,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './order-details.component.css',
 })
 export class OrderDetailsComponent {
+  constructor(private _orderService: OrderService) {}
   sections = [
     { title: 'General Information', icon: '🧾', key: 'general', open: true },
     { title: 'Customer Information', icon: '👤', key: 'customer', open: false },

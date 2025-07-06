@@ -25,6 +25,19 @@
   }
 
   @if (!isLoading && filteredEmployees.length) {
+
+        <!-- Pagination select number -->
+<div class="pagination-controls">
+  <label>
+    Show
+    <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange(itemsPerPage)">
+      <option *ngFor="let opt of itemsPerPageOptions" [value]="opt">{{ opt }}</option>
+    </select>
+    entries
+  </label>
+</div>
+<!--  -->
+
     <table class="delivery-table">
       <thead>
         <tr>
@@ -86,6 +99,18 @@
         }
       </tbody>
     </table>
+
+    <!-- Pagination control -->
+<div class="pagination-controls" *ngIf="totalPages > 1">
+  <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
+  <button *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="onPageChange(i + 1)"
+          [class.active]="currentPage === i + 1">
+    {{ i + 1 }}
+  </button>
+  <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">&raquo;</button>
+</div>
+<!--  -->
   }
 
   @if (!isLoading && !filteredEmployees.length) {

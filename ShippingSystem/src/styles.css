@@ -38,10 +38,14 @@ body {
   display: none !important;  
 }
 
+.modal-content{
+  background-color: var(--white) !important;
+}
 
+/* start default tables container  */
 .all-delivery-men-container {
   max-width: 1400px;
-  margin: 32px auto 0 auto;
+  /* margin: 32px auto 0 auto; */
   background: var(--glass);
   border-radius: 22px;
   box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22;
@@ -52,6 +56,7 @@ body {
   backdrop-filter: blur(2.5px);
   border: 1.5px solid var(--border);
   position: relative;
+  min-height: 90vh;
 }
 
 .header {
@@ -101,14 +106,13 @@ body {
 
 /* Search bar in a separate row */
 .search-bar-row {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .search-bar {
-     display: flex
-;
+     display: flex;
     align-items: center;
     background: var(--main-white);
     border-radius: 10px;
@@ -153,7 +157,8 @@ body {
 
 
 .delivery-table {
-  border: 2.5px solid #055866;
+  padding: 30px;
+  border: 2.5px;
   border-radius: 14px;
   overflow: hidden;
   background: var(--main-gray);
@@ -226,7 +231,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 80px;
+  min-width: 90px;
   width: fit-content;
   padding: 7px 12px;
   border: 1px solid transparent;
@@ -357,7 +362,9 @@ body {
   opacity: 0.95;
   padding: 14px 0;
 }
+/* end default table container */
 
+/* start modal style  */
 /* Modern Dashboard Modal Overlay */
 .modal-overlay {
   position: fixed;
@@ -560,3 +567,82 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+/* end modal style */
+
+/* start pagination */
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 16px 0;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.pagination-controls button {
+  background: #fff;
+  border: 1px solid #daf87a;
+  color: #055866;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.pagination-controls button.active,
+.pagination-controls button:hover {
+  background: #daf87a;
+  color: #055866;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pagination-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Modern select styling */
+.pagination-controls select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #fff url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23055866'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e") no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  border: 1px solid #daf87a;
+  border-radius: 8px;
+  padding: 8px 32px 8px 12px;
+  font-size: 14px;
+  color: #055866;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  min-width: 80px;
+}
+
+.pagination-controls select:hover {
+  border-color: #b8e04a;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pagination-controls select:focus {
+  outline: none;
+  border-color: #055866;
+  box-shadow: 0 0 0 2px rgba(5, 88, 102, 0.2);
+}
+
+/* Page info styling */
+.pagination-controls .page-info {
+  color: #555;
+  font-size: 14px;
+  margin: 0 8px;
+}
+
+/* end pagination */

@@ -27,7 +27,7 @@
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="toggleSubItems(item)"
         >
-          <i class="sidenav-link-icon" [class]="item.icon"></i>
+          <i class="sidenav-link-icon"  [class]="item.icon" ></i>
           @if (!isLeftSidebarCollapsed()) {
             <span class="sidenav-link-text" >{{ item.label }}</span>
             @if (item.subItems && item.subItems.length > 0) {
@@ -52,8 +52,26 @@
           }
         </ul>
       }
+     
     </li>
   }
-    </div>
+       <li class="sidenav-nav-item" [class.open]="logout.isOpen" >
+
+   <a
+          class="sidenav-nav-link"
+          [routerLink]=""
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          
+        >
+          <i class="sidenav-link-icon" [class]="logout.icon"></i>
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text" >Log out</span>
+            
+          }
+        </a>
+      </li>
+
+    </div>    
   </div>
 </div>

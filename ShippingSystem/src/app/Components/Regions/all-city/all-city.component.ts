@@ -19,6 +19,34 @@ export class AllCityComponent implements OnInit {
     private _cityService: CityServiceService,
     private _router: Router
   ) {}
+
+  // for test pagination
+
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  itemsPerPageOptions: number[] = [5, 10, 15];
+
+  get pagedCities(): any[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredCities().slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredCities().length / this.itemsPerPage);
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  onItemsPerPageChange(): void {
+    this.currentPage = 1;
+  }
+
+  /* All Of This Will Be Remove When APi Working */
+
   ngOnInit(): void {
     // this Is Code To Catch API When Worked
     // this._cityService.getAllCities().subscribe((data) => {
@@ -26,6 +54,48 @@ export class AllCityComponent implements OnInit {
     // });
 
     this.cities = [
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
+      {
+        name: 'Cairo',
+        normalPrice: 50,
+        pickupPrice: 30,
+        governorateName: 'Cairo Gov',
+        id: 1,
+      },
       {
         name: 'Cairo',
         normalPrice: 50,

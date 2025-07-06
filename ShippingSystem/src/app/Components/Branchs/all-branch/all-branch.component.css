@@ -1,174 +1,216 @@
-
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #e3f2f5;
-  font-family: "Quicksand", sans-serif;
-  color: #3a3362;
-  transition: background-color 0.5s ease;
+:root {
+  --main-white: #ffffff;
+  --main-gray: #3a3362;
+  --main-dark: #055866;
+  --main-accent: #daf87a;
+  --border: #dcdcdc;
+  --light-bg: #f9fafa;
 }
 
-
-.container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 20px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-  animation: fadeInUp 0.6s ease-out;
-  transition: box-shadow 0.3s ease-in-out;
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.container:hover {
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+.all-delivery-men-container {
+  background: var(--main-white);
+  padding: 32px;
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-
-h2 {
-  color: #055866;
-  font-size: 28px;
-  margin-bottom: 24px;
-  position: relative;
-}
-
-h2::after {
-  content: "";
-  width: 60px;
-  height: 3px;
-  background: #daf87a;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -10px;
-  border-radius: 5px;
-}
-
-
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-  transition: all 0.3s ease;
-}
-
-thead {
-  background-color: #055866;
-  color: white;
-}
-
-th {
-  padding: 14px 16px;
-  font-size: 15px;
-  text-transform: uppercase;
-  text-align: left;
-}
-
-td {
-  background-color: #ffffff;
-  padding: 16px;
-  border-radius: 8px;
-  font-size: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
-}
-
-tbody tr:hover td {
-  transform: scale(1.01);
-  background-color: #f0faff;
-}
-
-
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 6px;
-  font-size: 18px;
-  transition: all 0.3s ease;
-  margin: 0 5px;
-  border-radius: 5px;
-}
-
-button.edit i {
-  color: #3a3362;
-}
-
-button.delete i {
-  color: #daf87a;
-}
-
-button.edit:hover {
-  background-color: #daf87a20;
-  transform: scale(1.1);
-}
-
-button.delete:hover {
-  background-color: #ff000020;
-  transform: scale(1.1);
-}
-
-button.edit:hover i {
-  color: #055866;
-}
-
-button.delete:hover i {
-  color: red;
-}
-
-.toolbar {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
-  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
-.search-input {
-  padding: 10px 15px;
-  border: 2px solid #daf87a;
-  border-radius: 8px;
-  outline: none;
-  font-size: 15px;
-  transition: 0.3s ease;
-  width: 230px;
-}
-
-.search-input:focus {
-  border-color: #055866;
-  box-shadow: 0 0 6px rgba(5, 88, 102, 0.2);
+.header h2 {
+  color: var(--main-dark);
+  font-size: 1.7rem;
+  font-weight: 700;
 }
 
 .add-btn {
-  background-color: #055866;
-  color: white;
+  background: var(--main-accent);
+  color: var(--main-dark);
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-size: 15px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 1rem;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-btn i {
-  margin-right: 6px;
+  box-shadow: 0 2px 8px rgba(218, 248, 122, 0.35);
+  transition: 0.2s ease-in-out;
 }
 
 .add-btn:hover {
-  background-color: #3a3362;
+  background: #cce75c;
+  transform: translateY(-1px);
 }
 
+.search-bar-row {
+  margin-bottom: 24px;
+}
 
+.search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 380px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.search-bar input {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--main-gray);
+}
+
+.search-btn {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.search-btn:hover {
+  background: #f0faff;
+}
+
+.delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--main-white);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.delivery-table thead th {
+  background: #f5f5f5;
+  color: var(--main-dark);
+  font-weight: 600;
+  padding: 14px 12px;
+  font-size: 1rem;
+  border-bottom: 3px solid var(--main-accent);
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+.delivery-table tbody td {
+  padding: 13px 12px;
+  color: var(--main-gray);
+  font-size: 0.95rem;
+  background: var(--main-white);
+  border-bottom: 1px solid #eeeeee;
+}
+
+.delivery-table tbody tr:hover td {
+  background: #f0faff;
+  transition: 0.2s ease-in-out;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-right: 6px;
+  transition: 0.2s;
+}
+
+.edit-btn svg,
+.delete-btn svg {
+  transition: 0.2s ease-in-out;
+}
+
+.edit-btn:hover svg {
+  stroke: #0277bd;
+  transform: scale(1.15);
+}
+
+.delete-btn:hover svg {
+  stroke: #c62828;
+  transform: scale(1.15);
+}
+
+.pagination-controls {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px #0000000a;
+  flex-wrap: wrap;
+}
+
+.pagination-controls label {
+  font-size: 0.95rem;
+  color: #3a3362;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-controls select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.pagination-buttons button {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #3a3362;
+  transition: all 0.2s;
+}
+
+.pagination-buttons button:hover:not([disabled]) {
+  background: #daf87a;
+  border-color: #055866;
+}
+
+.pagination-buttons button.active {
+  background: #055866;
+  color: white;
+  font-weight: bold;
+  border-color: #055866;
+}
+
+.pagination-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

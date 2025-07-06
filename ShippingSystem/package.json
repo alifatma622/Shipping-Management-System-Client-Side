@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^20.0.6",
     "@angular/router": "^20.0.6",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@ng-select/ng-select": "^15.1.3",
     "bootstrap": "^5.3.7",
     "jwt-decode": "^4.0.0",
     "rxjs": "~7.8.0",

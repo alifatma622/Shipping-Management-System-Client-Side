@@ -3,22 +3,22 @@ import { ShippingType } from "../Enum/ShippingType";
 import { PaymentType } from "../Enum/PaymentType"
 
 export interface ReadOrderDTO {
-  orderID: number;
-  notes?: string;
+ orderID: number;
+  notes: string;
   customerName: string;
   customerPhone: string;
-  customerCityName?: string;
-  sellerName?: string;
-  sellerCityName?: string;
-  deliveryAgentName?: string;
-  branchName?: string;
+  customerCityName: string;
+  sellerName: string;
+  sellerCityName: string;
+  deliveryAgentName: string | null;
+  branchName: string;
   isShippedToVillage: boolean;
   address: string;
-  creationDate: Date;
-  status: string;
-  shippingType: string;
-  orderType: string;
-  paymentType: string;
+  creationDate: string; // or Date if you plan to convert it
+  status: string; // or enum if you have specific status values
+  shippingType: string; // or enum
+  orderType: string; // or enum
+  paymentType: string; // or enum
   isPickup: boolean;
   isActive: boolean;
   isDeleted: boolean;
@@ -41,6 +41,7 @@ export interface AddOrderDTO {
   cityId: number;
   sellerId: number;
   branchId: number;
+  deliveryAgentId?: number;
   products: AddProductDTO[];
 }
 
@@ -49,4 +50,12 @@ export interface AddProductDTO {
   price: number;
   weight: number;
   quantity: number;
+}
+
+export interface OrderResponse {
+  pageNumber: number;
+  totalCount: number;
+  pageSize: number;
+  totalPages: number;
+  items: ReadOrderDTO[];
 }
