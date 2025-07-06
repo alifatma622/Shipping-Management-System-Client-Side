@@ -28,7 +28,7 @@
   <!-- Main Stats Section -->
   <div class="main-stats-section">
     <!-- User Status Section -->
-    <h2 class="dashboard-section-title">User Status</h2>
+    <h2 class="dashboard-section-title">Users Status</h2>
     <div class="stats-cards-row">
       <div class="stat-card">
         <div class="stat-icon">
@@ -38,7 +38,7 @@
           <div class="stat-title">Total Employees</div>
           <div class="stat-value">{{dashboardData.employeesCount}}</div>
           <div class="stat-change positive">+21% vs last month</div>
-          <div class="stat-subtitle">Agents: {{dashboardData.deliveryAgentsCount}}</div>
+          <!-- <div class="stat-subtitle">Agents: {{dashboardData.deliveryAgentsCount}}</div> -->
         </div>
       </div>
       <div class="stat-card">
@@ -67,8 +67,8 @@
     <h2 class="dashboard-section-title">Orders Status</h2>
     <div class="stats-cards-row">
       <ng-container *ngFor="let status of orderStatusList">
-        <div class="stat-card">
-          <div class="stat-icon" [style.background-color]="status.color">
+        <div class="stat-card" style="margin:0px;">
+          <div class="stat-icon icon-order" [style.background-color]="status.color">
             <mat-icon>{{status.icon}}</mat-icon>
           </div>
           <div class="stat-content">
@@ -82,45 +82,11 @@
       </ng-container>
     </div>
 
-    <!-- Order Status Breakdown & Analytics -->
+  <!-- Top cities chart -->
     <div class="dashboard-row">
-      <!-- Analytics Section -->
-      <mat-card class="analytics-section">
-        <mat-card-header>
-          <mat-card-title>Shipment Analytics</mat-card-title>
-          <div class="legend">
-            <div class="legend-item">
-              <span class="legend-dot completed"></span>
-              <span>Completed</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-dot pending"></span>
-              <span>Pending</span>
-            </div>
-          </div>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="heatmap-container">
-            <div class="heatmap-grid">
-              <div class="heatmap-cell" *ngFor="let cell of generateHeatmapData()" 
-                   [ngClass]="getHeatmapCellClass(cell.value)"></div>
-            </div>
-            <div class="heatmap-months">
-              <span *ngFor="let month of ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov']">
-                {{month}}
-              </span>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
-  <!-- Bottom Section -->
-  <div class="bottom-row-cards">
-    <mat-card class="cities-section">
+     <mat-card class="cities-section">
       <mat-card-header>
-        <mat-card-title>Popular Cities</mat-card-title>
+        <mat-card-title class="dashboard-section-title">Popular Cities</mat-card-title>
         <mat-form-field class="time-filter">
           <mat-select [(value)]="selectedTimeFilter">
             <mat-option value="thisMonth">This month</mat-option>
@@ -141,7 +107,7 @@
           <div class="country-stats">
             <div class="country-percentage">{{getTopPerformingCity()}}</div>
             <div class="country-label">Top City</div>
-            <div class="country-change">{{getTotalOrdersInTopCities()}} orders</div>
+            <!-- <div class="country-change">{{}} orders</div> -->
           </div>
         </div>
 
@@ -172,32 +138,36 @@
           <p>Top performing city: <strong>{{getTopPerformingCity()}}</strong></p>
           <p>Top seller: <strong>{{getTopSeller()}}</strong></p>
           <p>Top delivery agent: <strong>{{getTopDeliveryAgent()}}</strong></p>
-          <button mat-raised-button color="primary" (click)="onViewDetail()">
+          <!-- <button mat-raised-button color="primary" (click)="onViewDetail()">
             <mat-icon>arrow_forward</mat-icon>
             View Detail
-          </button>
+          </button> -->
         </div>
       </mat-card-content>
     </mat-card>
+  </div>
+
+  <!-- Bottom Section -->
+  <div class="bottom-row-cards">
 
     <mat-card class="orders-section">
       <mat-card-header>
-        <mat-card-title>Recent Orders</mat-card-title>
+        <mat-card-title class="dashboard-section-title">Recent Orders</mat-card-title>
         <div class="table-controls">
-          <mat-form-field class="search-wrapper">
+          <!-- <mat-form-field class="search-wrapper">
             <mat-label>Search orders</mat-label>
             <input matInput placeholder="Search orders..." (input)="onSearch($event)">
             <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-          <button mat-icon-button (click)="onSort()" matTooltip="Sort">
+          </mat-form-field> -->
+          <!-- <button mat-icon-button (click)="onSort()" matTooltip="Sort">
             <mat-icon>sort</mat-icon>
           </button>
           <button mat-icon-button (click)="onFilter()" matTooltip="Filter">
             <mat-icon>filter_list</mat-icon>
-          </button>
-          <button mat-icon-button matTooltip="More options">
+          </button> -->
+          <!-- <button mat-icon-button matTooltip="More options">
             <mat-icon>more_vert</mat-icon>
-          </button>
+          </button> -->
         </div>
       </mat-card-header>
 
