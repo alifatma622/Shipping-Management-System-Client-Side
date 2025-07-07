@@ -699,7 +699,12 @@
   width: 100%;
   /* margin-bottom: 20px; */
 }
-
+.stats-cards-row-user{
+ display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  width: 100%;
+}
 .stat-card {
   width: auto;
   min-width: 0;

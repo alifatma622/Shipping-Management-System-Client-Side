@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan } from '../Models/IDeliveryMan_model';
+import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan, IDeliveryResponse } from '../Models/IDeliveryMan_model';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -43,4 +43,12 @@ export class DeliveryManService {
   hardDelete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}/hard`);
   }
+
+  getAllPaginated(pageNumber: number, pageSize: number): Observable<IDeliveryResponse> {
+     const params = new HttpParams()
+       .set('pageNumber', pageNumber.toString())
+       .set('pageSize', pageSize.toString());
+ 
+     return this.http.get<IDeliveryResponse>(`${this.apiUrl}/paginated`, { params });
+   }
 }
