@@ -129,6 +129,82 @@
 }
 
 
+.delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(85, 102, 119, 0.15);
+  font-size: 1rem;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.delivery-table thead {
+  background-color: #055866;
+  color: #fff;
+  text-align: left;
+}
+
+.delivery-table th,
+.delivery-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e3f2f5;
+}
+
+.delivery-table tbody tr:hover {
+  background-color: #e9fdf6;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.delivery-table td {
+  color: #055866;
+}
+
+/* زر الحذف */
+.delete-btn {
+  background-color: #fff0f0;
+  border: 1px solid #ffd5d5;
+  color: #d32f2f;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  background-color: #ffe2e2;
+  color: #a30000;
+  transform: scale(1.1);
+}
+
+
+.product-fields-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 900px) {
   .order-form {

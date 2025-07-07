@@ -5,6 +5,7 @@ import { ISellerModels } from '../../Models/seller_models/iseller-models';
 import { IAddSeller } from '../../Models/seller_models/IAddseller-models';
 import { IUpdateseller } from '../../Models/seller_models/IUpdateseller-models';
 import { ICity } from '../city.service';
+import { PaginationResult } from '../../Models/IPaginationResult';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,24 @@ export class SellerServiceService {
   private apiUrl = 'https://localhost:7294/api/Seller';
   constructor(private http: HttpClient) { }
 
-  getAllSellers():Observable<ISellerModels[]>{
+  // getAllSellers():Observable<ISellerModels[]>{
 
-    return this.http.get<ISellerModels[]>(`${this.apiUrl}`);
-  }
+  //   return this.http.get<ISellerModels[]>(`${this.apiUrl}`);
+  // }
+
+  getAllSellers(pageNumber: number, pageSize: number): Observable<PaginationResult<ISellerModels>> {
+  return this.http.get<PaginationResult<ISellerModels>>(
+    `${this.apiUrl}?PageNumber=${pageNumber}&PageSize=${pageSize}`
+  );
+}
+
+
+
+getAllSellersSelect(): Observable<ISellerModels[]> {
+  return this.http.get<ISellerModels[]>(
+    `${this.apiUrl}/all`
+  );
+}
 
   addSeller(seller: IAddSeller): Observable<any> {
     return this.http.post(`${this.apiUrl}`, seller);

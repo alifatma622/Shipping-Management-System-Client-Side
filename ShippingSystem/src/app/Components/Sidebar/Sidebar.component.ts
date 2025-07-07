@@ -12,6 +12,11 @@ export class SidebarComponent {
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
+  logout = { routeLink: 'logout',
+    icon: 'fal fa-sign-out',
+    isOpen: false,
+    label: 'Log out'
+  }
   items = [
     {
       routeLink: 'dashboard',
@@ -19,46 +24,46 @@ export class SidebarComponent {
       label: 'Dashboard'
     },
     {
-
       icon: 'fal fa-user-tie',
       label: 'Employees',
       isOpen: false,
-      subItems : [{label:'Employees list' , routeLink:''},{label:'New employee', routeLink:''}]
+      subItems : [{label:'Employees list' , routeLink:'employee'},{label:'New employee', routeLink:'employee/add'}]
     },
     {
-      routeLink: 'seller',
       icon: 'fal fa-store',
       label: 'Sellers',
       isOpen: false,
       subItems : [{label:'Sellers list', routeLink:'seller'} ,{label:'New seller', routeLink:'seller/add'}]
     },
     {
-      routeLink: 'deliveragent',
       icon: 'fal fa-truck',
       label: 'Delivery Agents',
        isOpen: false,
       subItems : [{label:'Deliver agents list', routeLink:'delivery-men'} ,{label:'New delivery agent ', routeLink:'delivery-men/add'}]
     },
+     {
+      icon: 'fal fa-box-open',
+      label: 'Orders',
+       isOpen: false,
+      subItems : [{label:'Orders list', routeLink:'order'} ,{label:'Add order', routeLink:'order/add'}]
+    },
     {
-      routeLink: 'governorates',
       icon: 'fal fa-globe',
       label: 'Governorates',
        isOpen: false,
-      subItems : [{label:'Governorates', routeLink:'governrates'} ,{label:'Add Governorate', routeLink:'add-governrate'}]
+      subItems : [{label:'Governorates list', routeLink:'governrates'} ,{label:'Add Governorate', routeLink:'add-governrate'}]
     },
     {
-      routeLink: 'cities',
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
-      subItems : [{label:'Cities dashboard', routeLink:''} ,{label:'New City', routeLink:''}]
+      subItems : [{label:'Cities list', routeLink:''} ,{label:'New City', routeLink:''}]
     },
     {
-      routeLink: 'branches',
       icon: 'fal fa-building',
       label: 'Branches',
        isOpen: false,
-      subItems : [{label:'Branches dashboard', routeLink:'' },{label:'New Branch' , routeLink:''}]
+      subItems : [{label:'Branches list', routeLink:'' },{label:'New Branch' , routeLink:''}]
     },
     // {
     //   routeLink: 'products',
@@ -95,10 +100,3 @@ export class SidebarComponent {
   selectedItem.isOpen = !selectedItem.isOpen;
 }
 }
-
-// navigateToSubItem(subItem: any, event: Event) {
-//     event.stopPropagation(); // Prevent the parent click handler from triggering
-//     this.router.navigateByUrl(subItem.routeLink);
-
-// }
-

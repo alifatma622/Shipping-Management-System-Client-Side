@@ -15,6 +15,13 @@ export class AllSellerComponent implements OnInit {
 
   sellers: ISellerModels[] = [];
 
+
+
+  pageNumber = 1;
+  pageSize = 5;
+  totalPages = 0;
+  itemsPerPageOptions = [5, 10, 20, 50];
+
   constructor(private sellerService  :SellerServiceService, private router :Router) { }
 
   ngOnInit(): void {
@@ -24,10 +31,11 @@ export class AllSellerComponent implements OnInit {
 
   getAllSellers() {
 
-      this.sellerService.getAllSellers().subscribe({
+      this.sellerService.getAllSellers(this.pageNumber ,this.pageSize).subscribe({
 
         next: (response) => {
-          this.sellers = response;
+          this.sellers = response.items;
+          this.totalPages = response.totalPages;
           console.log(response);
         },
         error: (error) => {
@@ -37,6 +45,21 @@ export class AllSellerComponent implements OnInit {
       });
   }
 
+
+  onPageChange(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.pageNumber = page;
+    this.getAllSellers();
+  }
+}
+
+
+
+onItemsPerPageChange(count: number) {
+  this.pageSize = count;
+  this.pageNumber = 1;
+  this.getAllSellers();
+}
 
   Add(){
     this.router.navigate(['/dashboard/seller/add']);

@@ -34,14 +34,14 @@ export class AllDeliveryMenComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        this.errorMsg = 'Error loading delivery men!';
+        this.errorMsg = 'Error loading delivery agents!';
         this.isLoading = false;
       }
     });
   }
 
   onEdit(id: number) {
-    this.router.navigate(['/delivery-men/edit', id]);
+    this.router.navigate(['dashboard/delivery-men/edit', id]);
   }
 
   onDelete(id: number) {
@@ -49,7 +49,7 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onAdd() {
-    this.router.navigate(['/delivery-men/add']);
+    this.router.navigate(['dashboard/delivery-men/add']);
   }
 
   get filteredDeliveryMen(): IReadDeliveryMan[] {

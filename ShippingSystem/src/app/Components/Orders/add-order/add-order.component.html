@@ -45,14 +45,14 @@
     <!-- Is Shipped To Village -->
     <div class="form-group">
       <label>
-        <input type="checkbox" formControlName="isShippedToVillage" /> Shipped to Village
+        <input  class="mt-5" type="checkbox" formControlName="isShippedToVillage" /> Shipped to Village
       </label>
     </div>
 
     <!-- Is Pickup -->
     <div class="form-group">
       <label>
-        <input type="checkbox" formControlName="isPickup" /> Pickup
+        <input  class="mt-5" type="checkbox" formControlName="isPickup" /> Pickup
       </label>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <!-- City -->
-    <div class="form-group">
+     <div class="form-group">
       <label for="cityId">City</label>
       <select id="cityId" formControlName="cityId"
         [class.invalid]="orderForm.get('cityId')?.invalid && orderForm.get('cityId')?.touched">
@@ -134,54 +134,93 @@
       </div>
     </div>
 
+
     <!-- Products -->
     <div class="form-group" style="grid-column: 1 / -1;">
       <h4 style="margin-top: 10px;">Products</h4>
-      <div formArrayName="products">
-        <div *ngFor="let product of products.controls; let i = index" [formGroupName]="i"
-          class="border p-3 mb-3 rounded" style="background: #fff; border: 1.5px solid #daf87a;">
 
-          <div class="form-group">
-            <label>Product Name</label>
-            <input formControlName="name" placeholder="Product name"
-              [class.invalid]="product.get('name')?.invalid && product.get('name')?.touched" />
-            <div class="error" *ngIf="product.get('name')?.invalid && product.get('name')?.touched">
-              Name is required.
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label>Price</label>
-            <input type="number" formControlName="price"
-              [class.invalid]="product.get('price')?.invalid && product.get('price')?.touched" />
-            <div class="error" *ngIf="product.get('price')?.invalid && product.get('price')?.touched">
-              Price must be greater than 0.
-            </div>
-          </div>
+      <!-- Table to show added products -->
+      <table class="delivery-table" *ngIf="addedProducts && addedProducts.length > 0">
 
-          <div class="form-group">
-            <label>Weight</label>
-            <input type="number" formControlName="weight"
-              [class.invalid]="product.get('weight')?.invalid && product.get('weight')?.touched" />
-            <div class="error" *ngIf="product.get('weight')?.invalid && product.get('weight')?.touched">
-              Weight must be greater than 0.
-            </div>
-          </div>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Weight</th>
+            <th>Quantity</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of addedProducts as products; let i = index">
 
-          <div class="form-group">
-            <label>Quantity</label>
-            <input type="number" formControlName="quantity"
-              [class.invalid]="product.get('quantity')?.invalid && product.get('quantity')?.touched" />
-            <div class="error" *ngIf="product.get('quantity')?.invalid && product.get('quantity')?.touched">
-              Quantity must be at least 1.
-            </div>
-          </div>
+            <td>{{ prod.name }}</td>
+            <td>{{ prod.price }}</td>
+            <td>{{ prod.weight }}</td>
+            <td>{{ prod.quantity }}</td>
+            <td>
+              <button type="button" class="delete-btn" (click)="removeProduct(i)">X</button>
+            </td>
+          </tr>
 
-          <button type="button" class="add-btn  mt-3" (click)="removeProduct(i)">Remove Product</button>
-        </div>
-      </div>
-      <button type="button" class="add-btn" (click)="addProduct()">Add Product</button>
+        </tbody>
+      </table>
+
+
+
+    <!-- Single Product Form -->
+<div [formGroup]="productForm" class="product-fields-wrapper border p-3 mb-3 rounded"
+  style="background: #fff; border: 1.5px solid #daf87a;">
+
+  <div class="form-group">
+    <label>Product Name</label>
+    <input formControlName="name" placeholder="Product name"
+      [class.invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched" />
+    <div class="error" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+      Name is required.
     </div>
+  </div>
+
+  <div class="form-group">
+    <label>Price</label>
+    <input type="number" formControlName="price"
+      [class.invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched" />
+    <div class="error" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+      Price must be greater than 0.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Weight</label>
+    <input type="number" formControlName="weight"
+      [class.invalid]="productForm.get('weight')?.invalid && productForm.get('weight')?.touched" />
+    <div class="error" *ngIf="productForm.get('weight')?.invalid && productForm.get('weight')?.touched">
+      Weight must be greater than 0.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Quantity</label>
+    <input type="number" formControlName="quantity"
+      [class.invalid]="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" />
+    <div class="error" *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched">
+      Quantity must be at least 1.
+    </div>
+  </div>
+
+  <div class="form-actions1">
+  <button type="button" class="add-btn mt-3" (click)="addProduct()">Add Product</button>
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
 
     <!-- Submit -->
     <div class="form-actions">

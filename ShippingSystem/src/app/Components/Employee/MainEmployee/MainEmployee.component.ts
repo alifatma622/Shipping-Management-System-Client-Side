@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { ReadEmployeeDTO } from '../../../Models/employee';
+import { ReadEmployeeDTO } from '../../../Models/IEmployee';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-MainEmployee',
-  imports: [RouterModule,FormsModule,FormsModule, NgIf,NgFor ,CommonModule], 
+  imports: [RouterModule, FormsModule, FormsModule, CommonModule], 
   templateUrl: './MainEmployee.component.html',
   styleUrls: ['./MainEmployee.component.css']
 })
@@ -17,7 +17,12 @@ export class MainEmployeeComponent implements OnInit {
   errorMsg = '';
   routes: any;
   searchUserName: string = '';
+  selectedEmpId: number =0;
 
+      currentPage = 1;
+  itemsPerPage = 10;
+  itemsPerPageOptions = [5, 10, 20, 50];
+  totalCount = 0;
   constructor(private EmployeeService:EmployeeService,private router: Router) { }
 ngOnInit(): void {
     this.getAllEmployees();
@@ -38,15 +43,15 @@ ngOnInit(): void {
   }
 
   onEdit(id: number) {
-    this.router.navigate(['/employee/edit', id]);
+    this.router.navigate(['dashboard/employee/edit', id]);
   }
 
   onDelete(id: number) {
-    this.EmployeeService.softDeleteEmployee(id).subscribe(() => this.getAllEmployees());
+    this.EmployeeService.hardDeleteEmployee(id).subscribe(() => this.getAllEmployees());
   }
 
   onAdd() {
-    this.router.navigate(['/employee/add']);
+    this.router.navigate(['dashboard/employee/add']);
   }
 
   get filteredEmployees(): ReadEmployeeDTO[] {
@@ -58,4 +63,30 @@ ngOnInit(): void {
   onSearchChange(value: string) {
     this.searchUserName = value;
   }
+
+  
+
+//#region pagination
+
+get pagedOrders() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  return this.filteredEmployees.slice(start, start + this.itemsPerPage);
 }
+
+get totalPages() {
+  return Math.ceil(this.filteredEmployees.length / this.itemsPerPage);
+}
+
+onPageChange(page: number) {
+  this.currentPage = page;
+}
+
+onItemsPerPageChange(count: number) {
+  this.itemsPerPage = count;
+  this.currentPage = 1;
+}
+//#endregion
+}
+
+
+

@@ -1,3 +1,5 @@
+
+
 // import { Component, OnInit } from '@angular/core';
 // import { ShippingType } from '../../../Enum/ShippingType';
 // import { OrderType } from '../../../Enum/OrderType';
@@ -11,23 +13,16 @@
 // import { ISellerModels } from '../../../Models/seller_models/iseller-models';
 // import { SellerServiceService } from '../../../Services/Seller_Service/seller-service.service';
 
-
-
-
 // export const ShippingTypeLabels: Record<ShippingType, string> = {
 //   [ShippingType.Standard]: 'Standard (5-7 days)',
 //   [ShippingType.Fast]: 'Priority (3 - 4 Days)',
 //   [ShippingType.Express24h]: 'Express (24 H)'
 // };
 
-
-
 // export const OrderTypeLabels: Record<OrderType, string> = {
 //   [OrderType.Normal]: 'Normal',
 //   [OrderType.Pickup]: 'Pickup'
-// }
-
-
+// };
 
 // export const PaymentTypeLabels: Record<PaymentType, string> = {
 //   [PaymentType.CashOnDelivery]: 'Cash on Delivery',
@@ -35,25 +30,23 @@
 //   [PaymentType.ParcelExchange]: 'Parcel Exchange'
 // };
 
-
-
-
 // @Component({
 //   selector: 'app-add-order',
-//   imports: [CommonModule,FormsModule,ReactiveFormsModule],
+//   imports: [CommonModule, FormsModule, ReactiveFormsModule],
 //   templateUrl: './add-order.component.html',
 //   styleUrl: './add-order.component.css'
 // })
 // export class AddOrderComponent implements OnInit {
 
 //   orderForm: FormGroup;
+//   isSubmitting = false;
+//   successMsg = '';
+//   errorMsg = '';
 
-//   // Enum options
 //   shippingTypes = Object.values(ShippingType).filter(v => typeof v === 'number');
 //   orderTypes = Object.values(OrderType).filter(v => typeof v === 'number');
 //   paymentTypes = Object.values(PaymentType).filter(v => typeof v === 'number');
 
-//   // Labels
 //   shippingTypeLabels = ShippingTypeLabels;
 //   orderTypeLabels = OrderTypeLabels;
 //   paymentTypeLabels = PaymentTypeLabels;
@@ -62,7 +55,13 @@
 //   branches: IBranch[] = [];
 //   sellers: ISellerModels[] = [];
 
-//   constructor(private fb: FormBuilder, private orderService: OrderServiceService,private cityService: CityService, private branchService: BranchService, private sellerService: SellerServiceService  ) {
+//   constructor(
+//     private fb: FormBuilder,
+//     private orderService: OrderServiceService,
+//     private cityService: CityService,
+//     private branchService: BranchService,
+//     private sellerService: SellerServiceService
+//   ) {
 //     this.orderForm = this.fb.group({
 //       notes: [''],
 //       customerName: ['', Validators.required],
@@ -84,37 +83,8 @@
 //   ngOnInit(): void {
 //     this.loadCities();
 //     this.loadBranches();
-//     this.loadSellers();
+//     // this.loadSellers();
 //   }
-
-
-//   loadCities(): void {
-//   this.cityService.getAllCities().subscribe({
-//     next: data => this.cities = data,
-//     error: err => console.error('Failed to load cities', err)
-//   });
-// }
-
-
-// loadSellers(): void {
-//    this.sellerService.getAllSellers().subscribe({
-//     next: (res) => this.sellers = res,
-//     error: (err) => console.error('Error loading sellers',err)
-//   });
-// }
-
-// loadBranches(): void {
-//   this.branchService.getAllBranches().subscribe({
-//     next: data => this.branches = data,
-//     error: err => console.error('Failed to load branches', err)
-//   });
-// }
-
-
-
-
-
-
 
 //   get products(): FormArray {
 //     return this.orderForm.get('products') as FormArray;
@@ -139,30 +109,71 @@
 //     }
 //   }
 
-//   onSubmit(): void {
-//     if (this.orderForm.valid) {
-
-//       const formValue = this.orderForm.value;
-
-//       const order: AddOrder = {
-//         ...formValue,
-//         shippingType: +formValue.shippingType,
-//         orderType: +formValue.orderType,
-//         paymentType: +formValue.paymentType
-//       };
-
-//       console.log('Final order to submit:', order);
-//       this.orderService.addOrder(order).subscribe({
-//         next: res => alert('Order added successfully'),
-//         error: err => console.error(err)
-//       });
-//     }
+//   loadCities(): void {
+//     this.cityService.getAllCities().subscribe({
+//       next: data => this.cities = data,
+//       error: err => console.error('Failed to load cities', err)
+//     });
 //   }
 
- 
+//   loadBranches(): void {
+//     this.branchService.getAllBranches().subscribe({
+//       next: data => this.branches = data,
+//       error: err => console.error('Failed to load branches', err)
+//     });
+//   }
+
+//   // loadSellers(): void {
+//   //   this.sellerService.getAllSellers().subscribe({
+//   //     next: res => this.sellers = res,
+//   //     error: err => console.error('Error loading sellers', err)
+//   //   });
+//   // }
+
+//   onSubmit(): void {
+//     this.successMsg = '';
+//     this.errorMsg = '';
+
+//     if (this.orderForm.invalid) {
+//       this.orderForm.markAllAsTouched();
+//       return;
+//     }
+
+//     const formValue = this.orderForm.value;
+//     const order: AddOrder = {
+//       ...formValue,
+//       shippingType: +formValue.shippingType,
+//       orderType: +formValue.orderType,
+//       paymentType: +formValue.paymentType
+//     };
+
+//     this.isSubmitting = true;
+
+//     this.orderService.addOrder(order).subscribe({
+//       next: _ => {
+//         this.successMsg = 'Order added successfully';
+//         this.isSubmitting = false;
+//         this.orderForm.reset();
+//         // Reset to default values again
+//         this.orderForm.patchValue({
+//           shippingType: ShippingType.Standard,
+//           orderType: OrderType.Normal,
+//           paymentType: PaymentType.CashOnDelivery,
+//           isShippedToVillage: false,
+//           isPickup: false,
+//           creationDate: new Date().toISOString()
+//         });
+//         this.products.clear();
+//         this.products.push(this.createProduct());
+//       },
+//       error: err => {
+//         console.error(err);
+//         this.errorMsg = 'Failed to add order. Please try again.';
+//         this.isSubmitting = false;
+//       }
+//     });
+//   }
 // }
-
-
 
 
 import { Component, OnInit } from '@angular/core';
@@ -197,13 +208,16 @@ export const PaymentTypeLabels: Record<PaymentType, string> = {
 
 @Component({
   selector: 'app-add-order',
+  standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './add-order.component.html',
   styleUrl: './add-order.component.css'
 })
 export class AddOrderComponent implements OnInit {
-
   orderForm: FormGroup;
+  productForm: FormGroup;
+  addedProducts: any[] = [];
+
   isSubmitting = false;
   successMsg = '';
   errorMsg = '';
@@ -241,22 +255,10 @@ export class AddOrderComponent implements OnInit {
       cityId: [null, Validators.required],
       sellerId: [null, Validators.required],
       branchId: [null, Validators.required],
-      products: this.fb.array([this.createProduct()])
+      products: this.fb.array([]) // will set this before submit
     });
-  }
 
-  ngOnInit(): void {
-    this.loadCities();
-    this.loadBranches();
-    this.loadSellers();
-  }
-
-  get products(): FormArray {
-    return this.orderForm.get('products') as FormArray;
-  }
-
-  createProduct(): FormGroup {
-    return this.fb.group({
+    this.productForm = this.fb.group({
       name: ['', Validators.required],
       price: [0, [Validators.required, Validators.min(0.01)]],
       weight: [0, [Validators.required, Validators.min(0.01)]],
@@ -264,14 +266,10 @@ export class AddOrderComponent implements OnInit {
     });
   }
 
-  addProduct(): void {
-    this.products.push(this.createProduct());
-  }
-
-  removeProduct(index: number): void {
-    if (this.products.length > 1) {
-      this.products.removeAt(index);
-    }
+  ngOnInit(): void {
+    this.loadCities();
+    this.loadBranches();
+    this.loadSellers();
   }
 
   loadCities(): void {
@@ -289,20 +287,73 @@ export class AddOrderComponent implements OnInit {
   }
 
   loadSellers(): void {
-    this.sellerService.getAllSellers().subscribe({
-      next: res => this.sellers = res,
-      error: err => console.error('Error loading sellers', err)
+    this.sellerService.getAllSellersSelect().subscribe({
+      next: data => this.sellers = data,
+      error: err => console.error('Failed to load sellers', err)
     });
+  }
+
+  addProduct(): void {
+    if (this.productForm.invalid) {
+      this.productForm.markAllAsTouched();
+      return;
+    }
+
+      console.log('Adding product:', this.productForm.value); // ✅ للتأكيد
+
+    this.addedProducts.push({ ...this.productForm.value });
+
+    console.log('Added products:', this.addedProducts); // ✅ للتأكيد
+
+    this.productForm.reset({
+      name: '',
+      price: 0,
+      weight: 0,
+      quantity: 1
+    });
+  }
+
+  removeProduct(index: number): void {
+    this.addedProducts.splice(index, 1);
   }
 
   onSubmit(): void {
     this.successMsg = '';
     this.errorMsg = '';
 
-    if (this.orderForm.invalid) {
+    if (this.orderForm.invalid || this.addedProducts.length === 0) {
       this.orderForm.markAllAsTouched();
       return;
     }
+
+    // ✅ استخدمي متغير مؤقت لعدم التأثير على addedProducts
+    // const productsFormArray = this.fb.array(this.addedProducts.map(prod =>
+    //   this.fb.group({
+    //     name: [prod.name],
+    //     price: [prod.price],
+    //     weight: [prod.weight],
+    //     quantity: [prod.quantity]
+    //   })
+    // ));
+
+    // this.orderForm.setControl('products', productsFormArray);
+
+      const productFormArray: FormArray<FormGroup> = this.fb.array<FormGroup>([]);
+
+      this.addedProducts.forEach(prod => {
+        const group = this.fb.group({
+          name: [prod.name, Validators.required],
+          price: [prod.price, [Validators.required, Validators.min(0.01)]],
+          weight: [prod.weight, [Validators.required, Validators.min(0.01)]],
+          quantity: [prod.quantity, [Validators.required, Validators.min(1)]]
+        });
+
+        productFormArray.push(group);
+      });
+
+      this.orderForm.setControl('products', productFormArray);
+
+
 
     const formValue = this.orderForm.value;
     const order: AddOrder = {
@@ -318,8 +369,9 @@ export class AddOrderComponent implements OnInit {
       next: _ => {
         this.successMsg = 'Order added successfully';
         this.isSubmitting = false;
+        this.addedProducts = [];
+        this.productForm.reset({ name: '', price: 0, weight: 0, quantity: 1 });
         this.orderForm.reset();
-        // Reset to default values again
         this.orderForm.patchValue({
           shippingType: ShippingType.Standard,
           orderType: OrderType.Normal,
@@ -328,8 +380,6 @@ export class AddOrderComponent implements OnInit {
           isPickup: false,
           creationDate: new Date().toISOString()
         });
-        this.products.clear();
-        this.products.push(this.createProduct());
       },
       error: err => {
         console.error(err);

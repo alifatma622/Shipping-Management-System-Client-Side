@@ -6,14 +6,14 @@ import { CityService, ICity } from './../../../Services/city.service';
 import { IAddDeliveryMan } from './../../../Models/IDeliveryMan_model';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-add-delivery-man',
   templateUrl: './add-delivery-man.component.html',
   styleUrls: ['./add-delivery-man.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
 })
 export class AddDeliveryManComponent implements OnInit {
   addForm: FormGroup;
@@ -116,7 +116,7 @@ export class AddDeliveryManComponent implements OnInit {
       },
     error: (err) => {
   console.log('Backend error:', err);
-  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery man!';
+  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery agent!';
   this.isSubmitting = false;
       },
     });

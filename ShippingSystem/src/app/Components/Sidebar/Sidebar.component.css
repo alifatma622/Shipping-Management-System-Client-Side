@@ -46,6 +46,12 @@
   background-color: transparent;
   border: none;
 }
+
+.sidenav .logo-container .btn-close:focus{
+  outline: none;
+  box-shadow: none;
+}
+
 .sidenav .logo-container .btn-close .fa-times {
   color: #fff;
   font-size: 24px;
@@ -68,7 +74,7 @@
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link {
   display: flex;
   align-items: center;
-  height: 3rem;
+  height: 2.8rem;
   color: #f3f3f3;
   text-decoration: none;
   border-radius: 0.625rem;
@@ -125,7 +131,7 @@
 .submenu-link {
   display: flex;
   align-items: center;
-  height: 3rem;
+  height: 2.4rem;
   color: #f3f3f3; 
   background: transparent;
   text-decoration: none;
