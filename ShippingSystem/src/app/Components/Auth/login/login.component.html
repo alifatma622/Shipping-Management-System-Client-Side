@@ -1,0 +1,83 @@
+<div class="login-page">
+  <div class="login-container">
+    <div class="image-section">
+      <img src="assets/Images/Shpping Register.avif" alt="Login Image" />
+    </div>
+
+    <div class="form-section">
+      <form
+        #loginForm="ngForm"
+        (ngSubmit)="onLoginSubmit(loginForm)"
+        class="login-form"
+        novalidate
+        >
+        <h2 class="title">Login</h2>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            ngModel
+            required
+            #usernameRef="ngModel"
+            class="form-control"
+            placeholder="Enter your username"
+            />
+            @if (usernameRef.invalid && usernameRef.touched) {
+              <small
+                class="text-danger"
+                >
+                Username is required
+              </small>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              ngModel
+              required
+              minlength="6"
+              #passwordRef="ngModel"
+              class="form-control"
+              placeholder="Enter your password"
+              />
+              @if (passwordRef.errors?.['required'] && passwordRef.touched) {
+                <small
+                  class="text-danger"
+                  >
+                  Password is required
+                </small>
+              }
+              @if (passwordRef.errors?.['minlength'] && passwordRef.touched) {
+                <small
+                  class="text-danger"
+                  >
+                  Password must be at least 6 characters
+                </small>
+              }
+            </div>
+
+            <button
+              type="submit"
+              class="btn-submit mt-3"
+              [disabled]="!loginForm.valid"
+              >
+              Login
+            </button>
+
+            @if (errorMessage) {
+              <div class="alert alert-danger mt-3">
+                {{ errorMessage }}
+              </div>
+            }
+          </form>
+        </div>
+      </div>
+    </div>

@@ -6,13 +6,13 @@ import { ICity } from '../../../Services/city.service';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { BranchService } from '../../../Services/branch.service';
 import { AddEmployeeDTO } from '../../../Models/IEmployee';
-import { NgFor, NgIf } from '@angular/common';
+
 import{ReactiveFormsModule} from '@angular/forms';import { IRole } from '../../../Models/IRole';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
 ; 
 @Component({
   selector: 'app-AddEmployee',
-  imports: [RouterModule, NgIf, NgFor, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './AddEmployee.component.html',
   styleUrls: ['./AddEmployee.component.css']
 })

@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AddDeliveryManComponent } from "../delivery-men/add-delivery-man/add-delivery-man.component";
-
+import { AddDeliveryManComponent } from '../delivery-men/add-delivery-man/add-delivery-man.component';
 
 @Component({
   selector: 'app-Main',
   imports: [ CommonModule, RouterOutlet],
   templateUrl: './Main.component.html',
-  styleUrls: ['./Main.component.css']
+  styleUrls: ['./Main.component.css'],
 })
 export class MainComponent {
  isLeftSidebarCollapsed = input.required<boolean>();

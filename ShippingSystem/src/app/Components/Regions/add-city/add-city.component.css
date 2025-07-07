@@ -1,0 +1,98 @@
+body {
+  background-color: #e3f2f5;
+  font-family: "Quicksand", sans-serif;
+  color: #3a3362;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(5, 88, 102, 0.15);
+  animation: fadeInUp 0.6s ease;
+}
+
+h2 {
+  text-align: center;
+  color: #055866;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #3a3362;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s ease;
+  font-size: 15px;
+}
+
+input:focus,
+select:focus {
+  border-color: #055866;
+  outline: none;
+}
+
+.error small {
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
+}
+
+button {
+  background-color: #055866;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #3a3362;
+  transform: translateY(-2px);
+}
+
+.server-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px 14px;
+  border-left: 5px solid red;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

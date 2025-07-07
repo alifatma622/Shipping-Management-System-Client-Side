@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IReadDeliveryMan, IAddDeliveryMan, IUpdateDeliveryMan } from '../Models/IDeliveryMan_model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeliveryManService {
-  private apiUrl = 'https://localhost:7294/api/DeliveryMan';
-  // https://localhost:7294/
+
+  private apiUrl = `${environment.baseUrl}/api/DeliveryMan`;
+
 
   constructor(private http: HttpClient) {}
 

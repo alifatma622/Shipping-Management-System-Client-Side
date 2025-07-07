@@ -4,195 +4,219 @@
   </div>
 
   <!-- Loading State -->
-  <div *ngIf="isLoading" class="loading-container">
-    <div class="loading-spinner"></div>
-    <p>Loading employee data...</p>
-  </div>
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading employee data...</p>
+    </div>
+  }
 
   <!-- Error State -->
-  <div *ngIf="errorMsg && !isLoading" class="error-container">
-    <div class="error-msg">{{ errorMsg }}</div>
-    <button class="retry-btn" (click)="loadEmployee(employeeId!)">Retry</button>
-  </div>
+  @if (errorMsg && !isLoading) {
+    <div class="error-container">
+      <div class="error-msg">{{ errorMsg }}</div>
+      <button class="retry-btn" (click)="loadEmployee(employeeId!)">Retry</button>
+    </div>
+  }
 
   <!-- Form -->
-  <form *ngIf="!isLoading" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
-    <!-- Row 1: Name, Email, Username -->
-    <div class="form-group">
-      <label for="firstName">First name</label>
-      <input
-        id="firstName"
-        formControlName="firstName"
-        placeholder="Enter first name"
-        [class.invalid]="isFieldInvalid('firstName')"
-        [disabled]="isSubmitting" />
-      <div class="error" *ngIf="isFieldInvalid('firstName')">
-        {{ getFieldErrorMessage('firstName') }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="lastName">Last name</label>
-      <input
-        id="lastName"
-        formControlName="lastName"
-        placeholder="Enter last name"
-        [class.invalid]="isFieldInvalid('lastName')"
-        [disabled]="isSubmitting" />
-      <div class="error" *ngIf="isFieldInvalid('lastName')">
-        {{ getFieldErrorMessage('lastName') }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        formControlName="email"
-        type="email"
-        placeholder="Enter email address"
-        [class.invalid]="isFieldInvalid('email')"
-        [disabled]="isSubmitting" />
-      <div class="error" *ngIf="isFieldInvalid('email')">
-        {{ getFieldErrorMessage('email') }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="userName">Username</label>
-      <input
-        id="userName"
-        formControlName="userName"
-        placeholder="Enter username"
-        [class.invalid]="isFieldInvalid('userName')"
-        [disabled]="isSubmitting" />
-      <div class="error" *ngIf="isFieldInvalid('userName')">
-        {{ getFieldErrorMessage('userName') }}
-      </div>
-    </div>
-
-    <!-- Row 2: Password, Phone, Branch -->
-    <div class="form-group">
-      <label for="password">New Password (optional)</label>
-      <input
-        id="password"
-        formControlName="password"
-        type="password"
-        placeholder="Leave blank to keep current password"
-        [class.invalid]="editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value"
-        [disabled]="isSubmitting" />
-      <div class="error"
-           *ngIf="editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value">
-        Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="phoneNumber">Phone Number</label>
-      <input
-        id="phoneNumber"
-        formControlName="phoneNumber"
-        placeholder="Enter Egyptian phone number"
-        [class.invalid]="isFieldInvalid('phoneNumber')"
-        [disabled]="isSubmitting" />
-      <div class="error" *ngIf="isFieldInvalid('phoneNumber')">
-        {{ getFieldErrorMessage('phoneNumber') }}
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="branchId">Branch</label>
-      <select
-        id="branchId"
-        formControlName="branchId"
-        [class.invalid]="isFieldInvalid('branchId')"
-        [disabled]="isSubmitting">
-        <option value="" disabled hidden>Select branch</option>
-        <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
-      </select>
-      <div class="error" *ngIf="isFieldInvalid('branchId')">
-        {{ getFieldErrorMessage('branchId') }}
-      </div>
-    </div>
-<div class="form-row">
-  
-   <div class="form-group">
-  <label for="department">Department</label>
-  <select
-    id="department"
-    formControlName="specificRole"  
-    [class.invalid]="isFieldInvalid('specificRole')"
-    [disabled]="isSubmitting || isLoading">
-    <option value="" disabled hidden>Select department</option>
-    <option *ngFor="let department of departments" 
-            [value]="department"
-            [selected]="department === editForm.get('specificRole')?.value">
-      {{ department }}
-    </option>
-  </select>
-  <div class="error" *ngIf="isFieldInvalid('specificRole')">
-    {{ getFieldErrorMessage('specificRole') }}
-  </div>
-</div>
-
-  <div class="form-group status-group">
-    <label for="isActive">Status</label>
-    <div class="status-toggle">
-      <label class="toggle-switch">
+  @if (!isLoading) {
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
+      <!-- Row 1: Name, Email, Username -->
+      <div class="form-group">
+        <label for="firstName">First name</label>
         <input
-          type="checkbox"
-          formControlName="isActive"
-          [disabled]="isSubmitting"
-          id="isActive" />
-        <span class="toggle-slider"></span>
-      </label>
-      <span class="status-text">
-        {{ editForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
-      </span>
-    </div>
-    <small class="help-text">
-      {{ editForm.get('isActive')?.value ? 'Employee is currently active.' : 'Employee is inactive.' }}
-    </small>
-  </div>
-</div>
-    <!-- Form Actions -->
-    <div class="form-actions">
-      <button
-        class="cancel-btn"
-        type="button"
-        (click)="goToEmployeeList()"
-        [disabled]="isSubmitting">
-        Cancel
-      </button>
-      <button
-        class="save-btn"
-        type="submit"
-        [disabled]="editForm.invalid || isSubmitting"
-        >
-        <svg *ngIf="!isSubmitting" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="6 12 10 16 18 8"/>
-        </svg>
-        <div *ngIf="isSubmitting" class="spinner"></div>
-        {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
-      </button>
-    </div>
-
-    <!-- Success/Error Messages -->
-    <div *ngIf="successMsg" class="success-msg">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <polyline points="6 12 10 16 18 8"/>
-      </svg>
-      {{ successMsg }}
-    </div>
-
-    <div *ngIf="errorMsg && !isLoading" class="error-msg">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10"/>
-        <line x1="15" y1="9" x2="9" y2="15"/>
-        <line x1="9" y1="9" x2="15" y2="15"/>
-      </svg>
-      {{ errorMsg }}
-    </div>
-  </form>
+          id="firstName"
+          formControlName="firstName"
+          placeholder="Enter first name"
+          [class.invalid]="isFieldInvalid('firstName')"
+          [disabled]="isSubmitting" />
+        @if (isFieldInvalid('firstName')) {
+          <div class="error">
+            {{ getFieldErrorMessage('firstName') }}
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input
+          id="lastName"
+          formControlName="lastName"
+          placeholder="Enter last name"
+          [class.invalid]="isFieldInvalid('lastName')"
+          [disabled]="isSubmitting" />
+        @if (isFieldInvalid('lastName')) {
+          <div class="error">
+            {{ getFieldErrorMessage('lastName') }}
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          formControlName="email"
+          type="email"
+          placeholder="Enter email address"
+          [class.invalid]="isFieldInvalid('email')"
+          [disabled]="isSubmitting" />
+        @if (isFieldInvalid('email')) {
+          <div class="error">
+            {{ getFieldErrorMessage('email') }}
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="userName">Username</label>
+        <input
+          id="userName"
+          formControlName="userName"
+          placeholder="Enter username"
+          [class.invalid]="isFieldInvalid('userName')"
+          [disabled]="isSubmitting" />
+        @if (isFieldInvalid('userName')) {
+          <div class="error">
+            {{ getFieldErrorMessage('userName') }}
+          </div>
+        }
+      </div>
+      <!-- Row 2: Password, Phone, Branch -->
+      <div class="form-group">
+        <label for="password">New Password (optional)</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Leave blank to keep current password"
+          [class.invalid]="editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value"
+          [disabled]="isSubmitting" />
+        @if (editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value) {
+          <div class="error"
+            >
+            Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          id="phoneNumber"
+          formControlName="phoneNumber"
+          placeholder="Enter Egyptian phone number"
+          [class.invalid]="isFieldInvalid('phoneNumber')"
+          [disabled]="isSubmitting" />
+        @if (isFieldInvalid('phoneNumber')) {
+          <div class="error">
+            {{ getFieldErrorMessage('phoneNumber') }}
+          </div>
+        }
+      </div>
+      <div class="form-group">
+        <label for="branchId">Branch</label>
+        <select
+          id="branchId"
+          formControlName="branchId"
+          [class.invalid]="isFieldInvalid('branchId')"
+          [disabled]="isSubmitting">
+          <option value="" disabled hidden>Select branch</option>
+          @for (branch of branches; track branch) {
+            <option [value]="branch.id">{{ branch.name }}</option>
+          }
+        </select>
+        @if (isFieldInvalid('branchId')) {
+          <div class="error">
+            {{ getFieldErrorMessage('branchId') }}
+          </div>
+        }
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="department">Department</label>
+          <select
+            id="department"
+            formControlName="specificRole"
+            [class.invalid]="isFieldInvalid('specificRole')"
+            [disabled]="isSubmitting || isLoading">
+            <option value="" disabled hidden>Select department</option>
+            @for (department of departments; track department) {
+              <option
+                [value]="department"
+                [selected]="department === editForm.get('specificRole')?.value">
+                {{ department }}
+              </option>
+            }
+          </select>
+          @if (isFieldInvalid('specificRole')) {
+            <div class="error">
+              {{ getFieldErrorMessage('specificRole') }}
+            </div>
+          }
+        </div>
+        <div class="form-group status-group">
+          <label for="isActive">Status</label>
+          <div class="status-toggle">
+            <label class="toggle-switch">
+              <input
+                type="checkbox"
+                formControlName="isActive"
+                [disabled]="isSubmitting"
+                id="isActive" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="status-text">
+              {{ editForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+          <small class="help-text">
+            {{ editForm.get('isActive')?.value ? 'Employee is currently active.' : 'Employee is inactive.' }}
+          </small>
+        </div>
+      </div>
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button
+          class="cancel-btn"
+          type="button"
+          (click)="goToEmployeeList()"
+          [disabled]="isSubmitting">
+          Cancel
+        </button>
+        <button
+          class="save-btn"
+          type="submit"
+          [disabled]="editForm.invalid || isSubmitting"
+          >
+          @if (!isSubmitting) {
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <polyline points="6 12 10 16 18 8"/>
+            </svg>
+          }
+          @if (isSubmitting) {
+            <div class="spinner"></div>
+          }
+          {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+      <!-- Success/Error Messages -->
+      @if (successMsg) {
+        <div class="success-msg">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="6 12 10 16 18 8"/>
+          </svg>
+          {{ successMsg }}
+        </div>
+      }
+      @if (errorMsg && !isLoading) {
+        <div class="error-msg">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="15" y1="9" x2="9" y2="15"/>
+            <line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          {{ errorMsg }}
+        </div>
+      }
+    </form>
+  }
 </div>
 

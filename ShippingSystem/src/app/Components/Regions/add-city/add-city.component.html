@@ -1,0 +1,109 @@
+<div class="container">
+  <h2>Add New City</h2>
+
+  <form #cityForm="ngForm" (ngSubmit)="onSubmit(cityForm)">
+    <div class="form-group">
+      <label for="name">City Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        class="form-control"
+        [(ngModel)]="newCity.name"
+        required
+        minlength="2"
+        #nameRef="ngModel"
+      />
+      <div class="error" *ngIf="nameRef.invalid && nameRef.touched">
+        <small *ngIf="nameRef.errors?.['required']">Name is required.</small>
+        <small *ngIf="nameRef.errors?.['minlength']">Min length is 2.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="normalPrice">Normal Price</label>
+      <input
+        type="number"
+        id="normalPrice"
+        name="normalPrice"
+        class="form-control"
+        [(ngModel)]="newCity.normalPrice"
+        required
+        min="1"
+        #normalPriceRef="ngModel"
+      />
+      <div
+        class="error"
+        *ngIf="normalPriceRef.invalid && normalPriceRef.touched"
+      >
+        <small *ngIf="normalPriceRef.errors?.['required']"
+          >Normal price is required.</small
+        >
+        <small *ngIf="normalPriceRef.errors?.['min']">Price must be > 0.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pickupPrice">Pickup Price</label>
+      <input
+        type="number"
+        id="pickupPrice"
+        name="pickupPrice"
+        class="form-control"
+        [(ngModel)]="newCity.pickupPrice"
+        required
+        min="1"
+        #pickupPriceRef="ngModel"
+      />
+      <div
+        class="error"
+        *ngIf="pickupPriceRef.invalid && pickupPriceRef.touched"
+      >
+        <small *ngIf="pickupPriceRef.errors?.['required']"
+          >Pickup price is required.</small
+        >
+        <small *ngIf="pickupPriceRef.errors?.['min']">Price must be > 0.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="mb-3">
+        <label for="governorateId" class="form-label">Governorate</label>
+        <select
+          id="governorateId"
+          name="governorateId"
+          class="form-select"
+          [(ngModel)]="newCity.governorateId"
+          required
+          #govRef="ngModel"
+        >
+          <option value="" disabled selected>Select Governorate</option>
+          <option *ngFor="let gov of governorates" [value]="gov.id">
+            {{ gov.name }}
+          </option>
+        </select>
+
+        <div class="text-danger mt-1" *ngIf="govRef.invalid && govRef.touched">
+          <small *ngIf="govRef.errors?.['required']"
+            >Governorate is required.</small
+          >
+        </div>
+      </div>
+
+      <div class="error" *ngIf="govRef.invalid && govRef.touched">
+        <small *ngIf="govRef.errors?.['required']"
+          >Governorate is required.</small
+        >
+      </div>
+    </div>
+
+    <!-- Server Error -->
+    <div class="server-error" *ngIf="serverError">
+      <p class="text-danger">{{ serverError }}</p>
+    </div>
+
+    <button [disabled]="cityForm.invalid" class="btn btn-success mt-3">
+      Add City
+    </button>
+  </form>
+</div>

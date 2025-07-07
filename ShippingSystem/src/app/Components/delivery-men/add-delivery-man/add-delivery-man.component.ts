@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DeliveryManService } from './../../../Services/delivery-man.service';
-import { BranchService, IBranch } from './../../../Services/branch.service';
+import {
+  BranchService,
+  IBranch,
+} from '../../../Services/Branch-Services/branch.service';
 import { CityService, ICity } from './../../../Services/city.service';
 import { IAddDeliveryMan } from './../../../Models/IDeliveryMan_model';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-add-delivery-man',
   templateUrl: './add-delivery-man.component.html',
   styleUrls: ['./add-delivery-man.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
 })
 export class AddDeliveryManComponent implements OnInit {
   addForm: FormGroup;
@@ -121,4 +124,4 @@ export class AddDeliveryManComponent implements OnInit {
       },
     });
   }
-  }
+}

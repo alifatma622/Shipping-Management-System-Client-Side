@@ -9,73 +9,86 @@
   </div>
 
   <!-- Form Section -->
-  <div class="governorate-form" *ngIf="isFormVisible">
-    <form [formGroup]="governrateForm" (ngSubmit)="onSubmit()">
-      <label> Name:</label>
+  @if (isFormVisible) {
+    <div class="governorate-form">
+      <form [formGroup]="governrateForm" (ngSubmit)="onSubmit()">
+        <label> Name:</label>
+        <input
+          formControlName="name"
+          placeholder="Enter governorate name"
+          type="text" />
+          @if (name?.touched && name?.invalid) {
+            <div class="error">
+              Name is required (2–100 characters).
+            </div>
+          }
+          <button type="submit" [disabled]="isSubmitting">Add Governorate</button>
+          @if (successMessage) {
+            <div class="success">{{ successMessage }}</div>
+          }
+          @if (errorMessage) {
+            <div class="error">{{ errorMessage }}</div>
+          }
+        </form>
+      </div>
+    }
+
+    <!-- Search Section -->
+    <div class="search-box">
       <input
-        formControlName="name"
-        placeholder="Enter governorate name"
+        [(ngModel)]="searchName"
+        (ngModelChange)="onSearchChange(searchName)"
+        placeholder="Search by name"
         type="text" />
-      <div *ngIf="name?.touched && name?.invalid" class="error">
-        Name is required (2–100 characters).
       </div>
 
-      <button type="submit" [disabled]="isSubmitting">Add Governorate</button>
-      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    </form>
-  </div>
+      <!-- Table Section -->
+      @if (!isLoading && filteredGovernrates.length > 0) {
+        <table class="governorate-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (gov of filteredGovernrates; track gov; let i = $index) {
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ gov.name }}</td>
+                <td>
+                  <i
+                    [ngClass]="gov.isDeleted ? 'bi bi-x-circle text-danger' : 'bi bi-check-circle text-success'"
+                    [title]="gov.isDeleted ? 'Inactive' : 'Active'">
+                  </i>
+                </td>
+                <td>
+                  @if (editingId === gov.id) {
+                    <input [(ngModel)]="gov.name" class="inline-edit" />
+                    <button (click)="saveEdit(gov)">💾</button>
+                    <button (click)="cancelEdit()">❌</button>
+                  } @else {
+                    <button class="edit-btn" (click)="startEdit(gov.id)">✏️</button>
+                    <button class="delete-btn" (click)="onDelete(gov.id)">🗑️</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
 
-  <!-- Search Section -->
-  <div class="search-box">
-    <input
-      [(ngModel)]="searchName"
-      (ngModelChange)="onSearchChange(searchName)"
-      placeholder="Search by name"
-      type="text" />
-  </div>
+      <!-- Loading State -->
+      @if (isLoading) {
+        <div class="loading">Loading governorates...</div>
+      }
 
-  <!-- Table Section -->
-  <table class="governorate-table" *ngIf="!isLoading && filteredGovernrates.length > 0">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let gov of filteredGovernrates; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ gov.name }}</td>
-        <td>
-          <i
-            [ngClass]="gov.isDeleted ? 'bi bi-x-circle text-danger' : 'bi bi-check-circle text-success'"
-            [title]="gov.isDeleted ? 'Inactive' : 'Active'">
-          </i>
-        </td>
-        <td>
-          <ng-container *ngIf="editingId === gov.id; else defaultActions">
-            <input [(ngModel)]="gov.name" class="inline-edit" />
-            <button (click)="saveEdit(gov)">💾</button>
-            <button (click)="cancelEdit()">❌</button>
-          </ng-container>
-
-          <ng-template #defaultActions>
-            <button class="edit-btn" (click)="startEdit(gov.id)">✏️</button>
-            <button class="delete-btn" (click)="onDelete(gov.id)">🗑️</button>
-          </ng-template>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="loading">Loading governorates...</div>
-
-  <!-- No Data State -->
-  <div *ngIf="!isLoading && filteredGovernrates.length === 0" class="no-data">
-    No results found.
-  </div>
-</div>
+      <!-- No Data State -->
+      @if (!isLoading && filteredGovernrates.length === 0) {
+        <div class="no-data">
+          No results found.
+        </div>
+      }
+    </div>
