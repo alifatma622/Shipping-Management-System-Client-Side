@@ -11,5 +11,5 @@ export enum OrderStatus {
         RejectWithPayment=10,
         RejectWithoutPayment=11,
         RejectWithPartiallyPaid=12
-    
+
 }

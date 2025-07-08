@@ -287,8 +287,8 @@ export class AddOrderComponent implements OnInit {
   }
 
   loadSellers(): void {
-    this.sellerService.getAllSellersSelect().subscribe({
-      next: data => this.sellers = data,
+    this.sellerService.getAllSellers(1 , 50).subscribe({
+      next: data => this.sellers = data.items,
       error: err => console.error('Failed to load sellers', err)
     });
   }
