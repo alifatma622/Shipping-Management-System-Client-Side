@@ -12,9 +12,10 @@ import { ChangeDetectorRef } from '@angular/core';
   selector: 'app-orders-list',
   imports: [CommonModule, FormsModule],
   templateUrl: './orders-list.component.html',
-  styleUrls: ['./orders-list.component.css']
+  styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
+
   //#region variables
   orders: ReadOrderDTO[] = [];
   isLoading = true;
@@ -30,6 +31,12 @@ export class OrdersListComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private deliveryService: DeliveryManService
+  ) {}
+
 
   OrderStatus = OrderStatus;
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
@@ -44,11 +51,11 @@ export class OrdersListComponent implements OnInit {
 
     this.deliveryService.getAllDeliveryMen().subscribe({
       next: (data) => {
-        this.deliveryAgents = data.filter(agent => !agent.isDeleted);
+        this.deliveryAgents = data.filter((agent) => !agent.isDeleted);
       },
       error: (err) => {
         console.error('Error loading delivery agents:', err);
-      }
+      },
     });
 
   }
@@ -69,6 +76,7 @@ export class OrdersListComponent implements OnInit {
 
   loadOrders() {
     this.isLoading = true;
+
     this.orderService.getPaginatedOrders(
       this.currentPage,
       this.itemsPerPage
@@ -125,6 +133,7 @@ export class OrdersListComponent implements OnInit {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
+
         o.customerCityName
         // Add more fields as needed
       ].filter(f => f); // Remove undefined/null values
@@ -212,6 +221,7 @@ export class OrdersListComponent implements OnInit {
   //#region pagination
 
   get pagedOrders() {
+
     return this.orders;
   }
 
@@ -221,6 +231,7 @@ export class OrdersListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
+
     this.loadOrders();
   }
   onItemsPerPageChange(count: number) {

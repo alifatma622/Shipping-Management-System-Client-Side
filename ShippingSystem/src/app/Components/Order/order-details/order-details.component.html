@@ -1,0 +1,48 @@
+<div class="order-details-container">
+  <h2 class="page-title">📦 Order Details</h2>
+
+  <div class="card" *ngFor="let section of sections">
+    <div class="card-header" (click)="toggleSection(section)">
+      <div class="header-left">
+        <span class="section-icon">{{ section.icon }}</span>
+        <h3 class="section-title">{{ section.title }}</h3>
+      </div>
+      <span class="toggle-btn" [class.open]="section.open">
+        {{ section.open ? '➖' : '➕' }}
+      </span>
+    </div>
+
+    <div class="card-body" *ngIf="section.open">
+      <div class="info-box">
+        <ng-container [ngSwitch]="section.key">
+          <ng-container *ngSwitchCase="'general'">
+            <p><strong>Order ID:</strong> 1001</p>
+            <p><strong>Date:</strong> 2025-07-03</p>
+            <p><strong>Status:</strong> <span class="status">Shipped</span></p>
+            <p><strong>Order Type:</strong> Online</p>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'customer'">
+            <p><strong>Name:</strong> Mohamed Ahmed</p>
+            <p><strong>Phone:</strong> 01012345678</p>
+            <p><strong>Address:</strong> El Thawra St., Maadi</p>
+            <p><strong>City:</strong> Cairo</p>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'shipping'">
+            <p><strong>Agent:</strong> Ahmed Ali</p>
+            <p><strong>To Village:</strong> Yes</p>
+            <p><strong>Shipping Cost:</strong> 35 LE</p>
+            <p><strong>Weight:</strong> 2.5 Kg</p>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="'seller'">
+            <p><strong>Seller:</strong> Al Zahraa Store</p>
+            <p><strong>Seller City:</strong> Alexandria</p>
+            <p><strong>Branch:</strong> Smouha Branch</p>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

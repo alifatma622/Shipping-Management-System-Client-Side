@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../../Services/auth-service.service';
-import { RegisterModel } from './../../Models/register-model';
+import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
+import { RegisterModel } from '../../../Models/Auht-Models/register-model';
 
 @Component({
   selector: 'app-register',
