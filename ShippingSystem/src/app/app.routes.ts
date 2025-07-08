@@ -51,15 +51,11 @@ export const routes: Routes = [
       { path: 'general-settings', component: GeneralSettingsComponent },
       { path: 'governrates', component: GovernratesListComponent },
       { path: 'seller', component: AllSellerComponent },
-    ],
-  },
-      { path: 'general-settings', component: GeneralSettingsComponent },
-      { path: 'governrates', component: GovernratesListComponent },
-      { path: 'seller', component: AllSellerComponent },
       { path: 'overview', component: AdminDashboardComponent }
     ]
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
