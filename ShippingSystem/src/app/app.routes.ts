@@ -28,6 +28,7 @@ import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEm
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { OrderDetailsComponent } from './Components/Order/order-details/order-details.component';
+import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.component';
 
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 export const routes: Routes = [
@@ -48,11 +49,11 @@ export const routes: Routes = [
       { path: 'seller/add', component: AddSellerComponent },
       { path: 'seller/edit/:id', component: EditSellerComponent },
       { path: 'order/add', component: AddOrderComponent },
-
       { path: 'employee/add', component: AddEmployeeComponent },
       { path: 'employee/edit/:id', component: EditEmployeeComponent },
       { path: 'order', component: OrdersListComponent },
-      { path: 'Details/:id', component: OrderDetailsComponent },
+      { path: 'Order/Details/:id', component: OrderDetailsComponent },
+      {path: 'Order/Edit/:id', component: EditOrderComponent},
       { path: 'Allcity', component: AllCityComponent },
       { path: 'Addcity', component: AddCityComponent },
       { path: 'Updatecity/:id', component: UpdateCityComponent },

@@ -31,11 +31,7 @@ export class OrdersListComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
-  constructor(
-    private orderService: OrderService,
-    private router: Router,
-    private deliveryService: DeliveryManService
-  ) {}
+
 
 
   OrderStatus = OrderStatus;
@@ -98,7 +94,7 @@ export class OrdersListComponent implements OnInit {
     });
   }
   onEdit(id: number) {
-    this.router.navigate(['dashboard/order/edit', id]);
+    this.router.navigate(['dashboard/Order/Edit', id]);
   }
 
   onDelete(id: number) {
@@ -110,11 +106,11 @@ export class OrdersListComponent implements OnInit {
   }
 
   viewDetails(deliveryId: number): void {
-    this.router.navigate(['dashboard/orders', deliveryId]);
+    this.router.navigate(['dashboard/Order/Details', deliveryId]);
   }
   //#endregion
 
-  //#region search 
+  //#region search
   get filteredOrders(): ReadOrderDTO[] {
 
     if (!this.searchString.trim()) return this.orders;
