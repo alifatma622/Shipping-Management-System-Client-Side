@@ -20,32 +20,52 @@ export class AllDeliveryMenComponent implements OnInit {
   routes: any;
   searchUserName: string = '';
 
+  currentPage = 1;
+  itemsPerPage = 10;
+  itemsPerPageOptions = [5, 10, 20, 50];
+  totalCount = 0;
   constructor(private deliveryManService: DeliveryManService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getAllDeliveryMen();
+    // this.getAllDeliveryMen();
+    this.getPaginatedDelivery();
   }
 
-  getAllDeliveryMen() {
+  // getAllDeliveryMen() {
+  //   this.isLoading = true;
+  //   this.deliveryManService.getAllDeliveryMen().subscribe({
+  //     next: (data) => {
+  //       this.deliveryMen = data;
+  //       this.isLoading = false;
+  //     },
+  //     error: (err) => {
+  //       this.errorMsg = 'Error loading delivery agents!';
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
+
+  getPaginatedDelivery(){
     this.isLoading = true;
-    this.deliveryManService.getAllDeliveryMen().subscribe({
-      next: (data) => {
-        this.deliveryMen = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.errorMsg = 'Error loading delivery agents!';
-        this.isLoading = false;
-      }
-    });
+    this.deliveryManService.getAllPaginated(this.currentPage,
+      this.itemsPerPage).subscribe({
+        next: (response) => {
+          this.deliveryMen = response.items;
+          this.totalCount = response.totalCount;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.errorMsg = 'Error loading delivery agents';
+          this.isLoading = false;
+        }
+      });
   }
-
   onEdit(id: number) {
     this.router.navigate(['dashboard/delivery-men/edit', id]);
   }
 
   onDelete(id: number) {
-    this.deliveryManService.softDelete(id).subscribe(() => this.getAllDeliveryMen());
+    this.deliveryManService.softDelete(id).subscribe(() => this.getPaginatedDelivery());
   }
 
   onAdd() {
@@ -62,4 +82,24 @@ export class AllDeliveryMenComponent implements OnInit {
     this.searchUserName = value;
   }
 
+  //#region pagination
+
+  get pagedDelivery() {
+    return this.deliveryMen;
+  }
+
+  get totalPages() {
+    return Math.ceil(this.totalCount / this.itemsPerPage);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.getPaginatedDelivery();
+  }
+  onItemsPerPageChange(count: number) {
+    this.itemsPerPage = count;
+    this.currentPage = 1;
+    this.getPaginatedDelivery();
+  }
+  //#endregion
 }

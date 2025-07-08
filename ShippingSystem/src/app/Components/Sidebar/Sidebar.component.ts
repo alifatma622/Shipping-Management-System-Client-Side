@@ -19,7 +19,7 @@ export class SidebarComponent {
   }
   items = [
     {
-      routeLink: 'dashboard',
+      routeLink: 'overview',
       icon: 'fal fa-home',
       label: 'Dashboard',
     },
