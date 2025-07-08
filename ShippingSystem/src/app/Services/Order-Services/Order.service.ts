@@ -27,7 +27,7 @@ constructor(private http: HttpClient) { }
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
 
-    return this.http.get<OrderResponse>(this.apiUrl, { params });
+    return this.http.get<OrderResponse>(`${this.apiUrl}`, { params });
   }
   createOrder(order: AddOrderDTO): Observable<ReadOrderDTO> {
     return this.http.post<ReadOrderDTO>(this.apiUrl, order);
@@ -38,7 +38,7 @@ constructor(private http: HttpClient) { }
   }
 
   
-assignDeliveryAgent(orderId: number, deliveryAgentId: number): Observable<any> {
+ assignDeliveryAgent(orderId: number, deliveryAgentId: number): Observable<any> {
   return this.http.put(
     `${this.apiUrl}/assignDeliveryAgent`, 
     null, 
@@ -50,6 +50,12 @@ assignDeliveryAgent(orderId: number, deliveryAgentId: number): Observable<any> {
       responseType: 'text' 
     }
   );
+  }
+
+ changeOrderStatus(orderId: number, newStatus: OrderStatus): Observable<any> {
+  return this.http.put(`${this.apiUrl}/changeStatus/${orderId}`,  {newStatus} );
 }
+
+
 }
 

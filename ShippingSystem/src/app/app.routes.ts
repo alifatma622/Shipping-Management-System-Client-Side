@@ -22,6 +22,8 @@ import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEm
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { OrderDetailsComponent } from './Components/Order/order-details/order-details.component';
+import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
+import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [

@@ -11,7 +11,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { DashboardService } from '../../Services/dashboard.service';
 import { DashboardDTO } from '../../Models/DashboardDTO';
-import { BaseChartDirective } from 'ng2-charts';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 @Component({
@@ -28,7 +28,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     FormsModule,
-    BaseChartDirective
+    NgChartsModule
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
@@ -61,8 +61,9 @@ export class AdminDashboardComponent implements OnInit {
       data: [],
       label: 'Orders Count',
       backgroundColor: ['#DAF87A', '#055866', '#DAF87A', '#055866', '#DAF87A'],
-      borderRadius: 8,
-      barThickness: 40
+      hoverBackgroundColor: ['#B6E600', '#04424A', '#B6E600', '#04424A', '#B6E600'],
+      borderRadius: 4,
+      barThickness: 80
     }]
   };
 
@@ -405,9 +406,9 @@ export class AdminDashboardComponent implements OnInit {
     console.log('Filter functionality to be implemented');
   }
 
-  onViewDetail(): void {
-    console.log('View detail functionality to be implemented');
-  }
+  // onViewDetail(): void {
+  //   console.log('View detail functionality to be implemented');
+  // }
 
   onRowAction(order: any): void {
     console.log('Row action for order:', order);

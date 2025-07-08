@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../Services/Order-Services/Order.service';
 import { Router } from '@angular/router';
-import { AddOrderDTO, ReadOrderDTO } from '../../../Models/IOrder';
+import { ReadOrderDTO } from '../../../Models/IOrder';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
-
+import { OrderStatus } from '../../../Enum/OrderStatus';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-orders-list',
   imports: [CommonModule, FormsModule],
@@ -14,6 +15,7 @@ import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
+  //#region variables
   orders: ReadOrderDTO[] = [];
   isLoading = true;
   errorMsg = '';
@@ -28,13 +30,15 @@ export class OrdersListComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
-  constructor(
-    private orderService: OrderService,
-    private router: Router,
-    private deliveryService: DeliveryManService
-  ) {}
 
-  //#region init
+  OrderStatus = OrderStatus;
+  orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
+  //#endregion
+  constructor(private orderService: OrderService, private router: Router, private deliveryService: DeliveryManService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  //#region crud
   ngOnInit(): void {
     this.loadOrders();
 
@@ -46,6 +50,7 @@ export class OrdersListComponent implements OnInit {
         console.error('Error loading delivery agents:', err);
       },
     });
+
   }
 
   // getAllOrders() {
@@ -64,19 +69,25 @@ export class OrdersListComponent implements OnInit {
 
   loadOrders() {
     this.isLoading = true;
-    this.orderService
-      .getPaginatedOrders(this.currentPage, this.itemsPerPage)
-      .subscribe({
-        next: (response) => {
-          this.orders = response.items;
-          this.totalCount = response.totalCount;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMsg = 'Error loading orders';
-          this.isLoading = false;
-        },
-      });
+    this.orderService.getPaginatedOrders(
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe({
+      next: (response) => {
+        // Add showStatusDropdown property to each order
+        this.orders = response.items.map(order => ({
+          ...order,
+          status: this.getStatusNumberFromName(order.status),
+          showStatusDropdown: false
+        }));
+        this.totalCount = response.totalCount;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMsg = 'Error loading orders';
+        this.isLoading = false;
+      }
+    });
   }
   onEdit(id: number) {
     this.router.navigate(['dashboard/order/edit', id]);
@@ -90,15 +101,21 @@ export class OrdersListComponent implements OnInit {
     this.router.navigate(['dashboard/order/add']);
   }
 
+  viewDetails(deliveryId: number): void {
+    this.router.navigate(['dashboard/orders', deliveryId]);
+  }
+  //#endregion
+
+  //#region search
   get filteredOrders(): ReadOrderDTO[] {
     if (!this.searchString.trim()) return this.orders;
 
     const searchTerm = this.searchString.trim().toLowerCase();
 
-    return this.orders.filter((o) => {
+    return this.orders.filter(o => {
       // Convert all searchable fields to lowercase strings for comparison
       const fieldsToSearch = [
-        o.status,
+        o.status.toString(),
         o.branchName,
         o.address,
         o.customerName,
@@ -107,90 +124,68 @@ export class OrdersListComponent implements OnInit {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
-        o.customerCityName,
+        o.customerCityName
         // Add more fields as needed
-      ].filter((f) => f); // Remove undefined/null values
+      ].filter(f => f); // Remove undefined/null values
 
-      return fieldsToSearch.some((f) => f.toLowerCase().includes(searchTerm));
+      return fieldsToSearch.some(f =>
+        f.toLowerCase().includes(searchTerm)
+      );
     });
   }
   onSearchChange(value: string) {
     this.searchString = value;
   }
+  //#endregion
 
-  getStatusText(status: string): string {
+  //#region status text & classes
+  getStatusText(status: any): string {
+    // console.log(status);
     switch (status) {
-      case 'Pending':
-        return 'Pending';
-      case 'AcceptedByDeliveryCompany':
-        return 'Accepted';
-      case 'RejectedByDeliveryCompany':
-        return 'Rejected';
-      case 'Delivered':
-        return 'Delivered';
-      case 'DeliveredToDeliveryMan':
-        return 'With Agent';
-      case 'CanNotBeReached':
-        return 'Unreachable';
-      case 'Postponed':
-        return 'Postponed';
-      case 'PartiallyDelivered':
-        return 'Partial';
-      case 'CanceledByCustomer':
-        return 'Canceled';
-      case 'RejectWithPayment':
-        return 'Rejected (Paid)';
-      case 'RejectWithoutPayment':
-        return 'Rejected (Unpaid)';
-      case 'RejectWithPartiallyPaid':
-        return 'Rejected (Partial)';
-      default:
-        return 'Unknown';
+      case 1: return 'Pending';
+      case 2: return 'Accepted';
+      case 3: return 'Rejected';
+      case 4: return 'Delivered';
+      case 5: return 'With Agent';
+      case 6: return 'Unreachable';
+      case 7: return 'Postponed';
+      case 8: return 'Partial';
+      case 9: return 'Canceled';
+      case 10: return 'Rejected (Paid)';
+      case 11: return 'Rejected (Unpaid)';
+      case 12: return 'Rejected (Partial)';
+      default: return 'Unknown';
     }
   }
 
-  getStatusClass(status: string): string {
+  getStatusClass(status: any): string {
+    // console.log(status)
     switch (status) {
-      case 'Pending':
-        return 'status-pending';
-      case 'AcceptedByDeliveryCompany':
-        return 'status-accepted';
-      case 'RejectedByDeliveryCompany':
-      case 'RejectWithPayment':
-      case 'RejectWithoutPayment':
-      case 'RejectWithPartiallyPaid':
+      case 1: return 'status-pending';
+      case 2: return 'status-accepted';
+      case 3:
+      case 10:
+      case 11:
+      case 12:
         return 'status-rejected';
-      case 'Delivered':
-        return 'status-delivered';
-      case 'DeliveredToDeliveryMan':
-        return 'status-with-agent';
-      case 'CanNotBeReached':
-        return 'status-unreachable';
-      case 'Postponed':
-        return 'status-postponed';
-      case 'PartiallyDelivered':
-        return 'status-partial';
-      case 'CanceledByCustomer':
-        return 'status-canceled';
-      default:
-        return 'status-unknown';
+      case 4: return 'status-delivered';
+      case 5: return 'status-with-agent';
+      case 6: return 'status-unreachable';
+      case 7: return 'status-postponed';
+      case 8: return 'status-partial';
+      case 9: return 'status-canceled';
+      default: return 'status-unknown';
     }
   }
 
-  // In your component class
-  viewDetails(orderId: number): void {
-    this.router.navigate(['/dashboard/Details', orderId]);
-  }
-  
+
   //#endregion
 
   //#region assign agent
 
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
-    return (this.filteredAgents = this.deliveryAgents.filter((agent) =>
-      agent.cities?.includes(cityName)
-    ));
+    return this.filteredAgents = this.deliveryAgents.filter(agent => agent.cities?.includes(cityName));
   }
 
   selectAgent(agent: IReadDeliveryMan): void {
@@ -198,39 +193,59 @@ export class OrdersListComponent implements OnInit {
   }
 
   assignOrder(orderId: number): void {
-    this.orderService
-      .assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0)
-      .subscribe({
-        next: (response) => {
-          console.log('Agent assigned successfully', response);
-          this.selectedAgent = null;
-          this.loadOrders();
-        },
-        error: (error) => {
-          console.error('Error assigning agent', error);
-        },
-      });
+    this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
+      next: (response) => {
+        console.log('Agent assigned successfully', response);
+        this.selectedAgent = null;
+        this.loadOrders();
+      },
+      error: (error) => {
+        console.error('Error assigning agent', error);
+      }
+    });
   }
   //#endregion
 
   //#region pagination
 
   get pagedOrders() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredOrders.slice(start, start + this.itemsPerPage);
+    return this.orders;
   }
 
   get totalPages() {
-    return Math.ceil(this.filteredOrders.length / this.itemsPerPage);
+    return Math.ceil(this.totalCount / this.itemsPerPage);
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.loadOrders();
   }
-
   onItemsPerPageChange(count: number) {
     this.itemsPerPage = count;
     this.currentPage = 1;
+    this.loadOrders();
   }
   //#endregion
+
+  //#region update status
+  updateOrderStatus(order: ReadOrderDTO, newstatus: OrderStatus): void {
+
+    this.orderService.changeOrderStatus(order.orderID, newstatus).subscribe({
+      next: () => {
+        order.status = newstatus;
+      },
+      error: (err) => {
+        console.error('Error updating order status:', err);
+      }
+    });
+  }
+  getStatusNumberFromName(status: string | number): number {
+    if (typeof status === 'number') return status; // Already a number, return as is
+
+    const enumEntry = Object.entries(OrderStatus).find(([key]) => key === status);
+    return enumEntry ? Number(enumEntry[1]) : -1; // Return -1 or a fallback value
+  }
+
+  //#endregion
 }
+
