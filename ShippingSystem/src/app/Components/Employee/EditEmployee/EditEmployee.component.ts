@@ -6,11 +6,11 @@ import { BranchService, IBranch } from '../../../Services/branch.service';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-EditEmployee',
-  imports :[NgIf, NgFor, ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './EditEmployee.component.html',
   styleUrls: ['./EditEmployee.component.css']
 })

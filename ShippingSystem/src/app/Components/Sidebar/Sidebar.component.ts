@@ -12,9 +12,14 @@ export class SidebarComponent {
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
+  logout = { routeLink: 'logout',
+    icon: 'fal fa-sign-out',
+    isOpen: false,
+    label: 'Log out'
+  }
   items = [
     {
-      routeLink: 'dashboard',
+      routeLink: 'overview',
       icon: 'fal fa-home',
       label: 'Dashboard'
     },
@@ -36,23 +41,29 @@ export class SidebarComponent {
        isOpen: false,
       subItems : [{label:'Deliver agents list', routeLink:'delivery-men'} ,{label:'New delivery agent ', routeLink:'delivery-men/add'}]
     },
+     {
+      icon: 'fal fa-box-open',
+      label: 'Orders',
+       isOpen: false,
+      subItems : [{label:'Orders list', routeLink:'order'} ,{label:'Add order', routeLink:'order/add'}]
+    },
     {
       icon: 'fal fa-globe',
       label: 'Governorates',
        isOpen: false,
-      subItems : [{label:'Governorates', routeLink:'governrates'} ,{label:'Add Governorate', routeLink:'add-governrate'}]
+      subItems : [{label:'Governorates list', routeLink:'governrates'} ,{label:'Add Governorate', routeLink:'add-governrate'}]
     },
     {
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
-      subItems : [{label:'Cities dashboard', routeLink:''} ,{label:'New City', routeLink:''}]
+      subItems : [{label:'Cities list', routeLink:''} ,{label:'New City', routeLink:''}]
     },
     {
       icon: 'fal fa-building',
       label: 'Branches',
        isOpen: false,
-      subItems : [{label:'Branches dashboard', routeLink:'' },{label:'New Branch' , routeLink:''}]
+      subItems : [{label:'Branches list', routeLink:'' },{label:'New Branch' , routeLink:''}]
     },
     // {
     //   routeLink: 'products',

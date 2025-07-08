@@ -6,14 +6,14 @@ import { BranchService, IBranch } from './../../../Services/branch.service';
 import { CityService, ICity } from './../../../Services/city.service';
 import { IUpdateDeliveryMan, IReadDeliveryMan } from './../../../Models/IDeliveryMan_model';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-edit-delivery-man',
   templateUrl: './edit-delivery-man.component.html',
   styleUrls: ['./edit-delivery-man.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule]
 })
 export class EditDeliveryManComponent implements OnInit {
   editForm: FormGroup;

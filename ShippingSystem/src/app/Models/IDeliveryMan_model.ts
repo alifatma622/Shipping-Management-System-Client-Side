@@ -33,3 +33,11 @@ export interface IUpdateDeliveryMan {
   password?: string;
   isDeleted?: boolean;
 }
+
+export interface IDeliveryResponse {
+  pageNumber: number;
+  totalCount: number;
+  pageSize: number;
+  totalPages: number;
+  items: IReadDeliveryMan[];
+}

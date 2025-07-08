@@ -12,36 +12,43 @@
         <h2>Current Configuration</h2>
       </div>
 
-      <div *ngIf="originalSettings; else loading" class="settings-display">
-        <div class="setting-row">
-          <i class="fas fa-weight-hanging icon"></i>
-          <span><strong>Default Weight:</strong> <span class="value">{{ originalSettings.defaultWeight }} kg</span></span>
+      @if (originalSettings) {
+        <div class="settings-display">
+          <div class="setting-row">
+            <i class="fas fa-weight-hanging icon"></i>
+            <span><strong>Default Weight:</strong> <span class="value">{{ originalSettings.defaultWeight }} kg</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-balance-scale icon"></i>
+            <span><strong>Extra Price / Kg:</strong> <span class="value">{{ originalSettings.extraPriceKg }} EGP</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-map-marker-alt icon"></i>
+            <span><strong>Extra Price / Village:</strong> <span class="value">{{ originalSettings.extraPriceVillage }} EGP</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-bolt icon"></i>
+            <span><strong>Fast Shipping:</strong> <span class="value">{{ originalSettings.fast }}%</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-rocket icon"></i>
+            <span><strong>Express Shipping:</strong> <span class="value">{{ originalSettings.express }}%</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-clock icon"></i>
+            <span><strong>Last Modified:</strong> <span class="value">{{ originalSettings.modifiedAt | date:'short' }}</span></span>
+          </div>
+          <div class="setting-row">
+            <i class="fas fa-user icon"></i>
+            <span><strong>Modified By:</strong> <span class="value">{{ originalSettings.employee }}</span></span>
+          </div>
         </div>
-        <div class="setting-row">
-          <i class="fas fa-balance-scale icon"></i>
-          <span><strong>Extra Price / Kg:</strong> <span class="value">{{ originalSettings.extraPriceKg }} EGP</span></span>
+      } @else {
+        <div class="loading">
+          <div><i class="fas fa-spinner fa-spin"></i></div>
+          <div>Loading settings...</div>
         </div>
-        <div class="setting-row">
-          <i class="fas fa-map-marker-alt icon"></i>
-          <span><strong>Extra Price / Village:</strong> <span class="value">{{ originalSettings.extraPriceVillage }} EGP</span></span>
-        </div>
-        <div class="setting-row">
-          <i class="fas fa-bolt icon"></i>
-          <span><strong>Fast Shipping:</strong> <span class="value">{{ originalSettings.fast }}%</span></span>
-        </div>
-        <div class="setting-row">
-          <i class="fas fa-rocket icon"></i>
-          <span><strong>Express Shipping:</strong> <span class="value">{{ originalSettings.express }}%</span></span>
-        </div>
-        <div class="setting-row">
-          <i class="fas fa-clock icon"></i>
-          <span><strong>Last Modified:</strong> <span class="value">{{ originalSettings.modifiedAt | date:'short' }}</span></span>
-        </div>
-        <div class="setting-row">
-          <i class="fas fa-user icon"></i>
-          <span><strong>Modified By:</strong> <span class="value">{{ originalSettings.employee }}</span></span>
-        </div>
-      </div>
+      }
     </div>
 
     <!-- Update Form Card -->
@@ -55,94 +62,89 @@
         <i class="fas fa-check-circle"></i> Settings updated successfully!
       </div>
 
-      <form *ngIf="settings; else loading"
-            class="settings-form"
-            (ngSubmit)="onSubmit()"
-            #settingsForm="ngForm">
+      @if (settings) {
+        <form
+          class="settings-form"
+          (ngSubmit)="onSubmit()"
+          #settingsForm="ngForm">
+          <div class="form-group">
+            <label for="defaultWeight">
+              <i class="fas fa-weight-hanging"></i> Default Weight (kg)
+            </label>
+            <input type="number"
+              id="defaultWeight"
+              name="defaultWeight"
+              [(ngModel)]="settings.defaultWeight"
+              step="0.01"
+              required
+              class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="extraPriceKg">
+                <i class="fas fa-balance-scale"></i> Extra Price per Kg (EGP)
+              </label>
+              <input type="number"
+                id="extraPriceKg"
+                name="extraPriceKg"
+                [(ngModel)]="settings.extraPriceKg"
+                step="0.01"
+                required
+                class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="extraPriceVillage">
+                  <i class="fas fa-map-marker-alt"></i> Extra Price per Village (EGP)
+                </label>
+                <input type="number"
+                  id="extraPriceVillage"
+                  name="extraPriceVillage"
+                  [(ngModel)]="settings.extraPriceVillage"
+                  step="0.01"
+                  required
+                  class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="fast">
+                    <i class="fas fa-bolt"></i> Fast Shipping Rate (%)
+                  </label>
+                  <input type="number"
+                    id="fast"
+                    name="fast"
+                    [(ngModel)]="settings.fast"
+                    step="0.01"
+                    min="0"
+                    max="100"
+                    required
+                    class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="express">
+                      <i class="fas fa-rocket"></i> Express Shipping Rate (%)
+                    </label>
+                    <input type="number"
+                      id="express"
+                      name="express"
+                      [(ngModel)]="settings.express"
+                      step="0.01"
+                      min="0"
+                      max="100"
+                      required
+                      class="form-control">
+                    </div>
+                    <button type="submit"
+                      class="update-btn"
+                      [disabled]="!settingsForm.valid || isLoading">
+                      <i class="fas" [class.fa-save]="!isLoading" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"></i>
+                      {{ isLoading ? 'Updating...' : 'Update Settings' }}
+                    </button>
+                  </form>
+                } @else {
+                  <div class="loading">
+                    <div><i class="fas fa-spinner fa-spin"></i></div>
+                    <div>Loading settings...</div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="defaultWeight">
-            <i class="fas fa-weight-hanging"></i> Default Weight (kg)
-          </label>
-          <input type="number"
-                 id="defaultWeight"
-                 name="defaultWeight"
-                 [(ngModel)]="settings.defaultWeight"
-                 step="0.01"
-                 required
-                 class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="extraPriceKg">
-            <i class="fas fa-balance-scale"></i> Extra Price per Kg (EGP)
-          </label>
-          <input type="number"
-                 id="extraPriceKg"
-                 name="extraPriceKg"
-                 [(ngModel)]="settings.extraPriceKg"
-                 step="0.01"
-                 required
-                 class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="extraPriceVillage">
-            <i class="fas fa-map-marker-alt"></i> Extra Price per Village (EGP)
-          </label>
-          <input type="number"
-                 id="extraPriceVillage"
-                 name="extraPriceVillage"
-                 [(ngModel)]="settings.extraPriceVillage"
-                 step="0.01"
-                 required
-                 class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="fast">
-            <i class="fas fa-bolt"></i> Fast Shipping Rate (%)
-          </label>
-          <input type="number"
-                 id="fast"
-                 name="fast"
-                 [(ngModel)]="settings.fast"
-                 step="0.01"
-                 min="0"
-                 max="100"
-                 required
-                 class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="express">
-            <i class="fas fa-rocket"></i> Express Shipping Rate (%)
-          </label>
-          <input type="number"
-                 id="express"
-                 name="express"
-                 [(ngModel)]="settings.express"
-                 step="0.01"
-                 min="0"
-                 max="100"
-                 required
-                 class="form-control">
-        </div>
-
-        <button type="submit"
-                class="update-btn"
-                [disabled]="!settingsForm.valid || isLoading">
-          <i class="fas" [class.fa-save]="!isLoading" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"></i>
-          {{ isLoading ? 'Updating...' : 'Update Settings' }}
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-
-<ng-template #loading>
-  <div class="loading">
-    <div><i class="fas fa-spinner fa-spin"></i></div>
-    <div>Loading settings...</div>
-  </div>
-</ng-template>

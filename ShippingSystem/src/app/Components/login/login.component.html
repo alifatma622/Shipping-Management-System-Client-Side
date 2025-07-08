@@ -10,7 +10,7 @@
         (ngSubmit)="onLoginSubmit(loginForm)"
         class="login-form"
         novalidate
-      >
+        >
         <h2 class="title">Login</h2>
 
         <div class="form-group">
@@ -24,55 +24,60 @@
             #usernameRef="ngModel"
             class="form-control"
             placeholder="Enter your username"
-          />
-          <small
-            class="text-danger"
-            *ngIf="usernameRef.invalid && usernameRef.touched"
-          >
-            Username is required
-          </small>
-        </div>
+            />
+            @if (usernameRef.invalid && usernameRef.touched) {
+              <small
+                class="text-danger"
+                >
+                Username is required
+              </small>
+            }
+          </div>
 
-        <!-- Password -->
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            ngModel
-            required
-            minlength="6"
-            #passwordRef="ngModel"
-            class="form-control"
-            placeholder="Enter your password"
-          />
-          <small
-            class="text-danger"
-            *ngIf="passwordRef.errors?.['required'] && passwordRef.touched"
-          >
-            Password is required
-          </small>
-          <small
-            class="text-danger"
-            *ngIf="passwordRef.errors?.['minlength'] && passwordRef.touched"
-          >
-            Password must be at least 6 characters
-          </small>
-        </div>
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              ngModel
+              required
+              minlength="6"
+              #passwordRef="ngModel"
+              class="form-control"
+              placeholder="Enter your password"
+              />
+              @if (passwordRef.errors?.['required'] && passwordRef.touched) {
+                <small
+                  class="text-danger"
+                  >
+                  Password is required
+                </small>
+              }
+              @if (passwordRef.errors?.['minlength'] && passwordRef.touched) {
+                <small
+                  class="text-danger"
+                  >
+                  Password must be at least 6 characters
+                </small>
+              }
+            </div>
 
-        <button
-          type="submit"
-          class="btn-submit mt-3"
-          [disabled]="!loginForm.valid"
-        >
-          Login
-        </button>
+            <button
+              type="submit"
+              class="btn-submit mt-3"
+              [disabled]="!loginForm.valid"
+              >
+              Login
+            </button>
 
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3">
-          {{ errorMessage }}
+            @if (errorMessage) {
+              <div class="alert alert-danger mt-3">
+                {{ errorMessage }}
+              </div>
+            }
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
