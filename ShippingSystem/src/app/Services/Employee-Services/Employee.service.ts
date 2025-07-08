@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AddEmployeeDTO, ReadEmployeeDTO } from '../../Models/IEmployee';
+import { AddEmployeeDTO, EmployeeResponse, ReadEmployeeDTO } from '../../Models/IEmployee';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
@@ -15,7 +15,13 @@ constructor(private http:HttpClient) { }
   getAllEmployees(): Observable<ReadEmployeeDTO[]> {
     return this.http.get<ReadEmployeeDTO[]>(this.apiUrl);
   }
+getPaginatedEmployees(pageNumber: number, pageSize: number): Observable<EmployeeResponse> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
 
+    return this.http.get<EmployeeResponse>(`${this.apiUrl}/paginated`, { params });
+  }
   // Get employee by ID
   getEmployeeById(id: number): Observable<ReadEmployeeDTO> {
     return this.http.get<ReadEmployeeDTO>(`${this.apiUrl}/${id}`);

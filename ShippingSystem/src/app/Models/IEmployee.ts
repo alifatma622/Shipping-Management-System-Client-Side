@@ -36,3 +36,11 @@ export interface ReadEmployeeDTO {
   specificRole: string;
   isDeleted: boolean;
 }
+
+export interface EmployeeResponse {
+  pageNumber: number;
+  totalCount: number;
+  pageSize: number;
+  totalPages: number;
+  items: ReadEmployeeDTO[];
+}

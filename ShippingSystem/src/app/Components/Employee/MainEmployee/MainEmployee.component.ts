@@ -7,25 +7,25 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-MainEmployee',
-  imports: [RouterModule, FormsModule, FormsModule, CommonModule], 
+  imports: [RouterModule, FormsModule, FormsModule, CommonModule],
   templateUrl: './MainEmployee.component.html',
   styleUrls: ['./MainEmployee.component.css']
 })
 export class MainEmployeeComponent implements OnInit {
-  public employees:ReadEmployeeDTO[] =[];
+  public employees: ReadEmployeeDTO[] = [];
   isLoading = true;
   errorMsg = '';
   routes: any;
-  searchUserName: string = '';
-  selectedEmpId: number =0;
+  searchString: string = '';
+  selectedEmpId: number = 0;
 
-      currentPage = 1;
+  currentPage = 1;
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
-  constructor(private EmployeeService:EmployeeService,private router: Router) { }
-ngOnInit(): void {
-    this.getAllEmployees();
+  constructor(private EmployeeService: EmployeeService, private router: Router) { }
+  ngOnInit(): void {
+    this.getPaginatedEmployees();
   }
 
   getAllEmployees() {
@@ -42,6 +42,22 @@ ngOnInit(): void {
     });
   }
 
+  getPaginatedEmployees() {
+    this.isLoading = true;
+    this.EmployeeService.getPaginatedEmployees(this.currentPage,
+      this.itemsPerPage).subscribe({
+        next: (response) => {
+          this.employees = response.items;
+          this.totalCount = response.totalCount;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.errorMsg = 'Error loading employees';
+          this.isLoading = false;
+        }
+      });
+  }
+
   onEdit(id: number) {
     this.router.navigate(['dashboard/employee/edit', id]);
   }
@@ -55,37 +71,55 @@ ngOnInit(): void {
   }
 
   get filteredEmployees(): ReadEmployeeDTO[] {
-    if (!this.searchUserName.trim()) return this.employees;
-    return this.employees.filter(emp =>
-      emp.userName?.toLowerCase().includes(this.searchUserName.trim().toLowerCase())
-    );
+    if (!this.searchString.trim()) return this.employees;
+
+    const searchTerm = this.searchString.trim().toLowerCase();
+
+    return this.employees.filter(e => {
+      // Convert all searchable fields to lowercase strings for comparison
+      const fieldsToSearch = [
+        e.firstName,
+        e.lastName,
+        e.branch,
+        e.email,
+        e.phoneNumber,
+        e.specificRole,
+        e.userName
+        // Add more fields as needed
+      ].filter(f => f); // Remove undefined/null values
+
+      return fieldsToSearch.some(f =>
+        f?.toLowerCase().includes(searchTerm)
+      );
+    });
   }
   onSearchChange(value: string) {
-    this.searchUserName = value;
+    this.searchString = value;
   }
 
-  
 
-//#region pagination
 
-get pagedOrders() {
-  const start = (this.currentPage - 1) * this.itemsPerPage;
-  return this.filteredEmployees.slice(start, start + this.itemsPerPage);
-}
+  //#region pagination
 
-get totalPages() {
-  return Math.ceil(this.filteredEmployees.length / this.itemsPerPage);
-}
+  get pagedEmps() {
+    return this.employees;
+  }
 
-onPageChange(page: number) {
-  this.currentPage = page;
-}
+  get totalPages() {
+    return Math.ceil(this.totalCount / this.itemsPerPage);
+  }
 
-onItemsPerPageChange(count: number) {
-  this.itemsPerPage = count;
-  this.currentPage = 1;
-}
-//#endregion
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.getPaginatedEmployees();
+  }
+
+  onItemsPerPageChange(count: number) {
+    this.itemsPerPage = count;
+    this.currentPage = 1;
+    this.getPaginatedEmployees();
+  }
+  //#endregion
 }
 
 

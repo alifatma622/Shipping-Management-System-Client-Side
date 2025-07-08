@@ -21,6 +21,7 @@ import { GovernratesListComponent } from './Components/Governrate/all-governrate
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
+import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -47,9 +48,10 @@ export const routes: Routes = [
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-       {path: 'general-settings', component: GeneralSettingsComponent},
-      {path: 'governrates', component: GovernratesListComponent},
-      { path: 'seller', component: AllSellerComponent }
+      { path: 'general-settings', component: GeneralSettingsComponent },
+      { path: 'governrates', component: GovernratesListComponent },
+      { path: 'seller', component: AllSellerComponent },
+      { path: 'overview', component: AdminDashboardComponent }
     ]
   }
 ];
