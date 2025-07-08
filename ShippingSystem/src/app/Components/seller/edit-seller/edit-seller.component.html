@@ -1,0 +1,105 @@
+<div class="edit-seller-container">
+  <h2>Edit Seller</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="seller-form" autocomplete="off">
+
+    <!-- Store Name -->
+    <div class="form-group">
+      <label for="storeName">Store Name</label>
+      <input id="storeName" formControlName="storeName" />
+      <div class="error" *ngIf="editForm.get('storeName')?.touched && editForm.get('storeName')?.invalid">
+        Store name is required.
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" />
+      <div class="error" *ngIf="editForm.get('address')?.touched && editForm.get('address')?.invalid">
+        Address is required.
+      </div>
+    </div>
+
+    <!-- Cancelled Order % -->
+    <div class="form-group">
+      <label for="cancelledOrderPercentage">Cancelled Order %</label>
+      <input id="cancelledOrderPercentage" type="number" step="0.01" formControlName="cancelledOrderPercentage" />
+      <div class="error" *ngIf="editForm.get('cancelledOrderPercentage')?.touched && editForm.get('cancelledOrderPercentage')?.invalid">
+        Must be between 0 and 1.
+      </div>
+    </div>
+
+  <div class="form-group">
+  <label for="cityId">City</label>
+    <select
+      id="cityId"
+      formControlName="cityId"
+      [class.invalid]="editForm.get('cityId')?.touched && editForm.get('cityId')?.invalid">
+      <option value="" disabled>Select a city</option>
+      <option *ngFor="let city of cities" [value]="city.id">
+        {{ city.name }}
+      </option>
+    </select>
+    <div class="error" *ngIf="editForm.get('cityId')?.touched && editForm.get('cityId')?.invalid">
+      City is required.
+    </div>
+  </div>
+
+    <!-- First Name -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input id="firstName" formControlName="firstName" />
+      <div class="error" *ngIf="editForm.get('firstName')?.touched && editForm.get('firstName')?.invalid">
+        First name is required.
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" formControlName="lastName" />
+      <div class="error" *ngIf="editForm.get('lastName')?.touched && editForm.get('lastName')?.invalid">
+        Last name is required.
+      </div>
+    </div>
+
+    <!-- Username -->
+    <div class="form-group">
+      <label for="userName">Username</label>
+      <input id="userName" formControlName="username" />
+      <div class="error" *ngIf="editForm.get('username')?.touched && editForm.get('username')?.invalid">
+        Username is required.
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+      <div class="error" *ngIf="editForm.get('email')?.touched && editForm.get('email')?.invalid">
+        Valid email is required.
+      </div>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" formControlName="phoneNumber" />
+      <div class="error" *ngIf="editForm.get('phoneNumber')?.touched && editForm.get('phoneNumber')?.invalid">
+        Must be a valid Egyptian number.
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="form-actions">
+      <button type="submit"  class="add-btn" [disabled]="editForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Saving...' : 'Update Seller' }}
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+    <div *ngIf="successMsg" class="success-msg">{{ successMsg }}</div>
+  </form>
+</div>

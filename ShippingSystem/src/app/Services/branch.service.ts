@@ -17,6 +17,6 @@ export class BranchService {
   constructor(private http: HttpClient) {}
 
   getAllBranches(): Observable<IBranch[]> {
-    return this.http.get<IBranch[]>(this.apiUrl);
+    return this.http.get<IBranch[]>(`${this.apiUrl}/all`);
   }
 }

@@ -108,6 +108,7 @@ export class OrdersListComponent implements OnInit {
 
   //#region search 
   get filteredOrders(): ReadOrderDTO[] {
+
     if (!this.searchString.trim()) return this.orders;
 
     const searchTerm = this.searchString.trim().toLowerCase();
@@ -158,6 +159,7 @@ export class OrdersListComponent implements OnInit {
     }
   }
 
+
   getStatusClass(status: any): string {
     // console.log(status)
     switch (status) {
@@ -191,6 +193,7 @@ export class OrdersListComponent implements OnInit {
   selectAgent(agent: IReadDeliveryMan): void {
     this.selectedAgent = agent;
   }
+
 
   assignOrder(orderId: number): void {
     this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
