@@ -8,108 +8,116 @@
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
     <div class="form-group">
       <label for="firstName">First name</label>
-      <input id="firstName" formControlName="firstName" placeholder="First name" [class.invalid]="addForm.get('firstName')?.invalid && addForm.get('firstName')?.touched" />
-      @if (addForm.get('name')?.invalid && addForm.get('name')?.touched) {
-        <div class="error">
-          First name is required (3-50 chars).
-        </div>
+      <input id="firstName" formControlName="firstName" placeholder="First name"
+        [class.invalid]="addForm.get('firstName')?.invalid && addForm.get('firstName')?.touched" />
+      @if (addForm.get('firstName')?.invalid && addForm.get('firstName')?.touched) {
+      <div class="error">
+        First name is required (3-50 chars).
+      </div>
       }
     </div>
     <div class="form-group">
       <label for="lastName">Last name</label>
-      <input id="lastName" formControlName="lastName" placeholder="Last name" [class.invalid]="addForm.get('lastName')?.invalid && addForm.get('lastName')?.touched" />
+      <input id="lastName" formControlName="lastName" placeholder="Last name"
+        [class.invalid]="addForm.get('lastName')?.invalid && addForm.get('lastName')?.touched" />
       @if (addForm.get('lastName')?.invalid && addForm.get('lastName')?.touched) {
-        <div class="error">
-          Last name is required (3-50 chars).
-        </div>
+      <div class="error">
+        Last name is required (3-50 chars).
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" placeholder="Email" [class.invalid]="addForm.get('email')?.invalid && addForm.get('email')?.touched" />
+      <input id="email" formControlName="email" type="email" placeholder="Email"
+        [class.invalid]="addForm.get('email')?.invalid && addForm.get('email')?.touched" />
       @if (addForm.get('email')?.invalid && addForm.get('email')?.touched) {
-        <div class="error">
-          Valid email is required.
-        </div>
+      <div class="error">
+        Valid email is required.
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="userName">Username</label>
-      <input id="userName" formControlName="userName" placeholder="Username" [class.invalid]="addForm.get('userName')?.invalid && addForm.get('userName')?.touched" />
+      <input id="userName" formControlName="userName" placeholder="Username"
+        [class.invalid]="addForm.get('userName')?.invalid && addForm.get('userName')?.touched" />
       @if (addForm.get('userName')?.invalid && addForm.get('userName')?.touched) {
-        <div class="error">
-          Username is required (4-30 chars).
-        </div>
+      <div class="error">
+        Username is required (4-30 chars).
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="password">Password</label>
-      <input id="password" formControlName="password" type="password" placeholder="Password" [class.invalid]="addForm.get('password')?.invalid && addForm.get('password')?.touched" />
+      <input id="password" formControlName="password" type="password" placeholder="Password"
+        [class.invalid]="addForm.get('password')?.invalid && addForm.get('password')?.touched" />
       @if (addForm.get('password')?.invalid && addForm.get('password')?.touched) {
-        <div class="error">
-          Password must be at least 8 chars, include uppercase, lowercase, number, and symbol.
-        </div>
+      <div class="error">
+        Password must be at least 8 chars, include uppercase, lowercase, number, and symbol.
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number" [class.invalid]="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched" />
+      <input id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number"
+        [class.invalid]="addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched" />
       @if (addForm.get('phoneNumber')?.invalid && addForm.get('phoneNumber')?.touched) {
-        <div class="error">
-          Valid Egyptian phone number required.
-        </div>
+      <div class="error">
+        Valid Egyptian phone number required.
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="branchId">Branch</label>
-      <select id="branchId" formControlName="branchId" [class.invalid]="addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched">
+      <select id="branchId" formControlName="branchId"
+        [class.invalid]="addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched">
         <option value="" disabled hidden>Select branch</option>
         @for (branch of branches; track branch) {
-          <option [value]="branch.id">{{ branch.name }}</option>
+        <option [value]="branch.id">{{ branch.name }}</option>
         }
       </select>
       @if (addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched) {
-        <div class="error">
-          Branch is required.
-        </div>
+      <div class="error">
+        Branch is required.
+      </div>
       }
     </div>
 
     <div class="form-group">
       <label for="specificRole">Department</label>
-      <select id="specificRole" formControlName="specificRole" [class.invalid]="addForm.get('specificRole')?.invalid && addForm.get('specificRole')?.touched">
+      <select id="specificRole" formControlName="specificRole"
+        [class.invalid]="addForm.get('specificRole')?.invalid && addForm.get('specificRole')?.touched">
         <option value="" disabled hidden>Select department</option>
         @for (department of departments; track department) {
-          <option [value]="department">{{ department }}</option>
+        <option [value]="department">{{ department }}</option>
         }
       </select>
       @if (addForm.get('specificRole')?.invalid && addForm.get('specificRole')?.touched) {
-        <div class="error">
-          Department is required.
-        </div>
+      <div class="error">
+        Department is required.
+      </div>
       }
     </div>
 
     <div class="form-actions">
       <button class="add-btn" type="submit" [disabled]="addForm.invalid || isSubmitting">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <line x1="12" y1="5" x2="12" y2="19"/>
-          <line x1="5" y1="12" x2="19" y2="12"/>
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
         Save
       </button>
     </div>
 
     @if (errorMsg) {
-      <div class="error-msg">{{ errorMsg }}</div>
+    <div class="error-msg">{{ errorMsg }}</div>
     }
     @if (successMsg) {
-      <div class="success-msg">{{ successMsg }}</div>
+    <div class="success-msg">{{ successMsg }}</div>
     }
   </form>
 </div>

@@ -1,6 +1,7 @@
 import { OrderType } from "../Enum/OrderType";
 import { ShippingType } from "../Enum/ShippingType";
 import { PaymentType } from "../Enum/PaymentType"
+import { OrderStatus } from "./DashboardDTO";
 
 export interface ReadOrderDTO {
  orderID: number;
@@ -15,7 +16,7 @@ export interface ReadOrderDTO {
   isShippedToVillage: boolean;
   address: string;
   creationDate: string; // or Date if you plan to convert it
-  status: string; // or enum if you have specific status values
+  status: number; // or enum if you have specific status values
   shippingType: string; // or enum
   orderType: string; // or enum
   paymentType: string; // or enum
@@ -25,6 +26,7 @@ export interface ReadOrderDTO {
   shippingCost: number;
   totalCost: number;
   totalWeight: number;
+  showStatusDropdown:boolean;
 }
 export interface ReadOrderDTO {
   orderID: number;
