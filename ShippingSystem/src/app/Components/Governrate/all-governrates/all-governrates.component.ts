@@ -23,6 +23,12 @@ export class GovernratesListComponent implements OnInit {
   successMessage = '';
   errorMessage = '';
 
+  // Pagination-related fields
+  currentPage = 1;
+  itemsPerPage = 10;
+  itemsPerPageOptions = [5, 10, 20, 50];
+  totalCount = 0;
+
   constructor(
     private governratesService: GovernratesService,
     private fb: FormBuilder
@@ -32,6 +38,10 @@ export class GovernratesListComponent implements OnInit {
     this.initForm();
     this.getGovernrates();
   }
+  onPageChange(page: number): void {
+  this.currentPage = page;
+  this.getGovernrates();
+ }
 
   private initForm(): void {
     this.governrateForm = this.fb.group({
@@ -39,15 +49,20 @@ export class GovernratesListComponent implements OnInit {
     });
   }
 
+  totalPages(): number[] {
+  return Array(Math.ceil(this.totalCount / this.itemsPerPage)).fill(0).map((_, i) => i + 1);
+}
+
   get name() {
     return this.governrateForm.get('name');
   }
   isFormVisible = false;
   getGovernrates(): void {
-    this.governratesService.getAllGovernrates().subscribe({
+    this.governratesService.getAllGovernrates(this.currentPage , this.itemsPerPage).subscribe({
       next: (data) => {
-        this.governrates = data;
-        this.filteredGovernrates = data;
+        this.governrates = data.items;
+        this.filteredGovernrates = data.items;
+        this.totalCount = data.totalCount;
         this.isLoading = false;
       },
       error: () => {
@@ -58,11 +73,18 @@ export class GovernratesListComponent implements OnInit {
   }
 
   onSearchChange(value: string): void {
-    const searchValue = value.toLowerCase();
-    this.filteredGovernrates = this.governrates.filter(g =>
-      g.name.toLowerCase().includes(searchValue)
-    );
+  const searchValue = value.toLowerCase();
+  this.filteredGovernrates = this.governrates.filter(g =>
+    g.name.toLowerCase().includes(searchValue)
+  );
   }
+
+  onItemsPerPageChange(count: number): void {
+  this.itemsPerPage = count;
+  this.currentPage = 1;
+  this.getGovernrates();
+}
+
 
   onSubmit(): void {
     if (this.governrateForm.invalid) {

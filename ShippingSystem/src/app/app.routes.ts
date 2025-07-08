@@ -16,14 +16,13 @@ import { AllSellerComponent } from './Components/seller/all-seller/all-seller/al
 import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
-
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     children: [
       { path: '', component: MainComponent },
@@ -38,6 +37,7 @@ export const routes: Routes = [
       { path: 'governrates', component: GovernratesListComponent },
       { path: 'seller', component: AllSellerComponent },
       { path: 'overview', component: AdminDashboardComponent }
+
     ]
   }
 ];

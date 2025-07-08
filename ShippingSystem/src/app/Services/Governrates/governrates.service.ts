@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Signal } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { PaginatedResponse } from '../../Models/PaginatedResponse';
 
 export interface Governrate {
   id: number;
@@ -18,10 +20,15 @@ export interface AddGovernrate{
   providedIn: 'root'
 })
 export class GovernratesService {
-  private apiUrl = 'https://localhost:7294/api/Governorate';
+  private apiUrl = `${environment.baseUrl}/api/Governorate`;
   constructor(private http:HttpClient) { }
-  getAllGovernrates(): Observable<Governrate[]> {
-    return this.http.get<Governrate[]>(this.apiUrl);
+
+  getAllGovernrates(pageNumber : number = 1 , pageSize : number = 10): Observable<PaginatedResponse<Governrate>> {
+    const params = {
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString()
+    };
+    return this.http.get<PaginatedResponse<Governrate>>(this.apiUrl, { params });
   }
   getGovernrateById(id: number): Observable<Governrate> {
     return this.http.get<Governrate>(`${this.apiUrl}/${id}`);
