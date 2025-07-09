@@ -12,7 +12,7 @@ export class AuthServiceService {
   constructor(private _httpClient: HttpClient) {}
 
 
-  private apiUrl = 'https://localhost:7294/api/Auth';
+  private apiUrl = `${environment.baseUrl}/api/Auth`;
 
   register(data: RegisterModel): Observable<any> {
     return this._httpClient.post(`${this.apiUrl}/register`, data);

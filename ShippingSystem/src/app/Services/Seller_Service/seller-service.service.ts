@@ -12,15 +12,13 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class SellerServiceService {
-  private apiUrl = `https://localhost:7294/api/Seller`;
+  private apiUrl = `${environment.baseUrl}/api/Seller`;
   constructor(private http: HttpClient) { }
-
-
 
   getAllSellers(pageNumber: number, pageSize: number): Observable<PaginationResult<ISellerModels>> {
   return this.http.get<PaginationResult<ISellerModels>>(
-    // `${this.apiUrl}/paginated?PageNumber=${pageNumber}&PageSize=${pageSize}`
-    `${this.apiUrl}/paginated/?PageNumber=${pageNumber}&PageSize=${pageSize}`
+     `${this.apiUrl}/paginated?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    // `${this.apiUrl}/paginated/?PageNumber=${pageNumber}&PageSize=${pageSize}`
   );
 }
 
