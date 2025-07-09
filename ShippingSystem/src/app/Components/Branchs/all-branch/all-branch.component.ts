@@ -41,6 +41,11 @@ export class AllBranchComponent implements OnInit {
     this.currentPage = 1;
   }
 
+  onSearch(event?: Event) {
+    if (event) event.preventDefault();
+    this.currentPage = 1;
+  }
+
   /* /// this Is Removing When API Working //// */
 
   ngOnInit(): void {

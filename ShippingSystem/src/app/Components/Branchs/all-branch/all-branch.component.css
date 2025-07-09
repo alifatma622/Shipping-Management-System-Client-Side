@@ -1,216 +1,53 @@
-:root {
-  --main-white: #ffffff;
-  --main-gray: #3a3362;
-  --main-dark: #055866;
-  --main-accent: #daf87a;
-  --border: #dcdcdc;
-  --light-bg: #f9fafa;
-}
-
-.page-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.all-delivery-men-container {
-  background: var(--main-white);
-  padding: 32px;
-  border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.header h2 {
-  color: var(--main-dark);
-  font-size: 1.7rem;
-  font-weight: 700;
-}
-
-.add-btn {
-  background: var(--main-accent);
-  color: var(--main-dark);
-  border: none;
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(218, 248, 122, 0.35);
-  transition: 0.2s ease-in-out;
-}
-
-.add-btn:hover {
-  background: #cce75c;
-  transform: translateY(-1px);
-}
-
-.search-bar-row {
-  margin-bottom: 24px;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  max-width: 380px;
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-
-.search-bar input {
-  flex: 1;
-  padding: 10px 14px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  color: var(--main-gray);
-}
-
-.search-btn {
-  padding: 10px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: 0.2s;
-}
-
-.search-btn:hover {
-  background: #f0faff;
-}
-
-.delivery-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--main-white);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-}
-
-.delivery-table thead th {
-  background: #f5f5f5;
-  color: var(--main-dark);
-  font-weight: 600;
-  padding: 14px 12px;
-  font-size: 1rem;
-  border-bottom: 3px solid var(--main-accent);
-  text-align: left;
-  letter-spacing: 0.5px;
-}
-
-.delivery-table tbody td {
-  padding: 13px 12px;
-  color: var(--main-gray);
-  font-size: 0.95rem;
-  background: var(--main-white);
-  border-bottom: 1px solid #eeeeee;
-}
-
-.delivery-table tbody tr:hover td {
-  background: #f0faff;
-  transition: 0.2s ease-in-out;
-}
-
-.edit-btn,
-.delete-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  margin-right: 6px;
-  transition: 0.2s;
-}
-
-.edit-btn svg,
-.delete-btn svg {
-  transition: 0.2s ease-in-out;
-}
-
-.edit-btn:hover svg {
-  stroke: #0277bd;
-  transform: scale(1.15);
-}
-
-.delete-btn:hover svg {
-  stroke: #c62828;
-  transform: scale(1.15);
-}
+/* Use only global styles for table and search bar */
 
 .pagination-controls {
-  margin-top: auto;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 12px;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px #0000000a;
   flex-wrap: wrap;
+  gap: 12px;
 }
 
 .pagination-controls label {
   font-size: 0.95rem;
-  color: #3a3362;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  color: var(--main-gray);
 }
 
 .pagination-controls select {
   padding: 4px 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 0.9rem;
+  margin: 0 8px;
 }
 
 .pagination-buttons {
   display: flex;
-  gap: 6px;
-  margin-top: 8px;
+  gap: 0;
 }
 
 .pagination-buttons button {
-  background: white;
+  background: #fff;
   border: 1px solid #ccc;
+  color: var(--main-dark);
+  padding: 6px 10px;
+  margin: 0 3px;
   border-radius: 6px;
-  padding: 4px 10px;
   cursor: pointer;
+  transition: 0.2s;
   font-weight: 500;
-  color: #3a3362;
-  transition: all 0.2s;
+  box-shadow: none;
 }
 
-.pagination-buttons button:hover:not([disabled]) {
-  background: #daf87a;
-  border-color: #055866;
+.pagination-buttons button:hover {
+  background: var(--main-accent);
+  border-color: var(--main-accent);
+  color: var(--main-dark);
 }
 
 .pagination-buttons button.active {
-  background: #055866;
-  color: white;
+  background: var(--main-dark);
+  color: #fff;
+  border-color: var(--main-dark);
   font-weight: bold;
-  border-color: #055866;
-}
-
-.pagination-buttons button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }

@@ -18,9 +18,9 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
-    CommonModule, 
-    MatCardModule, 
-    MatTableModule, 
+    CommonModule,
+    MatCardModule,
+    MatTableModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -141,7 +141,7 @@ export class AdminDashboardComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'top',
         labels: {
@@ -198,12 +198,11 @@ export class AdminDashboardComponent implements OnInit {
   // Table configuration
   displayedColumns: string[] = [
     'customerName',
-    'orderID', 
+    'orderID',
     'creationDate',
     'customerCityName',
     'status',
-    'totalCost',
-    'actions'
+    'totalCost'
   ];
 
   constructor(private dashboardService: DashboardService) {}
@@ -215,8 +214,8 @@ export class AdminDashboardComponent implements OnInit {
   private loadDashboardData(): void {
     this.isLoading = true;
     this.error = null;
-    
-    this.dashboardService.getMockDashboardData().subscribe({
+
+    this.dashboardService.getDashboardData().subscribe({
       next: (data) => {
         this.dashboardData = data;
         this.setupChartData();
@@ -363,15 +362,28 @@ export class AdminDashboardComponent implements OnInit {
   getStatusClass(status: string): string {
     const statusClasses: { [key: string]: string } = {
       'delivered': 'complete',
+      'Delivered': 'complete',
       'pending': 'delivery',
+      'Pending': 'delivery',
       'deliveredToAgent': 'delivery',
+      'DeliveredToAgent': 'delivery',
       'new': 'delivery',
+      'New': 'delivery',
       'cancelledByReceiver': 'cancelled',
+      'CancelledByReceiver': 'cancelled',
       'partiallyDelivered': 'partial',
+      'PartiallyDelivered': 'partial',
       'postponed': 'postponed',
+      'Postponed': 'postponed',
       'notReachable': 'unreachable',
+      'NotReachable': 'unreachable',
       'refusedWithPartialPayment': 'refused',
-      'refusedWithoutPayment': 'refused'
+      'RefusedWithPartialPayment': 'refused',
+      'refusedWithoutPayment': 'refused',
+      'RefusedWithoutPayment': 'refused',
+      'AcceptedByDeliveryCompany': 'complete',
+      'RejectedByDeliveryCompany': 'cancelled',
+      // add more API status mappings as needed
     };
     return statusClasses[status] || 'default';
   }
@@ -445,13 +457,13 @@ export class AdminDashboardComponent implements OnInit {
   // Filter methods
   getFilteredOrders(): any[] {
     if (!this.dashboardData?.recentOrders) return [];
-    
+
     if (!this.searchTerm.trim()) {
       return this.dashboardData.recentOrders;
     }
 
     const searchLower = this.searchTerm.toLowerCase();
-    return this.dashboardData.recentOrders.filter(order => 
+    return this.dashboardData.recentOrders.filter(order =>
       order.customerName.toLowerCase().includes(searchLower) ||
       order.orderID.toString().includes(searchLower) ||
       order.customerCityName.toLowerCase().includes(searchLower) ||
@@ -467,4 +479,4 @@ export class AdminDashboardComponent implements OnInit {
       .filter((type, index, arr) => type && arr.indexOf(type) === index);
     return types as string[];
   }
-} 
+}

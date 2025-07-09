@@ -21,7 +21,7 @@ export class BranchService {
     return this._httpClient.get<IBranch[]>(this.apiUrl);
   }
   getAllBranch() {
-    return this._httpClient.get<AllBranch[]>(`${environment.baseUrl}/endpoint`);
+    return this._httpClient.get<AllBranch[]>(`${environment.baseUrl}/api/Branch`);
   }
 
   getBranchById(id: number) {
@@ -29,7 +29,7 @@ export class BranchService {
   }
 
   addNewBranch(newBranch: AddBranch) {
-    return this._httpClient.post(`${environment.baseUrl}/endpoint`, newBranch);
+    return this._httpClient.post(`${environment.baseUrl}/api/Branch`, newBranch);
   }
 
   updateBranch(id: number, branch: AddBranch) {

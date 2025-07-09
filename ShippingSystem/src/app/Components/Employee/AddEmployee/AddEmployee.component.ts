@@ -9,6 +9,7 @@ import { AddEmployeeDTO } from '../../../Models/IEmployee';
 
 import{ReactiveFormsModule} from '@angular/forms';import { IRole } from '../../../Models/IRole';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
+import Swal from 'sweetalert2';
 ; 
 @Component({
   selector: 'app-AddEmployee',
@@ -125,8 +126,14 @@ export class AddEmployeeComponent implements OnInit {
 
     this.employeeService.addEmployee(data).subscribe({
       next: () => {
-        this.successMsg = 'Employee added successfully!';
-        setTimeout(() => this.router.navigate(['employee']), 1200);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Employee has been added successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['employee']);
+        });
       },
     error: (err) => {
   console.log('Backend error:', err);

@@ -1,7 +1,9 @@
-<div class="container">
-  <h2>Add Branch</h2>
+<div class="add-delivery-man-container">
+  <div class="header">
+    <h2>Add Branch</h2>
+  </div>
 
-  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
     <div class="form-group">
       <label for="name">Branch Name</label>
       <input
@@ -9,40 +11,46 @@
         type="text"
         formControlName="name"
         placeholder="Enter branch name"
+        [class.invalid]="branchForm.get('name')?.invalid && branchForm.get('name')?.touched"
       />
-      <div
-        class="error"
-        *ngIf="
-          branchForm.get('name')?.touched && branchForm.get('name')?.invalid
-        "
-      >
-        <small>Name is required</small>
+      @if (branchForm.get('name')?.invalid && branchForm.get('name')?.touched) {
+      <div class="error">
+        Name is required.
       </div>
+      }
     </div>
 
-    <!-- City Dropdown -->
     <div class="form-group">
       <label for="cityId">City</label>
-      <select id="cityId" formControlName="cityId">
-        <option value="" disabled>Select a city</option>
-        <option *ngFor="let city of cities" [value]="city.id">
-          {{ city.name }}
-        </option>
-      </select>
-      <div
-        class="error"
-        *ngIf="
-          branchForm.get('cityId')?.touched && branchForm.get('cityId')?.invalid
-        "
+      <select 
+        id="cityId" 
+        formControlName="cityId"
+        [class.invalid]="branchForm.get('cityId')?.invalid && branchForm.get('cityId')?.touched"
       >
-        <small>City is required</small>
+        <option value="" disabled hidden>Select a city</option>
+        @for (city of cities; track city) {
+        <option [value]="city.id">{{ city.name }}</option>
+        }
+      </select>
+      @if (branchForm.get('cityId')?.invalid && branchForm.get('cityId')?.touched) {
+      <div class="error">
+        City is required.
       </div>
+      }
     </div>
 
-    <button type="submit" [disabled]="branchForm.invalid">➕ Add Branch</button>
-
-    <div class="server-error" *ngIf="serverError">
-      {{ serverError }}
+    <div class="form-actions">
+      <button class="add-btn" type="submit" [disabled]="branchForm.invalid">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Add Branch
+      </button>
     </div>
+
+    @if (serverError) {
+    <div class="error-msg">{{ serverError }}</div>
+    }
   </form>
 </div>

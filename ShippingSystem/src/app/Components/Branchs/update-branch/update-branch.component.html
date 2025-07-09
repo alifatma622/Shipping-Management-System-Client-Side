@@ -1,49 +1,56 @@
-<div class="update-container">
-  <h2 class="form-title">Update Branch</h2>
+<div class="add-delivery-man-container">
+  <div class="header">
+    <h2>Update Branch</h2>
+  </div>
 
-  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
-    <div class="form-group mb-3">
+  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()" class="delivery-form" autocomplete="off">
+    <div class="form-group">
       <label for="name">Branch Name</label>
       <input
         id="name"
         type="text"
-        class="form-control"
         formControlName="name"
         placeholder="Enter branch name"
+        [class.invalid]="branchForm.get('name')?.invalid && branchForm.get('name')?.touched"
       />
-      <div
-        class="text-danger"
-        *ngIf="
-          branchForm.get('name')?.touched && branchForm.get('name')?.invalid
-        "
-      >
+      @if (branchForm.get('name')?.invalid && branchForm.get('name')?.touched) {
+      <div class="error">
         Name is required.
       </div>
+      }
     </div>
 
-    <div class="form-group mb-4">
+    <div class="form-group">
       <label for="cityId">City</label>
-      <select id="cityId" class="form-select" formControlName="cityId">
-        <option value="" disabled>Select a city</option>
-        <option *ngFor="let city of cities" [value]="city.id">
-          {{ city.name }}
-        </option>
-      </select>
-      <div
-        class="text-danger"
-        *ngIf="
-          branchForm.get('cityId')?.touched && branchForm.get('cityId')?.invalid
-        "
+      <select 
+        id="cityId" 
+        formControlName="cityId"
+        [class.invalid]="branchForm.get('cityId')?.invalid && branchForm.get('cityId')?.touched"
       >
+        <option value="" disabled hidden>Select a city</option>
+        @for (city of cities; track city) {
+        <option [value]="city.id">{{ city.name }}</option>
+        }
+      </select>
+      @if (branchForm.get('cityId')?.invalid && branchForm.get('cityId')?.touched) {
+      <div class="error">
         City is required.
       </div>
+      }
     </div>
 
-    <button type="submit" class="btn-update" [disabled]="branchForm.invalid">
-      ✏️ Update Branch
-    </button>
-    <div class="text-danger" *ngIf="serverError">
-      {{ serverError }}
+    <div class="form-actions">
+      <button class="add-btn" type="submit" [disabled]="branchForm.invalid">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        Update Branch
+      </button>
     </div>
+
+    @if (serverError) {
+    <div class="error-msg">{{ serverError }}</div>
+    }
   </form>
 </div>

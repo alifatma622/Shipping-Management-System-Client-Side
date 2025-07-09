@@ -6,6 +6,7 @@ import { BranchService, IBranch } from '../../../Services/branch.service';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -147,9 +148,15 @@ export class EditEmployeeComponent implements OnInit {
 
     this.employeeService.updateEmployee(this.employeeId, data).subscribe({
       next: (res) => {
-        this.successMsg = ' Employee updated successfully!';
+        Swal.fire({
+          title: 'Success!',
+          text: 'Employee has been updated successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['dashboard/employee']);
+        });
         this.isSubmitting = false;
-        setTimeout(() => this.router.navigate(['dashboard/employee']), 1200);
       },
       error: (err) => {
         console.error('Backend error:', err);

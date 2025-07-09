@@ -45,6 +45,11 @@ export class AllCityComponent implements OnInit {
     this.currentPage = 1;
   }
 
+  onSearch(event?: Event) {
+    if (event) event.preventDefault();
+    this.currentPage = 1;
+  }
+
   /* All Of This Will Be Remove When APi Working */
 
   ngOnInit(): void {

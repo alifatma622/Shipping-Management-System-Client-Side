@@ -23,6 +23,11 @@
   </mat-card>
 </div>
 
+<!-- Dashboard Main Title -->
+<div class="header">
+  <h2>Admin Dash Board</h2>
+</div>
+
 <!-- Dashboard Content -->
 <div class="dashboard-container" *ngIf="dashboardData && !isLoading">
   <!-- Main Stats Section -->
@@ -179,9 +184,6 @@
               <th mat-header-cell *matHeaderCellDef>Customer Name</th>
               <td mat-cell *matCellDef="let order">
                 <div class="customer-cell">
-                  <div class="customer-avatar">
-                    {{order.customerName.charAt(0)}}
-                  </div>
                   <span>{{order.customerName}}</span>
                 </div>
               </td>

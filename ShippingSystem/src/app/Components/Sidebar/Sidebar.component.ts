@@ -28,7 +28,7 @@ export class SidebarComponent {
       label: 'Employees',
       isOpen: false,
       subItems: [
-        { label: 'Employees list', routeLink: 'employee' },
+        { label: 'Employees', routeLink: 'employee' },
         { label: 'New employee', routeLink: 'employee/add' },
       ],
     },
@@ -37,7 +37,7 @@ export class SidebarComponent {
       label: 'Sellers',
       isOpen: false,
       subItems: [
-        { label: 'Sellers list', routeLink: 'seller' },
+        { label: 'Sellers ', routeLink: 'seller' },
         { label: 'New seller', routeLink: 'seller/add' },
       ],
     },
@@ -46,7 +46,7 @@ export class SidebarComponent {
       label: 'Delivery Agents',
       isOpen: false,
       subItems: [
-        { label: 'Deliver agents list', routeLink: 'delivery-men' },
+        { label: 'Deliver Agents ', routeLink: 'delivery-men' },
         { label: 'New delivery agent ', routeLink: 'delivery-men/add' },
       ],
     },
@@ -64,8 +64,8 @@ export class SidebarComponent {
       label: 'Governorates',
       isOpen: false,
       subItems: [
-        { label: 'Governorates list', routeLink: 'governrates' },
-        { label: 'Add Governorate', routeLink: 'add-governrate' },
+        { label: 'Governorates ', routeLink: 'governrates' },
+        // { label: 'Add Governorate', routeLink: 'add-governrate' },
       ],
     },
     {
@@ -73,7 +73,7 @@ export class SidebarComponent {
       label: 'Cities',
       isOpen: false,
       subItems: [
-        { label: 'Cities dashboard', routeLink: 'Allcity' },
+        { label: 'Cities ', routeLink: 'Allcity' },
         { label: 'New City', routeLink: 'Addcity' },
       ],
     },
@@ -82,7 +82,7 @@ export class SidebarComponent {
       label: 'Branches',
       isOpen: false,
       subItems: [
-        { label: 'Branches dashboard', routeLink: 'AllBranch' },
+        { label: 'Branches ', routeLink: 'AllBranch' },
         { label: 'New Branch', routeLink: 'AddBranch' },
       ],
     },

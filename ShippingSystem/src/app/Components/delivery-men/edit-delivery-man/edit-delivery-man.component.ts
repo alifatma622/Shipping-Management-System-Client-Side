@@ -12,6 +12,7 @@ import {
   IReadDeliveryMan,
 } from './../../../Models/IDeliveryMan_model';
 import { ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -159,8 +160,12 @@ export class EditDeliveryManComponent implements OnInit {
       cityIds: this.editForm.value.cityIds
         .map((id: any) => Number(id))
         .filter((id: number) => !!id),
-      isActive: this.editForm.value.isActive,
+      isDeleted: !this.editForm.value.isActive,
     };
+    delete (data as any).isActive;
+
+    // Log for debugging
+    console.log('isActive:', this.editForm.value.isActive, 'isDeleted:', data.isDeleted);
 
     if (!data.password || data.password.trim() === '') {
       delete data.password;
@@ -170,9 +175,15 @@ export class EditDeliveryManComponent implements OnInit {
 
     this.deliveryManService.update(this.deliveryManId, data).subscribe({
       next: (res) => {
-        this.successMsg = res?.message || 'Delivery man updated successfully!';
+        Swal.fire({
+          title: 'Success!',
+          text: 'Delivery man has been updated successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['/dashboard/delivery-men']);
+        });
         this.isSubmitting = false;
-        setTimeout(() => this.router.navigate(['/delivery-men']), 1200);
       },
       error: (err) => {
         console.error('Backend error:', err);
@@ -218,6 +229,6 @@ export class EditDeliveryManComponent implements OnInit {
   }
 
   goToDeliveryMenList() {
-    this.router.navigate(['/delivery-men']);
+    this.router.navigateByUrl('/dashboard/delivery-men');
   }
 }

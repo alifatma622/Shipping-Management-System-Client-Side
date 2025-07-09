@@ -9,6 +9,7 @@ import { CityService, ICity } from './../../../Services/city.service';
 import { IAddDeliveryMan } from './../../../Models/IDeliveryMan_model';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -114,8 +115,14 @@ export class AddDeliveryManComponent implements OnInit {
 
     this.deliveryManService.add(data).subscribe({
       next: () => {
-        this.successMsg = 'Delivery man added successfully!';
-        setTimeout(() => this.router.navigate(['/delivery-men']), 1200);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Delivery man has been added successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['/delivery-men']);
+        });
       },
     error: (err) => {
   console.log('Backend error:', err);
