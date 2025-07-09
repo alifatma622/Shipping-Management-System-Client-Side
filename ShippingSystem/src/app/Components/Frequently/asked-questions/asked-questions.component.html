@@ -1,0 +1,41 @@
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-header">
+      <div class="faq-badge">
+        <span class="badge-text">FAQ</span>
+      </div>
+      <h2 class="faq-title">
+        <span class="title-highlight">FREQUENTLY ASKED</span>
+        <span class="title-main">QUESTIONS</span>
+      </h2>
+      <p class="faq-subtitle">Find answers to common questions about our services and policies</p>
+    </div>
+
+
+    <div class="faq-content">
+      <div class="faq-grid">
+        <div class="faq-item" *ngFor="let faq of faqs; let i = index" [class.active]="activeIndex === i">
+          <div class="faq-question" (click)="toggleQuestion(i)" [attr.aria-expanded]="activeIndex === i">
+            <div class="question-content">
+              <span class="question-number">{{ (i + 1).toString().padStart(2, '0') }}</span>
+              <h3 class="question-text">{{ faq.question }}</h3>
+            </div>
+            <div class="toggle-wrapper">
+              <span class="toggle-icon" [class.rotated]="activeIndex === i">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M12 6L8 10L4 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <div class="faq-answer" [class.show]="activeIndex === i">
+            <div class="answer-content">
+              <p>{{ faq.answer }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
