@@ -1,1 +1,175 @@
-<p>edit-order works!</p>
+<div class="edit-order-container">
+  
+  <div class="header">
+    <h2>Edit Order</h2>
+  </div>
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
+    <button type="button" class="add-btn" (click)="goBack()">Go Back</button>
+  </div>
+  <form [formGroup]="orderForm" (ngSubmit)="submit()" class="order-form" autocomplete="off">
+    <!-- Customer Name -->
+    <div class="form-group">
+      <label for="customerName">Customer Name</label>
+      <input id="customerName" formControlName="customerName" placeholder="Enter customer name"
+        [class.invalid]="orderForm.get('customerName')?.invalid && orderForm.get('customerName')?.touched" />
+      <div class="error" *ngIf="orderForm.get('customerName')?.invalid && orderForm.get('customerName')?.touched">
+        Customer name is required.
+      </div>
+    </div>
+
+    <!-- Customer Phone -->
+    <div class="form-group">
+      <label for="customerPhone">Customer Phone</label>
+      <input id="customerPhone" formControlName="customerPhone" placeholder="Enter phone number"
+        [class.invalid]="orderForm.get('customerPhone')?.invalid && orderForm.get('customerPhone')?.touched" />
+      <div class="error" *ngIf="orderForm.get('customerPhone')?.invalid && orderForm.get('customerPhone')?.touched">
+        Phone number is required.
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" placeholder="Delivery address"
+        [class.invalid]="orderForm.get('address')?.invalid && orderForm.get('address')?.touched" />
+      <div class="error" *ngIf="orderForm.get('address')?.invalid && orderForm.get('address')?.touched">
+        Address is required.
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group">
+      <label for="notes">Notes</label>
+      <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="2"></textarea>
+    </div>
+
+    <!-- Is Shipped To Village -->
+    <div class="form-group">
+      <label>
+        <input class="mt-5" type="checkbox" formControlName="isShippedToVillage" /> Shipped to Village
+      </label>
+    </div>
+
+    <!-- Is Pickup -->
+    <div class="form-group">
+      <label>
+        <input class="mt-5" type="checkbox" formControlName="isPickup" /> Pickup
+      </label>
+    </div>
+
+    <!-- Shipping Type -->
+    <div class="form-group">
+      <label for="shippingType">Shipping Type</label>
+      <select id="shippingType" formControlName="shippingType"
+        [class.invalid]="orderForm.get('shippingType')?.invalid && orderForm.get('shippingType')?.touched">
+        <option [value]="null" disabled>Select shipping type</option>
+        <option *ngFor="let type of ShippingTypes" [value]="type.value">{{ type.label }}</option>
+      </select>
+      <div class="error" *ngIf="orderForm.get('shippingType')?.invalid && orderForm.get('shippingType')?.touched">
+        Please select a shipping type.
+      </div>
+    </div>
+
+    <!-- Order Type -->
+    <!-- <div class="form-group">
+      <label for="orderType">Order Type</label>
+      <select id="orderType" formControlName="orderType"
+        [class.invalid]="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
+        <option [value]="null" disabled>Select order type</option>
+        <option *ngFor="let type of OrderTypes" [value]="type.value">{{ type.label }}</option>
+      </select>
+      <div class="error" *ngIf="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
+        Please select an order type.
+      </div>
+    </div> -->
+
+    <!-- Payment Type -->
+    <div class="form-group">
+      <label for="paymentType">Payment Type</label>
+      <select id="paymentType" formControlName="paymentType"
+        [class.invalid]="orderForm.get('paymentType')?.invalid && orderForm.get('paymentType')?.touched">
+        <option [value]="null" disabled>Select payment type</option>
+        <option *ngFor="let type of PaymentTypes" [value]="type.value">{{ type.label }}</option>
+      </select>
+      <div class="error" *ngIf="orderForm.get('paymentType')?.invalid && orderForm.get('paymentType')?.touched">
+        Please select a payment type.
+      </div>
+    </div>
+
+    <!-- Products -->
+    <div class="form-group" style="grid-column: 1 / -1;">
+      <h4 style="margin-top: 10px;">Products</h4>
+      <table class="delivery-table" *ngIf="ProductList.length > 0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Weight</th>
+            <th>Quantity</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of ProductList; let i = index">
+            <td>{{ prod.name }}</td>
+            <td>{{ prod.price }}</td>
+            <td>{{ prod.weight }}</td>
+            <td>{{ prod.quantity }}</td>
+            <td>
+              <button type="button" class="delete-btn" (click)="removeProduct(i)">X</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div [formGroup]="productForm" class="product-fields-wrapper border p-3 mb-3 rounded"
+        style="background: #fff; border: 1.5px solid #daf87a;">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input formControlName="name" placeholder="Product name"
+            [class.invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched" />
+          <div class="error" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+            Name is required.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" formControlName="price"
+            [class.invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched" />
+          <div class="error" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+            Price must be greater than 0.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Weight</label>
+          <input type="number" formControlName="weight"
+            [class.invalid]="productForm.get('weight')?.invalid && productForm.get('weight')?.touched" />
+          <div class="error" *ngIf="productForm.get('weight')?.invalid && productForm.get('weight')?.touched">
+            Weight must be greater than 0.
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" formControlName="quantity"
+            [class.invalid]="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched" />
+          <div class="error" *ngIf="productForm.get('quantity')?.invalid && productForm.get('quantity')?.touched">
+            Quantity must be at least 1.
+          </div>
+        </div>
+        <div class="form-actions1">
+          <button type="button" class="add-btn mt-3" (click)="addProduct()">Add Product</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="form-actions">
+      <button type="submit" class="add-btn" [disabled]="orderForm.invalid || isSubmitting">
+        Update Order
+      </button>
+    </div>
+
+    <div *ngIf="errorMsg" class="error-msg">{{ errorMsg }}</div>
+    <div *ngIf="successMsg" class="success-msg">{{ successMsg }}</div>
+
+  </form>
+</div>
