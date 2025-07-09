@@ -11,11 +11,16 @@ import { environment } from '../../environments/environment.development';
 export class AuthServiceService {
   constructor(private _httpClient: HttpClient) {}
 
+
+  private apiUrl = 'https://localhost:7294/api/Auth';
+
   register(data: RegisterModel): Observable<any> {
-    return this._httpClient.post(`${environment.baseUrl}/endPoint`, data);
+    return this._httpClient.post(`${this.apiUrl}/register`, data);
   }
 
   login(data: LoginModel): Observable<any> {
-    return this._httpClient.post(`${environment.baseUrl}/endPoint`, data);
-  }
+  console.log('Sending request to login:', data);
+  return this._httpClient.post(`${this.apiUrl}`, data);
+}
+
 }

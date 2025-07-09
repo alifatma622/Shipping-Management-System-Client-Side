@@ -9,9 +9,6 @@ import { MainEmployeeComponent } from './Components/Employee/MainEmployee/MainEm
 import { AllDeliveryMenComponent } from './Components/delivery-men/all-delivery-men/all-delivery-men.component';
 import { AddDeliveryManComponent } from './Components/delivery-men/add-delivery-man/add-delivery-man.component';
 import { EditDeliveryManComponent } from './Components/delivery-men/edit-delivery-man/edit-delivery-man.component';
-// import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
-// import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
-// import { GovernratesListComponent  } from './Components/Governrate/all-governrates/all-governrates.component';
 import { AddSellerComponent } from './Components/seller/add-seller/add-seller.component';
 import { EditSellerComponent } from './Components/seller/edit-seller/edit-seller.component';
 import { AddOrderComponent } from './Components/Orders/add-order/add-order.component';
@@ -21,15 +18,23 @@ import { GovernratesListComponent } from './Components/Governrate/all-governrate
 import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
+import { UnauthorizedComponent } from './Components/unauthorized/unauthorized.component';
+import { authGuard } from './Guards/auth.guard';
+import { SellerDashboardComponent } from './Components/seller-dashboard/seller-dashboard.component';
+import { DeliveryDashboardComponent } from './Components/delivery-dashboard/delivery-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'unauthorized', component: UnauthorizedComponent },
+
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
+    data: { roles: ['Admin', 'Employee'] },
     children: [
       { path: '', component: MainComponent },
       { path: 'employee', component: MainEmployeeComponent },
@@ -51,7 +56,24 @@ export const routes: Routes = [
       {path: 'governrates', component: GovernratesListComponent},
       { path: 'seller', component: AllSellerComponent }
     ]
-  }
+  },
+
+    {
+      path: 'seller-dashboard',
+      component: SellerDashboardComponent,
+      canActivate: [authGuard],
+      data: { roles:'Seller' },
+      children: []
+    },
+
+    {
+      path: 'delivery-dashboard',
+      component: DeliveryDashboardComponent,
+      canActivate: [authGuard],
+      data: { roles:'DeliveryAgent' },
+      children: []
+    },
+
 ];
 
 @NgModule({

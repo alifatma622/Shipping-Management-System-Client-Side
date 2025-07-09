@@ -18,8 +18,9 @@
           <input
             type="text"
             id="username"
-            name="username"
-            ngModel
+            name="userName"
+            [(ngModel)]="userName"
+
             required
             #usernameRef="ngModel"
             class="form-control"
@@ -41,7 +42,7 @@
               type="password"
               id="password"
               name="password"
-              ngModel
+              [(ngModel)]="password"
               required
               minlength="6"
               #passwordRef="ngModel"
