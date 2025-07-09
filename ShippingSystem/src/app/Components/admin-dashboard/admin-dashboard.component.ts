@@ -18,9 +18,9 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
-    CommonModule, 
-    MatCardModule, 
-    MatTableModule, 
+    CommonModule,
+    MatCardModule,
+    MatTableModule,
     MatButtonModule,
     MatIconModule,
     MatInputModule,
@@ -29,6 +29,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
     MatSnackBarModule,
     FormsModule,
     NgChartsModule
+
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
@@ -141,7 +142,7 @@ export class AdminDashboardComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'top',
         labels: {
@@ -198,7 +199,7 @@ export class AdminDashboardComponent implements OnInit {
   // Table configuration
   displayedColumns: string[] = [
     'customerName',
-    'orderID', 
+    'orderID',
     'creationDate',
     'customerCityName',
     'status',
@@ -215,7 +216,7 @@ export class AdminDashboardComponent implements OnInit {
   private loadDashboardData(): void {
     this.isLoading = true;
     this.error = null;
-    
+
     this.dashboardService.getMockDashboardData().subscribe({
       next: (data) => {
         this.dashboardData = data;
@@ -445,13 +446,13 @@ export class AdminDashboardComponent implements OnInit {
   // Filter methods
   getFilteredOrders(): any[] {
     if (!this.dashboardData?.recentOrders) return [];
-    
+
     if (!this.searchTerm.trim()) {
       return this.dashboardData.recentOrders;
     }
 
     const searchLower = this.searchTerm.toLowerCase();
-    return this.dashboardData.recentOrders.filter(order => 
+    return this.dashboardData.recentOrders.filter(order =>
       order.customerName.toLowerCase().includes(searchLower) ||
       order.orderID.toString().includes(searchLower) ||
       order.customerCityName.toLowerCase().includes(searchLower) ||
@@ -467,4 +468,4 @@ export class AdminDashboardComponent implements OnInit {
       .filter((type, index, arr) => type && arr.indexOf(type) === index);
     return types as string[];
   }
-} 
+}
