@@ -48,69 +48,69 @@ export class AllCityComponent implements OnInit {
   /* All Of This Will Be Remove When APi Working */
 
   ngOnInit(): void {
-    // this Is Code To Catch API When Worked
-    // this._cityService.getAllCities().subscribe((data) => {
-    //   this.cities = data;
-    // });
+    //this Is Code To Catch API When Worked
+    this._cityService.getAllCities().subscribe((data) => {
+      this.cities = data;
+    });
 
-    this.cities = [
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Cairo',
-        normalPrice: 50,
-        pickupPrice: 30,
-        governorateName: 'Cairo Gov',
-        id: 1,
-      },
-      {
-        name: 'Alexandria',
-        normalPrice: 60,
-        pickupPrice: 40,
-        governorateName: 'Alex Gov',
-        id: 2,
-      },
-    ];
+    // this.cities = [
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Cairo',
+    //     normalPrice: 50,
+    //     pickupPrice: 30,
+    //     governorateName: 'Cairo Gov',
+    //     id: 1,
+    //   },
+    //   {
+    //     name: 'Alexandria',
+    //     normalPrice: 60,
+    //     pickupPrice: 40,
+    //     governorateName: 'Alex Gov',
+    //     id: 2,
+    //   },
+    // ];
   }
 
   onEdit(city: CityModel) {
