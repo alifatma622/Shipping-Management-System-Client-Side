@@ -95,11 +95,15 @@ export interface ReadOneOrderDTO {
   branchName?: string;
   isShippedToVillage: boolean;
   address: string;
-  creationDate: string; // Use `string` for ISO date (from .NET DateTime)
+  creationDate: string;
+  statusId: number;
+  shippingTypeID: number;
+  orderTypeId: number;
+  paymentTypeId: number;
   status: string;
-  shippingType: string;
-  orderType: string;
-  paymentType: string;
+  shippingType: number;
+  orderType: number;
+  paymentType: number;
   isPickup: boolean;
   isActive: boolean;
   isDeleted: boolean;
@@ -122,7 +126,7 @@ export interface UpdateProductDTO {
 
 export interface UpdateOrderDTO
 {
-  orderID: number;
+  id: number;
   notes: string;
   customerName: string;
   customerPhone: string;
@@ -134,6 +138,6 @@ export interface UpdateOrderDTO
   paymentType: number;
   isPickup: boolean;
   isActive: boolean;
-  deliveyManId?: number;
+  deliveryManId?: number;
   products: UpdateProductDTO[];
 }

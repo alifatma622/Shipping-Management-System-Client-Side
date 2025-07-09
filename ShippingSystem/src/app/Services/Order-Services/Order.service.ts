@@ -79,12 +79,12 @@ getPaymentTypes(): Observable<PaymentType[]> {
     return of(Object.values(PaymentType).filter(value => typeof value === 'number') as PaymentType[]).pipe(delay(1000));
 }
 
-getOrderTypes(): Observable<string[]> {
-    return of(Object.values(OrderType).filter(value => typeof value === 'string') as string[]).pipe(delay(1000));
+getOrderTypes(): Observable<OrderType[]> {
+    return of(Object.values(OrderType).filter(value => typeof value === 'number') as OrderType[]).pipe(delay(1000));
 }
 
 updateOrder(order : UpdateOrderDTO): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${order.orderID}`, order);
+    return this.http.put(`${this.apiUrl}/${order.id}`, order);
 }
 
 

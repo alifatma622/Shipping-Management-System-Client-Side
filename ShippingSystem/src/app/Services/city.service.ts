@@ -10,7 +10,7 @@ export interface ICity {
 
 @Injectable({ providedIn: 'root' })
 export class CityService {
-  private apiUrl = 'https://localhost:7294/api/City';
+  private apiUrl = `${environment.baseUrl}/api/City`;
 
   constructor(private http: HttpClient) {}
 

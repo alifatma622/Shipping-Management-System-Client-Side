@@ -10,10 +10,12 @@ import { UpdateCity } from '../../Models/CityModels/update-city';
 })
 
 export class CityServiceService {
+  private apiUrl = `${environment.baseUrl}/api/City`;
+
   constructor(private _httpClient: HttpClient) {}
 
   getAllCities() {
-    return this._httpClient.get<CityModel[]>(`${environment.baseUrl}/endpoint`);
+    return this._httpClient.get<CityModel[]>(`${environment.baseUrl}/api/City/paginated`);
   }
 
   getCityById(id: number) {

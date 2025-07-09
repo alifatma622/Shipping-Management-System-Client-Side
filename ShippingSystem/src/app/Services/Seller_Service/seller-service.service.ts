@@ -19,7 +19,8 @@ export class SellerServiceService {
 
   getAllSellers(pageNumber: number, pageSize: number): Observable<PaginationResult<ISellerModels>> {
   return this.http.get<PaginationResult<ISellerModels>>(
-    `${this.apiUrl}/paginated?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    // `${this.apiUrl}/paginated?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    `${this.apiUrl}/paginated/?PageNumber=${pageNumber}&PageSize=${pageSize}`
   );
 }
 
