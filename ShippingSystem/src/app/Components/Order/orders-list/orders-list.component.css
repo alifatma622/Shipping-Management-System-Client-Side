@@ -1,4 +1,4 @@
-/* Details Button */
+
 .details-btn {
   background: var(--main-white);
   color: var(--main-gray);
@@ -12,13 +12,13 @@
   gap: 6px;
   cursor: pointer;
   transition: all 0.18s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .details-btn:hover {
   background: #f0f7f8;
   border-color: var(--main-dark);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .details-btn svg {
@@ -37,7 +37,7 @@
   margin-right: 8px;
   cursor: pointer;
   transition: all 0.18s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   min-width: 85px;
 }
 
@@ -60,6 +60,7 @@
   /* align-content: center; */
   gap: 6px;
 }
+
 .agent-table {
   padding: 30px;
   border-radius: 14px;
@@ -68,8 +69,9 @@
   /* box-shadow: 0 4px 18px #05586622; */
   margin: 18px 0 0 0;
 }
-.agent-table th{
- background: #fff;
+
+.agent-table th {
+  background: #fff;
   color: #055866;
   font-weight: 600;
   padding: 14px 10px;
@@ -81,6 +83,7 @@
   border-bottom: 3px solid #055866;
   position: relative;
 }
+
 .agent-table td {
   background: var(--main-white);
   color: var(--main-gray);
@@ -104,3 +107,16 @@
   color: #055866;
 }
 
+.status-dropdown-list li {
+  transition: background-color 0.2s ease;
+}
+
+.status-dropdown-list li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.status-dropdown-list li:not(.active):hover {
+  background-color: #f2f2f2;
+  color: black;
+}

@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Add Branch</h2>
+
+  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Branch Name</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        placeholder="Enter branch name"
+      />
+      <div
+        class="error"
+        *ngIf="
+          branchForm.get('name')?.touched && branchForm.get('name')?.invalid
+        "
+      >
+        <small>Name is required</small>
+      </div>
+    </div>
+
+    <!-- City Dropdown -->
+    <div class="form-group">
+      <label for="cityId">City</label>
+      <select id="cityId" formControlName="cityId">
+        <option value="" disabled>Select a city</option>
+        <option *ngFor="let city of cities" [value]="city.id">
+          {{ city.name }}
+        </option>
+      </select>
+      <div
+        class="error"
+        *ngIf="
+          branchForm.get('cityId')?.touched && branchForm.get('cityId')?.invalid
+        "
+      >
+        <small>City is required</small>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="branchForm.invalid">➕ Add Branch</button>
+
+    <div class="server-error" *ngIf="serverError">
+      {{ serverError }}
+    </div>
+  </form>
+</div>

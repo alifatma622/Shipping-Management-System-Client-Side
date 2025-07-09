@@ -35,7 +35,7 @@ body {
 
 .modal-backdrop {
   z-index: 0 !important; /* Just below modal */
-  display: none !important;  
+  display: none !important;
 }
 
 .modal-content{

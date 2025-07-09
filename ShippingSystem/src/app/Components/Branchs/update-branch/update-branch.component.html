@@ -1,0 +1,49 @@
+<div class="update-container">
+  <h2 class="form-title">Update Branch</h2>
+
+  <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="name">Branch Name</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        formControlName="name"
+        placeholder="Enter branch name"
+      />
+      <div
+        class="text-danger"
+        *ngIf="
+          branchForm.get('name')?.touched && branchForm.get('name')?.invalid
+        "
+      >
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group mb-4">
+      <label for="cityId">City</label>
+      <select id="cityId" class="form-select" formControlName="cityId">
+        <option value="" disabled>Select a city</option>
+        <option *ngFor="let city of cities" [value]="city.id">
+          {{ city.name }}
+        </option>
+      </select>
+      <div
+        class="text-danger"
+        *ngIf="
+          branchForm.get('cityId')?.touched && branchForm.get('cityId')?.invalid
+        "
+      >
+        City is required.
+      </div>
+    </div>
+
+    <button type="submit" class="btn-update" [disabled]="branchForm.invalid">
+      ✏️ Update Branch
+    </button>
+    <div class="text-danger" *ngIf="serverError">
+      {{ serverError }}
+    </div>
+  </form>
+</div>

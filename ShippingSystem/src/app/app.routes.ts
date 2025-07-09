@@ -1,7 +1,13 @@
-import { NgModule } from '@angular/core';
+import { AllCityComponent } from './Components/Regions/all-city/all-city.component';
+import { AddCityComponent } from './Components/Regions/add-city/add-city.component';
+import { UpdateCityComponent } from './Components/Regions/update-city/update-city.component';
+import { AllBranchComponent } from './Components/Branchs/all-branch/all-branch.component';
+import { UpdateBranchComponent } from './Components/Branchs/update-branch/update-branch.component';
+import { AddBranchComponent } from './Components/Branchs/add-branch/add-branch.component';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './Components/login/login.component';
-import { RegisterComponent } from './Components/register/register.component';
+import { LoginComponent } from './Components/Auth/login/login.component';
+import { RegisterComponent } from './Components/Auth/register/register.component';
 import { LandingComponent } from './Components/landing/landing.component';
 import { DashboardComponent } from './Components/Dashboard/Dashboard.component';
 import { MainComponent } from './Components/Main/Main.component';
@@ -15,14 +21,17 @@ import { AddOrderComponent } from './Components/Orders/add-order/add-order.compo
 import { AddEmployeeComponent } from './Components/Employee/AddEmployee/AddEmployee.component';
 import { GeneralSettingsComponent } from './Components/general-settings/general-settings.component';
 import { GovernratesListComponent } from './Components/Governrate/all-governrates/all-governrates.component';
-import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
 import { EditEmployeeComponent } from './Components/Employee/EditEmployee/EditEmployee.component';
 import { OrdersListComponent } from './Components/Order/orders-list/orders-list.component';
 import { UnauthorizedComponent } from './Components/unauthorized/unauthorized.component';
 import { authGuard } from './Guards/auth.guard';
 import { SellerDashboardComponent } from './Components/seller-dashboard/seller-dashboard.component';
 import { DeliveryDashboardComponent } from './Components/delivery-dashboard/delivery-dashboard.component';
+import { AllSellerComponent } from './Components/seller/all-seller/all-seller/all-seller.component';
+import { OrderDetailsComponent } from './Components/Order/order-details/order-details.component';
+import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.component';
 
+import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
@@ -45,16 +54,26 @@ export const routes: Routes = [
       { path: 'seller/add', component: AddSellerComponent },
       { path: 'seller/edit/:id', component: EditSellerComponent },
       { path: 'order/add', component: AddOrderComponent },
-
       { path: 'employee/add', component: AddEmployeeComponent },
       { path: 'employee/edit/:id', component: EditEmployeeComponent },
-      { path: 'order', component:OrdersListComponent},
+      { path: 'order', component: OrdersListComponent },
+      { path: 'Order/Details/:id', component: OrderDetailsComponent },
+      {path: 'Order/Edit/:id', component: EditOrderComponent},
+      { path: 'Allcity', component: AllCityComponent },
+      { path: 'Addcity', component: AddCityComponent },
+      { path: 'Updatecity/:id', component: UpdateCityComponent },
+      { path: 'AllBranch', component: AllBranchComponent },
+      { path: 'UpdateBranch/:id', component: UpdateBranchComponent },
+      { path: 'AddBranch', component: AddBranchComponent },
       { path: 'delivery-men', component: AllDeliveryMenComponent },
       { path: 'delivery-men/add', component: AddDeliveryManComponent },
       { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent },
-       {path: 'general-settings', component: GeneralSettingsComponent},
-      {path: 'governrates', component: GovernratesListComponent},
-      { path: 'seller', component: AllSellerComponent }
+      { path: 'general-settings', component: GeneralSettingsComponent },
+      { path: 'governrates', component: GovernratesListComponent },
+      { path: 'seller', component: AllSellerComponent },
+
+      { path: 'overview', component: AdminDashboardComponent }
+
     ]
   },
 
@@ -78,6 +97,6 @@ export const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

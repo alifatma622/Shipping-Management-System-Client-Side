@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Signal } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
 
 export interface GeneralSettings {
   id: number;
@@ -20,7 +21,7 @@ export interface GeneralSettings {
   providedIn: 'root'
 })
 export class GeneralSettingsServiceTsService {
-  private apiUrl = 'https://localhost:7294/api/GeneralSettings';
+  private apiUrl = `${environment.baseUrl}/api/GeneralSettings`;
   constructor(private http: HttpClient){}
   getSettings(): Observable<GeneralSettings> {
     return this.http.get<GeneralSettings>(this.apiUrl);

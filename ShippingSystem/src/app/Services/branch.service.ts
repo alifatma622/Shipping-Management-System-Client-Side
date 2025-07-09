@@ -1,4 +1,3 @@
-
 // branch.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -12,7 +11,7 @@ export interface IBranch {
 
 @Injectable({ providedIn: 'root' })
 export class BranchService {
-  private apiUrl = `${environment.baseUrl}/api/Branch`;
+  private apiUrl = `https://localhost:7294/api/Branch`;
 
   constructor(private http: HttpClient) {}
 

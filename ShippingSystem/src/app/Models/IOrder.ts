@@ -1,6 +1,7 @@
 import { OrderType } from "../Enum/OrderType";
 import { ShippingType } from "../Enum/ShippingType";
 import { PaymentType } from "../Enum/PaymentType"
+import { OrderStatus } from "./DashboardDTO";
 
 export interface ReadOrderDTO {
  orderID: number;
@@ -15,7 +16,7 @@ export interface ReadOrderDTO {
   isShippedToVillage: boolean;
   address: string;
   creationDate: string; // or Date if you plan to convert it
-  status: string; // or enum if you have specific status values
+  status: number; // or enum if you have specific status values
   shippingType: string; // or enum
   orderType: string; // or enum
   paymentType: string; // or enum
@@ -25,7 +26,11 @@ export interface ReadOrderDTO {
   shippingCost: number;
   totalCost: number;
   totalWeight: number;
+  showStatusDropdown:boolean;
 }
+
+
+
 
 export interface AddOrderDTO {
   notes?: string;
@@ -33,7 +38,7 @@ export interface AddOrderDTO {
   customerPhone: string;
   isShippedToVillage: boolean;
   address: string;
-  creationDate: Date;
+  creationDate: string;
   shippingType: ShippingType;
   orderType: OrderType;
   paymentType: PaymentType;
@@ -58,4 +63,77 @@ export interface OrderResponse {
   pageSize: number;
   totalPages: number;
   items: ReadOrderDTO[];
+}
+
+export interface ProductDTO {
+  name: string;
+  price: number;
+  weight: number;
+  quantity: number;
+}
+
+//update Order
+
+export interface Product {
+  productID: number;
+  name: string;
+  price: number;
+  weight: number;
+  quantity: number;
+  orderId: number;
+}
+export interface ReadOneOrderDTO {
+  orderID: number;
+  notes?: string;
+  customerName: string;
+  customerPhone: string;
+  customerCityName?: string;
+  sellerName?: string;
+  sellerCityName?: string;
+  deliverManId : number;
+  deliveryAgentName?: string;
+  branchName?: string;
+  isShippedToVillage: boolean;
+  address: string;
+  creationDate: string; // Use `string` for ISO date (from .NET DateTime)
+  status: string;
+  shippingType: string;
+  orderType: string;
+  paymentType: string;
+  isPickup: boolean;
+  isActive: boolean;
+  isDeleted: boolean;
+  shippingCost: number;
+  totalCost: number;
+  totalWeight: number;
+  products: Product[];
+}
+
+
+
+
+export interface UpdateProductDTO {
+  name: string;
+  price: number;
+  weight: number;
+  quantity: number;
+  orderId : number;
+}
+
+export interface UpdateOrderDTO
+{
+  orderID: number;
+  notes: string;
+  customerName: string;
+  customerPhone: string;
+  isShippedToVillage: boolean;
+  address: string;
+  status : number;
+  shippingType: number;
+  orderType: number;
+  paymentType: number;
+  isPickup: boolean;
+  isActive: boolean;
+  deliveyManId?: number;
+  products: UpdateProductDTO[];
 }
