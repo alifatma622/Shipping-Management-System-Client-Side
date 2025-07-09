@@ -12,10 +12,10 @@ export class AuthServiceService {
   constructor(private _httpClient: HttpClient) {}
 
   register(data: RegisterModel): Observable<any> {
-    return this._httpClient.post(`${environment.baseUrl}/endPoint`, data);
+    return this._httpClient.post(`${environment.baseUrl}/api/Auth/register`, data);
   }
 
   login(data: LoginModel): Observable<any> {
-    return this._httpClient.post(`${environment.baseUrl}/endPoint`, data);
+    return this._httpClient.post(`${environment.baseUrl}/api/Auth/login`, data);
   }
 }
