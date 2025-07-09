@@ -1,0 +1,212 @@
+.services-section {
+  background: linear-gradient(
+    135deg,
+    var(--light-bg) 0%,
+    var(--main-white) 100%
+  );
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at 20% 30%,
+        rgba(218, 248, 122, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(5, 88, 102, 0.1) 0%,
+        transparent 50%
+      );
+    pointer-events: none;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-header {
+    .section-title {
+      font-size: 2.5rem;
+      color: var(--main-gray);
+      font-weight: 700;
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--main-dark),
+          var(--main-accent)
+        );
+        border-radius: 2px;
+      }
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--main-gray);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+
+  .service-card {
+    background: var(--main-white);
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--main-dark), var(--main-accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(5, 88, 102, 0.15);
+      border-color: var(--main-accent);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      .icon-wrapper .icon {
+        background: var(--main-accent);
+        color: var(--main-dark);
+        transform: scale(1.1) rotate(5deg);
+      }
+    }
+
+    .icon-wrapper {
+      display: flex;
+      justify-content: center;
+
+      .icon {
+        width: 70px;
+        height: 70px;
+        background: var(--light-bg);
+        border: 3px solid var(--border);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--main-dark);
+        font-size: 1.8rem;
+        transition: all 0.4s ease;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: -3px;
+          background: linear-gradient(
+            45deg,
+            var(--main-dark),
+            var(--main-accent)
+          );
+          border-radius: 15px;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          z-index: -1;
+        }
+
+        &:hover::after {
+          opacity: 0.1;
+        }
+      }
+    }
+
+    .service-title {
+      color: var(--main-gray);
+      font-size: 1.3rem;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .service-description {
+      color: var(--main-gray);
+      opacity: 0.8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .services-section {
+    .section-header {
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .section-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    .service-card {
+      .icon-wrapper .icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+      }
+
+      .service-title {
+        font-size: 1.1rem;
+      }
+
+      .service-description {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .services-section {
+    .section-header {
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    .service-card {
+      padding: 1.5rem !important;
+
+      .icon-wrapper .icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
+    }
+  }
+}

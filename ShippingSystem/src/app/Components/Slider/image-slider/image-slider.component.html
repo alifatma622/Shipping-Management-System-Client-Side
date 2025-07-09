@@ -1,0 +1,65 @@
+
+<div class="slider-container" (mouseenter)="onSliderEnter()" (mouseleave)="onSliderLeave()">
+  <div class="slide-wrapper">
+
+    <div class="slide"
+         *ngFor="let image of images; let i = index"
+         [class.active]="i === currentIndex"
+         [class.prev]="i === (currentIndex - 1 + images.length) % images.length"
+         [class.next]="i === (currentIndex + 1) % images.length">
+
+      <img [src]="image" [alt]="sliderTexts[i].title" class="slide-img">
+
+      <div class="slide-overlay">
+        <div class="slide-content">
+          <h2 class="slide-title">{{ sliderTexts[i].title }}</h2>
+          <p class="slide-subtitle">{{ sliderTexts[i].subtitle }}</p>
+          <button class="slide-btn" (click)="onButtonClick(sliderTexts[i].buttonText)">
+            {{ sliderTexts[i].buttonText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button class="nav-arrow prev" (click)="prevImage()" aria-label="Previous slide">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5m7-7l-7 7 7 7"/>
+    </svg>
+  </button>
+
+  <button class="nav-arrow next" (click)="nextImage()" aria-label="Next slide">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12h14m-7-7l7 7-7 7"/>
+    </svg>
+  </button>
+
+  <div class="dots-container">
+    <span class="dot"
+          *ngFor="let dot of images; let i = index"
+          [class.active]="i === currentIndex"
+          (click)="goToImage(i)"
+          [attr.aria-label]="'Go to slide ' + (i + 1)"
+          role="button"
+          tabindex="0">
+    </span>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width.%]="progressWidth"></div>
+  </div>
+
+
+
+
+  <button class="play-pause-btn" (click)="isPlaying ? (isPlaying = false) : (isPlaying = true)"
+          [attr.aria-label]="isPlaying ? 'Pause slideshow' : 'Play slideshow'">
+    <svg *ngIf="isPlaying" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+    </svg>
+    <svg *ngIf="!isPlaying" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z"/>
+    </svg>
+  </button>
+</div>
