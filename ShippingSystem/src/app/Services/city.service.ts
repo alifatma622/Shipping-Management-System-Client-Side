@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 
 export interface ICity {
   id: number;
@@ -9,7 +10,7 @@ export interface ICity {
 
 @Injectable({ providedIn: 'root' })
 export class CityService {
-  private apiUrl = 'https://localhost:7294/api/City';
+  private apiUrl = `${environment.baseUrl}/api/City/all`;
 
   constructor(private http: HttpClient) {}
 

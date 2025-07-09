@@ -15,6 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
+
   //#region variables
   orders: ReadOrderDTO[] = [];
   isLoading = true;
@@ -30,6 +31,8 @@ export class OrdersListComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
+
+
 
   OrderStatus = OrderStatus;
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
@@ -69,6 +72,7 @@ export class OrdersListComponent implements OnInit {
 
   loadOrders() {
     this.isLoading = true;
+
     this.orderService.getPaginatedOrders(
       this.currentPage,
       this.itemsPerPage
@@ -90,7 +94,7 @@ export class OrdersListComponent implements OnInit {
     });
   }
   onEdit(id: number) {
-    this.router.navigate(['dashboard/order/edit', id]);
+    this.router.navigate(['dashboard/Order/Edit', id]);
   }
 
   onDelete(id: number) {
@@ -102,12 +106,14 @@ export class OrdersListComponent implements OnInit {
   }
 
   viewDetails(deliveryId: number): void {
-    this.router.navigate(['dashboard/orders', deliveryId]);
+    this.router.navigate(['dashboard/Order/Details', deliveryId]);
   }
   //#endregion
 
   //#region search
+  //#region search
   get filteredOrders(): ReadOrderDTO[] {
+
     if (!this.searchString.trim()) return this.orders;
 
     const searchTerm = this.searchString.trim().toLowerCase();
@@ -124,6 +130,7 @@ export class OrdersListComponent implements OnInit {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
+
         o.customerCityName
         // Add more fields as needed
       ].filter(f => f); // Remove undefined/null values
@@ -157,6 +164,7 @@ export class OrdersListComponent implements OnInit {
       default: return 'Unknown';
     }
   }
+
 
   getStatusClass(status: any): string {
     // console.log(status)
@@ -192,6 +200,7 @@ export class OrdersListComponent implements OnInit {
     this.selectedAgent = agent;
   }
 
+
   assignOrder(orderId: number): void {
     this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
       next: (response) => {
@@ -209,6 +218,7 @@ export class OrdersListComponent implements OnInit {
   //#region pagination
 
   get pagedOrders() {
+
     return this.orders;
   }
 
@@ -218,6 +228,7 @@ export class OrdersListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
+
     this.loadOrders();
   }
   onItemsPerPageChange(count: number) {
