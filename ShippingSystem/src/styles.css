@@ -48,7 +48,7 @@ html, body {
 .body-trimmed {
   width: calc(100% - 13.5625rem);
   margin-left: 14.1625rem;
-  margin-top: 0 !important;
+  margin-top: 45px !important;
   padding-top: 0 !important;
 }
 

@@ -9,7 +9,7 @@
 
 .all-delivery-men-container {
   max-width: 1400px important;
-  height: 700px important;
+  height: 600px important;
   padding: 38px 28px 24px 28px;
   display: flex;
   flex-direction: column;
@@ -26,9 +26,19 @@
 }
 
 .header h2 {
-  color: var(--main-dark);
-  font-size: 1.7rem;
-  font-weight: 700;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #055866;
+  font-weight:700;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin: 0 0 18px 0;
+  line-height: 1.1;
+  border-bottom: 3px solid #daf87a; /* الخط الأصفر */
+  display: inline-block;
+  padding-bottom: 6px;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .add-btn {

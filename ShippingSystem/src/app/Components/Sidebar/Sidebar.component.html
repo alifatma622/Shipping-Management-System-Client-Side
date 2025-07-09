@@ -2,18 +2,13 @@
   class="sidenav"
   [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
 >
-  
   <div class="logo-container">
-    
     <button class="logo" (click)="toggleCollapse()">
-      <!-- <i class="fal fa-bars"></i> -->
-      <img src="assets/Images/logo-Pica.png" width="40" height="40" alt="Logo">
+      <i class="fas fa-bars menu-icon" [ngClass]="{'with-gap': !isLeftSidebarCollapsed()}"></i>
     </button>
     @if (!isLeftSidebarCollapsed()) {
-      <div class="logo-text">Shipping</div>
-      <button class="btn-close" (click)="closeSidenav()">
-        <i class="fal fa-times close-icon"></i>
-      </button>
+      <img src="assets/Images/logo-Pica.png" class="carvex-logo" alt="Carvex Logo" />
+      <span class="carvex-name">Carvex</span>
     }
   </div>
   <div class="sidenav-nav-wrapper">
