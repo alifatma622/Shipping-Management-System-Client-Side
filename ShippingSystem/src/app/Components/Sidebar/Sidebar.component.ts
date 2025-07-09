@@ -1,3 +1,4 @@
+import { AuthServiceService } from './../../Services/Auth_Services/auth-service.service';
 import { Component, OnInit, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -8,7 +9,7 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
   styleUrls: ['./Sidebar.component.css'],
 })
 export class SidebarComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router , private authService : AuthServiceService) {}
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
@@ -116,4 +117,10 @@ export class SidebarComponent {
     });
     selectedItem.isOpen = !selectedItem.isOpen;
   }
+
+  Logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/landing']);
+  }
+
 }

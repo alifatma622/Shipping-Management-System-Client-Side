@@ -2,9 +2,9 @@
   class="sidenav"
   [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
 >
-  
+
   <div class="logo-container">
-    
+
     <button class="logo" (click)="toggleCollapse()">
       <!-- <i class="fal fa-bars"></i> -->
       <img src="assets/Images/logo-Pica.png" width="40" height="40" alt="Logo">
@@ -44,7 +44,7 @@
                      [routerLink]="subItem.routeLink"
                      routerLinkActive="active"
                      [routerLinkActiveOptions]="{ exact: true }"
-                
+
                      >
                     <span>{{ subItem.label }}</span>
                   </a>
@@ -52,26 +52,19 @@
           }
         </ul>
       }
-     
+
     </li>
   }
-       <li class="sidenav-nav-item" [class.open]="logout.isOpen" >
+       <li class="sidenav-nav-item">
+  <a class="sidenav-nav-link" (click)="Logout()">
+    <i class="sidenav-link-icon" [class]="logout.icon"></i>
+    @if (!isLeftSidebarCollapsed()) {
+      <span class="sidenav-link-text">Log out</span>
+    }
+  </a>
+</li>
 
-   <a
-          class="sidenav-nav-link"
-          [routerLink]=""
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          
-        >
-          <i class="sidenav-link-icon" [class]="logout.icon"></i>
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text" >Log out</span>
-            
-          }
-        </a>
-      </li>
 
-    </div>    
+    </div>
   </div>
 </div>

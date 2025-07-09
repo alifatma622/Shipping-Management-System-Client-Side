@@ -23,4 +23,9 @@ export class AuthServiceService {
   return this._httpClient.post(`${this.apiUrl}`, data);
 }
 
+logout() {
+  localStorage.removeItem('token');
+}
+
+
 }

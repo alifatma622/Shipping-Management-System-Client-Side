@@ -58,7 +58,7 @@ export class LoginComponent {
           console.log('Role:', role);
           // هنا هيضاف Role ال باقيه وكمان عنضبط ليهم Route In App.routes
           if (role[0] === 'Admin' && role[1] === 'Employee') {
-            this._router.navigate(['/dashboard']);
+            this._router.navigate(['/dashboard/overview']);
           } else if (role === 'Seller') {
             this._router.navigate(['/seller-dashboard']);
           }
