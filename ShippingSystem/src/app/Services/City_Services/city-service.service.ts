@@ -13,24 +13,24 @@ export class CityServiceService {
   constructor(private _httpClient: HttpClient) {}
 
   getAllCities() {
-    return this._httpClient.get<CityModel[]>(`${environment.baseUrl}/endpoint`);
+    return this._httpClient.get<CityModel[]>(`${environment.baseUrl}/api/City`);
   }
 
   getCityById(id: number) {
     return this._httpClient.get<CityModel>(
-      `${environment.baseUrl}/endpoint/${id}`
+      `${environment.baseUrl}/api/City/${id}`
     );
   }
 
   addCity(city: CreateCityModel) {
-    return this._httpClient.post(`${environment.baseUrl}/endpoint`, city);
+    return this._httpClient.post(`${environment.baseUrl}/api/City`, city);
   }
 
   updateCity(id: number, city: UpdateCity) {
-    return this._httpClient.put(`${environment.baseUrl}/endpoint/${id}`, city);
+    return this._httpClient.put(`${environment.baseUrl}/api/City/${id}`, city);
   }
 
   deleteCity(id: number) {
-    return this._httpClient.delete(`${environment.baseUrl}/endpoint/${id}`);
+    return this._httpClient.delete(`${environment.baseUrl}/api/City/${id}`);
   }
 }

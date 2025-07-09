@@ -12,3 +12,9 @@
   font-family: 'Segoe UI', Arial, sans-serif;
   letter-spacing: 1px;
 }
+.carvex-logo {
+  width: 32px;
+  height: 34px;
+  /* margin-right: 10px; */
+  vertical-align: middle;
+}

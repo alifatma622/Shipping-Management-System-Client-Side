@@ -12,12 +12,11 @@ import { OrderService } from '../../../Services/Order-Services/Order.service';
 export class OrderDetailsComponent {
   constructor(private _orderService: OrderService) {}
   sections = [
-    { title: 'General Information', icon: '🧾', key: 'general', open: true },
-    { title: 'Customer Information', icon: '👤', key: 'customer', open: false },
-    { title: 'Shipping Information', icon: '🚚', key: 'shipping', open: false },
+    { title: 'General Information', key: 'general', open: true },
+    { title: 'Customer Information',  key: 'customer', open: false },
+    { title: 'Shipping Information', key: 'shipping', open: false },
     {
       title: 'Seller & Branch Information',
-      icon: '🏪',
       key: 'seller',
       open: false,
     },

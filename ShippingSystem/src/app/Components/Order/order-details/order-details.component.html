@@ -1,10 +1,9 @@
 <div class="order-details-container">
-  <h2 class="page-title">📦 Order Details</h2>
+  <h2 class="page-title">Order Details</h2>
 
   <div class="card" *ngFor="let section of sections">
     <div class="card-header" (click)="toggleSection(section)">
       <div class="header-left">
-        <span class="section-icon">{{ section.icon }}</span>
         <h3 class="section-title">{{ section.title }}</h3>
       </div>
       <span class="toggle-btn" [class.open]="section.open">
