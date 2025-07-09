@@ -4,7 +4,9 @@
       <img src="assets/Images/Shpping Register.avif" alt="Login Image" />
     </div>
 
-    <div class="form-section">
+    <div class="form-section" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      
+
       <form
         #loginForm="ngForm"
         (ngSubmit)="onLoginSubmit(loginForm)"
@@ -79,6 +81,10 @@
               </div>
             }
           </form>
+          <div class="nav-btn-row" style="display: flex; justify-content: center; align-items: center; margin-top: 20px;" >
+            <button type="button" class="nav-btn" (click)="goHome()">Go Home</button>
+          </div>
         </div>
       </div>
+      
     </div>

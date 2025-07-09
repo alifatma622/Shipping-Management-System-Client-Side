@@ -78,4 +78,12 @@ export class LoginComponent {
       this.errorMessage = 'Form is invalid';
     }
   }
+
+  goHome(): void {
+    this._router.navigate(['/']);
+  }
+
+  goBack(): void {
+    this._router.navigate(['/dashboard/overview']); // or use: window.history.back();
+  }
 }

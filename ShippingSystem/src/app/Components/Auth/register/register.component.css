@@ -88,3 +88,49 @@ label {
   background-color: #8faeb3;
   cursor: not-allowed;
 }
+
+.btn-submit {
+  background-color: #055866;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:disabled {
+  background-color: #8faeb3;
+  cursor: not-allowed;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.nav-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.nav-btn {
+  background-color: #daf87a;
+  color: #055866;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: #c0e96a;
+}

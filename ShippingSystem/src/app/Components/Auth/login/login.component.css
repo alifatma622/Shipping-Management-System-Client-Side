@@ -90,3 +90,26 @@ label {
   margin-top: 5px;
   display: block;
 }
+
+.nav-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.nav-btn {
+  background-color: #daf87a;
+  color: #055866;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: #c0e96a;
+}
