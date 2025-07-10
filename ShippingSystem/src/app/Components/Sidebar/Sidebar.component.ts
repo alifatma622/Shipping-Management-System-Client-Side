@@ -8,9 +8,13 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
   templateUrl: './Sidebar.component.html',
   styleUrls: ['./Sidebar.component.css'],
 })
-export class SidebarComponent {
-  constructor(private router: Router , private authService : AuthServiceService) {}
-
+export class SidebarComponent implements OnInit {
+  userRole: string[]  | null = [];
+  constructor(private router: Router , public authService : AuthServiceService) {}
+  ngOnInit(): void {
+  this.userRole = this.authService.getRole();
+  console.log("✅ User roles:", this.userRole);
+}
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
   logout = { routeLink: 'logout',
@@ -23,11 +27,13 @@ export class SidebarComponent {
       routeLink: 'overview',
       icon: 'fal fa-home',
       label: 'Dashboard',
+      visibleFor: ['Employee', 'Admin'],
     },
     {
       icon: 'fal fa-user-tie',
       label: 'Employees',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Employees', routeLink: 'employee' },
         { label: 'New employee', routeLink: 'employee/add' },
@@ -37,6 +43,7 @@ export class SidebarComponent {
       icon: 'fal fa-store',
       label: 'Sellers',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Sellers ', routeLink: 'seller' },
         { label: 'New seller', routeLink: 'seller/add' },
@@ -46,6 +53,7 @@ export class SidebarComponent {
       icon: 'fal fa-truck',
       label: 'Delivery Agents',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Deliver Agents ', routeLink: 'delivery-men' },
         { label: 'New delivery agent ', routeLink: 'delivery-men/add' },
@@ -55,15 +63,17 @@ export class SidebarComponent {
       icon: 'fal fa-box-open',
       label: 'Orders',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin' , 'Seller' , 'DeliveryAgent'],
       subItems: [
         { label: 'Orders list', routeLink: 'order' },
-        { label: 'Add order', routeLink: 'order/add' },
+        { label: 'Add order', routeLink: 'order/add', visibleFor : ['Employee' , 'Admin'] },
       ],
     },
     {
       icon: 'fal fa-globe',
       label: 'Governorates',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Governorates ', routeLink: 'governrates' },
         // { label: 'Add Governorate', routeLink: 'add-governrate' },
@@ -73,6 +83,7 @@ export class SidebarComponent {
       icon: 'fal fa-city',
       label: 'Cities',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Cities ', routeLink: 'Allcity' },
         { label: 'New City', routeLink: 'Addcity' },
@@ -82,6 +93,7 @@ export class SidebarComponent {
       icon: 'fal fa-building',
       label: 'Branches',
       isOpen: false,
+      visibleFor: ['Employee', 'Admin'],
       subItems: [
         { label: 'Branches ', routeLink: 'AllBranch' },
         { label: 'New Branch', routeLink: 'AddBranch' },
@@ -98,6 +110,7 @@ export class SidebarComponent {
       routeLink: 'general-settings',
       icon: 'fal fa-cog',
       label: 'Settings',
+      visibleFor: ['Employee', 'Admin'],
     },
   ];
 

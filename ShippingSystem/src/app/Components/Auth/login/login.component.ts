@@ -60,11 +60,11 @@ export class LoginComponent {
           if (role[0] === 'Admin' && role[1] === 'Employee') {
             this._router.navigate(['/dashboard/overview']);
           } else if (role === 'Seller') {
-            this._router.navigate(['/seller-dashboard']);
+            this._router.navigate(['/dashboard']);
           }
 
           else if (role === 'DeliveryAgent') {
-            this._router.navigate(['/delivery-dashboard']);
+            this._router.navigate(['/dashboard']);
           }
           else {
             this._router.navigate(['/']);
