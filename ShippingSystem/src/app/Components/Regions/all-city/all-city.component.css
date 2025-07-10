@@ -58,6 +58,7 @@
   justify-content: center;
   float: right;
   margin-bottom: 24px;
+
 }
 .add-btn:disabled {
   opacity: 0.6;

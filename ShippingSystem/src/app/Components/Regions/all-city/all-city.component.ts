@@ -64,6 +64,7 @@ export class AllCityComponent implements OnInit {
     this.currentPage = 1;
     // لو عايز تبحث من السيرفر، ابعت searchTerm في params هنا
     // حالياً البحث محلي فقط
+
   }
 
   onEdit(city: CityModel) {

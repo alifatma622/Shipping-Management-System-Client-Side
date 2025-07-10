@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment.development';
 })
 export class DashboardService {
   private readonly baseUrl = `${environment.baseUrl}/api`;
+
   private readonly dashboardEndpoint = '/Dashboard/overview';
 
   constructor(private http: HttpClient) {}
