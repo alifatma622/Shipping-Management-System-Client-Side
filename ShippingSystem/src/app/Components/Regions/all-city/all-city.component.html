@@ -29,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let city of pagedCities">
+        <tr *ngFor="let city of filteredCities()">
           <td>{{ city.name }}</td>
           <td>{{ city.normalPrice }}</td>
           <td>{{ city.pickupPrice }}</td>

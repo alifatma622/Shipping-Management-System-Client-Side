@@ -15,11 +15,10 @@ export class SellerServiceService {
   private apiUrl = `${environment.baseUrl}/api/Seller`;
   constructor(private http: HttpClient) { }
 
-
-
   getAllSellers(pageNumber: number, pageSize: number): Observable<PaginationResult<ISellerModels>> {
   return this.http.get<PaginationResult<ISellerModels>>(
-    `${this.apiUrl}?PageNumber=${pageNumber}&PageSize=${pageSize}`
+     `${this.apiUrl}/paginated?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    // `${this.apiUrl}/paginated/?PageNumber=${pageNumber}&PageSize=${pageSize}`
   );
 }
 
@@ -48,6 +47,3 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
   }
 
 }
-
-
-

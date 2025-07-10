@@ -39,4 +39,8 @@ export class BranchService {
   deleteBranch(id: number) {
     return this._httpClient.delete(`${this.apiUrl}/${id}/softDelete`);
   }
+
+  hardDeleteBranch(id: number) {
+    return this._httpClient.delete(`${this.apiUrl}/Hard/${id}`);
+  }
 }

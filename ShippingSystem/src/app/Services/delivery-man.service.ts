@@ -36,12 +36,12 @@ export class DeliveryManService {
 
   // soft delete
   softDelete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}/soft`);
+    return this.http.delete<any>(`${this.apiUrl}/SoftDelete/${id}`);
   }
 
   // hard delete
   hardDelete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/${id}/hard`);
+    return this.http.delete<any>(`${this.apiUrl}/HardDelete/${id}`);
   }
 
   getAllPaginated(pageNumber: number, pageSize: number): Observable<IDeliveryResponse> {

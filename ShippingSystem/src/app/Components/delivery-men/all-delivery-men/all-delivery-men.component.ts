@@ -4,6 +4,7 @@ import { DeliveryManService } from './../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-all-delivery-men',
@@ -65,7 +66,38 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.deliveryManService.softDelete(id).subscribe(() => this.getPaginatedDelivery());
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this! This will permanently delete the delivery agent from the database.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deliveryManService.hardDelete(id).subscribe({
+          next: () => {
+            Swal.fire({
+              title: 'Deleted!',
+              text: 'Delivery agent has been permanently deleted.',
+              icon: 'success',
+              confirmButtonColor: '#055866',
+            });
+            this.getPaginatedDelivery();
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error!',
+              text: err?.error?.message || 'Failed to delete delivery agent. Please try again.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
+            });
+          }
+        });
+      }
+    });
   }
 
   onAdd() {

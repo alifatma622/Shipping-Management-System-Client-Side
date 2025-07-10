@@ -49,49 +49,7 @@ export class AllBranchComponent implements OnInit {
   /* /// this Is Removing When API Working //// */
 
   ngOnInit(): void {
-    // this.getBranches();
-    const fakeData: AllBranch[] = [
-      {
-        id: 1,
-        name: 'Main Branch',
-        city: 'Cairo',
-        creationDate: '2024-01-10',
-      },
-      {
-        id: 1,
-        name: 'Main Branch',
-        city: 'Cairo',
-        creationDate: '2024-01-10',
-      },
-      {
-        id: 1,
-        name: 'Main Branch',
-        city: 'Cairo',
-        creationDate: '2024-01-10',
-      },
-      {
-        id: 2,
-        name: 'Alex Branch',
-        city: 'Alexandria',
-        creationDate: '2024-02-05',
-      },
-      {
-        id: 3,
-        name: 'Giza Branch',
-        city: 'Giza',
-        creationDate: '2024-03-15',
-      },
-      {
-        id: 4,
-        name: 'Zagazig Branch',
-        city: 'Sharqia',
-        creationDate: '2024-04-01',
-      },
-    ];
-
-    setTimeout(() => {
-      this.branches = fakeData;
-    }, 500);
+    this.getBranches();
   }
 
   getBranches() {
@@ -130,10 +88,9 @@ export class AllBranchComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this._branchService.deleteBranch(id).subscribe({
+        this._branchService.hardDeleteBranch(id).subscribe({
           next: () => {
-            this.branches = this.branches.filter((b) => b.id !== id);
-
+            this.getBranches();
             Swal.fire({
               title: 'Deleted!',
               text: 'Branch has been deleted.',

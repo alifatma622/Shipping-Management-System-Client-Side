@@ -5,7 +5,8 @@ import { CityServiceService } from '../../../Services/City_Services/city-service
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AllGovernorate } from '../../../Models/GovernorateModels/all-governorate';
+import { GovernratesService, Governrate } from '../../../Services/Governrates/governrates.service';
+
 @Component({
   selector: 'app-update-city',
   imports: [CommonModule, FormsModule],
@@ -22,42 +23,30 @@ export class UpdateCityComponent implements OnInit {
     governorateId: 0,
   };
 
-  governorates: AllGovernorate[] = [];
+  governorates: Governrate[] = [];
+
   constructor(
     private _route: ActivatedRoute,
     private cityService: CityServiceService,
-    private _router: Router // private _governorateService: GovernorateService
+    private _router: Router,
+    private _governorateService: GovernratesService
   ) {}
+
   ngOnInit(): void {
     this.cityId = +this._route.snapshot.paramMap.get('id')!;
-    // لما API Working
-    // this.getCityData(this.cityId);
+    this.getCityData(this.cityId);
+    this.getGovernorates();
+  }
 
-    // For Testing Only
-    this.cityData = {
-      id: this.cityId,
-      name: 'Mock City',
-      normalPrice: 50,
-      pickupPrice: 75,
-      governorateId: 1,
-    };
-
-    // لما API يشتغل
-    // this._governorateService.getAllGovernorate().subscribe({
-    //   next: (data) => {
-    //     this.governorates = data;
-    //   },
-    //   error: (err) => {
-    //     console.error('Failed to load governorates', err);
-    //   },
-    // });
-
-    // دي هنشال لما API Working
-    this.governorates = [
-      { id: 1, name: 'Cairo', isActive: true },
-      { id: 2, name: 'Alexandria', isActive: false },
-      { id: 3, name: 'Giza', isActive: true },
-    ];
+  getGovernorates() {
+    this._governorateService.getAllGovernrates(1, 100).subscribe({
+      next: (data) => {
+        this.governorates = data.items;
+      },
+      error: (err) => {
+        console.error('Failed to load governorates', err);
+      },
+    });
   }
 
   getCityData(id: number) {
@@ -68,7 +57,7 @@ export class UpdateCityComponent implements OnInit {
           name: res.name,
           normalPrice: res.normalPrice,
           pickupPrice: res.pickupPrice,
-          governorateId: 0,
+          governorateId: res.id,
         };
       },
       error: (err) => console.error('Error loading city:', err),

@@ -68,7 +68,7 @@ export class AddDeliveryManComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
       ],
-      branchId: ['', [Validators.required, Validators.min(1)]],
+      branchId: [null, [Validators.required, Validators.min(1)]],
       cityIds: [[], [Validators.required, Validators.minLength(1)]],
     });
   }
@@ -93,25 +93,15 @@ export class AddDeliveryManComponent implements OnInit {
     }
     this.isSubmitting = true;
 
-    // تحويل branchId و cityIds لأرقام والتأكد من صحتهم
-    const branchId = Number(this.addForm.value.branchId);
-    const cityIds = (this.addForm.value.cityIds as any[])
-      .map((id) => Number(id))
-      .filter((id) => !isNaN(id) && id > 0);
-
-    if (!branchId || cityIds.length === 0) {
-      this.errorMsg = 'Please select a valid branch and at least one city.';
-      this.isSubmitting = false;
-      return;
-    }
-
     const data: IAddDeliveryMan = {
       ...this.addForm.value,
-      branchId,
-      cityIds,
+      branchId: Number(this.addForm.value.branchId),
+      cityIds: this.addForm.value.cityIds
+        .map((id: any) => Number(id))
+        .filter((id: number) => !!id),
     };
 
-    console.log(data);
+    console.log('Sending data to backend:', data);
 
     this.deliveryManService.add(data).subscribe({
       next: () => {
@@ -121,13 +111,14 @@ export class AddDeliveryManComponent implements OnInit {
           icon: 'success',
           confirmButtonColor: '#055866',
         }).then(() => {
-          this.router.navigate(['/delivery-men']);
+          this.router.navigate(['/dashboard/delivery-men']);
         });
+        this.isSubmitting = false;
       },
-    error: (err) => {
-  console.log('Backend error:', err);
-  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery agent!';
-  this.isSubmitting = false;
+      error: (err) => {
+        console.log('Backend error:', err);
+        this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding delivery agent!';
+        this.isSubmitting = false;
       },
     });
   }

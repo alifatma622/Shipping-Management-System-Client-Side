@@ -3,29 +3,30 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { DashboardDTO } from '../Models/DashboardDTO';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  private readonly baseUrl = 'https://localhost:7294/api'; 
+  private readonly baseUrl = `${environment.baseUrl}/api`;
   private readonly dashboardEndpoint = '/Dashboard/overview';
 
   constructor(private http: HttpClient) {}
 
-  
+
   getDashboardData(): Observable<DashboardDTO> {
     const url = `${this.baseUrl}${this.dashboardEndpoint}`;
-    
+
     return this.http.get<DashboardDTO>(url).pipe(
-      retry(2), 
+      retry(2),
       map(response => this.transformResponse(response)),
       catchError(this.handleError)
     );
   }
 
   private transformResponse(response: any): DashboardDTO {
-   
+
     if (!response) {
       throw new Error('No data received from server');
     }
@@ -61,7 +62,7 @@ export class DashboardService {
     };
   }
 
- 
+
   private getDefaultShipmentAnalytics(): any {
     return {
       monthlyShipments: [
@@ -103,15 +104,15 @@ export class DashboardService {
     };
   }
 
-  
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred while fetching dashboard data';
 
     if (error.error instanceof ErrorEvent) {
-      
+
       errorMessage = `Client Error: ${error.error.message}`;
     } else {
-     
+
       switch (error.status) {
         case 0:
           errorMessage = 'Unable to connect to server. Please check your internet connection.';
@@ -231,10 +232,10 @@ export class DashboardService {
     );
   }
 
-  
+
   updateDashboardData(data: Partial<DashboardDTO>): Observable<DashboardDTO> {
     const url = `${this.baseUrl}${this.dashboardEndpoint}`;
-    
+
     return this.http.put<DashboardDTO>(url, data).pipe(
       retry(1),
       map(response => this.transformResponse(response)),
@@ -270,7 +271,7 @@ export class DashboardService {
     );
   }
 
-  
+
   getTopCities(limit: number = 5): Observable<Array<{cityName: string, ordersCount: number}>> {
     return this.getDashboardData().pipe(
       map(data => data.topCities.slice(0, limit)),
@@ -278,7 +279,7 @@ export class DashboardService {
     );
   }
 
- 
+
   getRecentOrders(limit: number = 10): Observable<Array<any>> {
     return this.getDashboardData().pipe(
       map(data => data.recentOrders.slice(0, limit)),
@@ -288,22 +289,22 @@ export class DashboardService {
 
   checkServerHealth(): Observable<boolean> {
     const url = `${this.baseUrl}/health`;
-    
+
     return this.http.get(url, { responseType: 'text' }).pipe(
       map(() => true),
       catchError(() => of(false))
     );
   }
 
-  
+
   refreshData(): Observable<DashboardDTO> {
-  
+
     const url = `${this.baseUrl}${this.dashboardEndpoint}?t=${Date.now()}`;
-    
+
     return this.http.get<DashboardDTO>(url).pipe(
       retry(1),
       map(response => this.transformResponse(response)),
       catchError(this.handleError)
     );
   }
-} 
+}

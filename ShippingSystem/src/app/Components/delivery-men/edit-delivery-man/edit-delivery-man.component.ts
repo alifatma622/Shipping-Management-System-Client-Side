@@ -62,12 +62,7 @@ export class EditDeliveryManComponent implements OnInit {
       ],
       password: [
         '',
-        [
-          Validators.minLength(8),
-          Validators.pattern(
-            '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}:;<>.,?]).+$'
-          ),
-        ],
+        // Remove all validators - make it completely optional
       ],
       phoneNumber: [
         '',
@@ -112,7 +107,7 @@ export class EditDeliveryManComponent implements OnInit {
         this.loadDeliveryMan(+id);
       } else {
         this.errorMsg = 'Invalid delivery man ID.';
-        setTimeout(() => this.router.navigate(['/delivery-men']), 2000);
+        setTimeout(() => this.router.navigate(['/dashboard/delivery-men']), 2000);
       }
     });
   }
@@ -120,6 +115,9 @@ export class EditDeliveryManComponent implements OnInit {
   loadDeliveryMan(id: number) {
     this.isLoading = true;
     this.errorMsg = '';
+
+    // Disable form while loading
+    this.editForm.disable();
 
     this.deliveryManService.getById(id).subscribe({
       next: (data: IReadDeliveryMan) => {
@@ -131,14 +129,18 @@ export class EditDeliveryManComponent implements OnInit {
           branchId: data.branchId ? Number(data.branchId) : null,
           cityIds: data.cityIds ? data.cityIds.map(Number) : [],
           isActive: !data.isDeleted,
+          password: '' // Initialize password as empty string
         });
         this.isLoading = false;
+        // Enable form after loading
+        this.editForm.enable();
       },
       error: (err) => {
         console.error('Error loading delivery man:', err);
         this.errorMsg = 'Failed to load delivery man data. Please try again.';
         this.isLoading = false;
-        setTimeout(() => this.router.navigate(['/delivery-men']), 2000);
+        this.editForm.enable();
+        setTimeout(() => this.router.navigate(['/dashboard/delivery-men']), 2000);
       },
     });
   }
@@ -175,6 +177,7 @@ export class EditDeliveryManComponent implements OnInit {
 
     this.deliveryManService.update(this.deliveryManId, data).subscribe({
       next: (res) => {
+        console.log('API Response:', res);
         Swal.fire({
           title: 'Success!',
           text: 'Delivery man has been updated successfully.',
@@ -187,6 +190,9 @@ export class EditDeliveryManComponent implements OnInit {
       },
       error: (err) => {
         console.error('Backend error:', err);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
+        console.error('Error details:', err.error);
         this.isSubmitting = false;
 
         if (err?.error?.details) {
