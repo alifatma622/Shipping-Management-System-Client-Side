@@ -3,7 +3,6 @@
   [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
 >
   <div class="logo-container">
-
     <button class="logo" (click)="toggleCollapse()">
       <i class="fas fa-bars menu-icon" [ngClass]="{'with-gap': !isLeftSidebarCollapsed()}"></i>
     </button>
@@ -12,55 +11,63 @@
       <span class="carvex-name" style="text-transform: lowercase;">arvex</span>
     }
   </div>
+
   <div class="sidenav-nav-wrapper">
     <div class="sidenav-nav">
-    @for (item of items; track $index) {
-       <li class="sidenav-nav-item" [class.open]="item.isOpen" >
-        <a
-          class="sidenav-nav-link"
-          [routerLink]="item.routeLink || '#'"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          (click)="toggleSubItems(item)"
-        >
-          <i class="sidenav-link-icon"  [class]="item.icon" ></i>
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text" >{{ item.label }}</span>
-            @if (item.subItems && item.subItems.length > 0) {
-              <i class="fas" [class.fa-angle-down]="item.isOpen" [class.fa-angle-right]="!item.isOpen" style="position: absolute; right: 23px;"></i>
+      @for (item of items; track $index) {
+        @if (!item.visibleFor || authService.hasAnyRole(item.visibleFor)) {
+          <li class="sidenav-nav-item" [class.open]="item.isOpen">
+            <a
+              class="sidenav-nav-link"
+              [routerLink]="item.routeLink || '#'"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="toggleSubItems(item)"
+            >
+              <i class="sidenav-link-icon" [class]="item.icon"></i>
+              @if (!isLeftSidebarCollapsed()) {
+                <span class="sidenav-link-text">{{ item.label }}</span>
+                @if (item.subItems && item.subItems.length > 0) {
+                  <i
+                    class="fas"
+                    [class.fa-angle-down]="item.isOpen"
+                    [class.fa-angle-right]="!item.isOpen"
+                    style="position: absolute; right: 23px;"
+                  ></i>
+                }
+              }
+            </a>
+
+            @if (!isLeftSidebarCollapsed() && item.subItems && item.subItems.length > 0) {
+              <ul class="submenu">
+                @for (subItem of item.subItems; track $index) {
+                  @if (!subItem.visibleFor || authService.hasAnyRole(subItem.visibleFor)) {
+                    <li>
+                      <a
+                        class="submenu-link"
+                        [routerLink]="subItem.routeLink"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                      >
+                        <span>{{ subItem.label }}</span>
+                      </a>
+                    </li>
+                  }
+                }
+              </ul>
             }
-          }
-        </a>
-
-        @if (!isLeftSidebarCollapsed() && item.subItems && item.subItems.length > 0) {
-        <ul class="submenu">
-          @for (subItem of item.subItems; track $index) {
-            <li >
-             <a class="submenu-link"
-                     [routerLink]="subItem.routeLink"
-                     routerLinkActive="active"
-                     [routerLinkActiveOptions]="{ exact: true }"
-
-                     >
-                    <span>{{ subItem.label }}</span>
-                  </a>
-            </li>
-          }
-        </ul>
+          </li>
+        }
       }
 
-    </li>
-  }
-       <li class="sidenav-nav-item">
-  <a class="sidenav-nav-link" (click)="Logout()">
-    <i class="sidenav-link-icon" [class]="logout.icon"></i>
-    @if (!isLeftSidebarCollapsed()) {
-      <span class="sidenav-link-text">Log out</span>
-    }
-  </a>
-</li>
-
-
+      <li class="sidenav-nav-item">
+        <a class="sidenav-nav-link" (click)="Logout()">
+          <i class="sidenav-link-icon" [class]="logout.icon"></i>
+          @if (!isLeftSidebarCollapsed()) {
+            <span class="sidenav-link-text">Log out</span>
+          }
+        </a>
+      </li>
     </div>
   </div>
 </div>
