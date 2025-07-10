@@ -20,7 +20,7 @@ export interface AddGovernrate{
 })
 export class GovernratesService {
 
-  private apiUrl = `${environment.baseUrl}/api/Governorate/paginated`;
+  private baseUrl = `${environment.baseUrl}/api/Governorate`;
   constructor(private http:HttpClient) { }
 
   getAllGovernrates(pageNumber: number = 1, pageSize: number = 10): Observable<PaginatedResponse<Governrate>> {
