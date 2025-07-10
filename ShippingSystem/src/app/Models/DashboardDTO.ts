@@ -44,7 +44,7 @@ export interface RecentOrder {
   totalCost: number;
 }
 
-export type OrderStatus = 
+export type OrderStatus =
   | 'new'
   | 'pending'
   | 'deliveredToAgent'
@@ -227,4 +227,4 @@ export interface TimePerformanceMetrics {
   bestPerformingMonth: string;
   worstPerformingMonth: string;
   weeklyGrowthRate: number;
-} 
+}
