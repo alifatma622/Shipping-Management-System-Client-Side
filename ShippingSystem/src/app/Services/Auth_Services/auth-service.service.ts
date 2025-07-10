@@ -28,4 +28,43 @@ logout() {
   localStorage.removeItem('token');
 }
 
+getToken(): string | null {
+  return localStorage.getItem('token');
+}
+
+getRole(): string[] {
+  const token = this.getToken();
+  if (!token) return [];
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log("Decoded payload:", payload);
+
+    const roles = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+
+    if (!roles) return [];
+
+    // تأكد من أن النتيجة مصفوفة حتى لو كان عنصر واحد فقط
+    return Array.isArray(roles) ? roles : [roles];
+  } catch (e) {
+    console.error("Token decode error:", e);
+    return [];
+  }
+}
+
+
+
+
+hasRole(role: string): boolean {
+  return this.getRole().includes(role);
+}
+
+hasAnyRole(roles: string[]): boolean {
+  const userRoles = this.getRole();
+  return roles.some(role => userRoles.includes(role));
+}
+
+
+
+
 }
