@@ -1,4 +1,5 @@
 .edit-order-container {
+
   max-width: 1400px important;
   height: 700px important;
   /* margin: 40px auto 0 auto; */
@@ -14,6 +15,7 @@
   /* backdrop-filter: blur(2.5px); */
   position: relative;
   margin-top: 12px;
+
 }
 
 .header h2 {

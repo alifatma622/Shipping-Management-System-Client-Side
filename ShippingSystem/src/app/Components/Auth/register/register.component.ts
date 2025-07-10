@@ -89,4 +89,8 @@ export class RegisterComponent {
       this.registerForm.markAllAsTouched();
     }
   }
+
+  goHome(): void {
+    this._router.navigate(['/']);
+  }
 }

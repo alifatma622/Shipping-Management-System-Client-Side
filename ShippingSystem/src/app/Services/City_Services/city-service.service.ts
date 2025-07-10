@@ -18,6 +18,7 @@ export class CityServiceService {
       `${this.apiUrl}/paginated`,
       { params: { pageNumber, pageSize } }
     );
+
   }
 
   getCityById(id: number) {

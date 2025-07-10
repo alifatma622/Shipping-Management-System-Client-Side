@@ -29,6 +29,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
     MatSnackBarModule,
     FormsModule,
     NgChartsModule
+
   ],
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
@@ -216,6 +217,7 @@ export class AdminDashboardComponent implements OnInit {
     this.error = null;
 
     this.dashboardService.getDashboardData().subscribe({
+
       next: (data) => {
         this.dashboardData = data;
         this.setupChartData();

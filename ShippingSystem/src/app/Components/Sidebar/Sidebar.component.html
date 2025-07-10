@@ -3,6 +3,7 @@
   [ngClass]="isLeftSidebarCollapsed() ? 'sidenav-collapsed' : ''"
 >
   <div class="logo-container">
+
     <button class="logo" (click)="toggleCollapse()">
       <i class="fas fa-bars menu-icon" [ngClass]="{'with-gap': !isLeftSidebarCollapsed()}"></i>
     </button>
@@ -39,7 +40,7 @@
                      [routerLink]="subItem.routeLink"
                      routerLinkActive="active"
                      [routerLinkActiveOptions]="{ exact: true }"
-                
+
                      >
                     <span>{{ subItem.label }}</span>
                   </a>
@@ -47,26 +48,19 @@
           }
         </ul>
       }
-     
+
     </li>
   }
-       <li class="sidenav-nav-item" [class.open]="logout.isOpen" >
+       <li class="sidenav-nav-item">
+  <a class="sidenav-nav-link" (click)="Logout()">
+    <i class="sidenav-link-icon" [class]="logout.icon"></i>
+    @if (!isLeftSidebarCollapsed()) {
+      <span class="sidenav-link-text">Log out</span>
+    }
+  </a>
+</li>
 
-   <a
-          class="sidenav-nav-link"
-          [routerLink]=""
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          
-        >
-          <i class="sidenav-link-icon" [class]="logout.icon"></i>
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text" >Log out</span>
-            
-          }
-        </a>
-      </li>
 
-    </div>    
+    </div>
   </div>
 </div>

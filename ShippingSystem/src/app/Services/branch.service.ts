@@ -18,4 +18,6 @@ export class BranchService {
   getAllBranches(): Observable<IBranch[]> {
     return this.http.get<IBranch[]>(`${this.apiUrl}`);
   }
+
+
 }
