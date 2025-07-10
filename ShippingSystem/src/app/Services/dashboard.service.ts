@@ -15,10 +15,13 @@ export class DashboardService {
   constructor(private http: HttpClient) {}
 
 
+
   getDashboardData(): Observable<DashboardDTO> {
     const url = `${this.baseUrl}${this.dashboardEndpoint}`;
 
+
     return this.http.get<DashboardDTO>(url).pipe(
+      retry(2),
       retry(2),
       map(response => this.transformResponse(response)),
       catchError(this.handleError)
@@ -26,6 +29,7 @@ export class DashboardService {
   }
 
   private transformResponse(response: any): DashboardDTO {
+
 
     if (!response) {
       throw new Error('No data received from server');
@@ -61,6 +65,7 @@ export class DashboardService {
       shipmentAnalytics: response.shipmentAnalytics || this.getDefaultShipmentAnalytics()
     };
   }
+
 
 
   private getDefaultShipmentAnalytics(): any {
@@ -105,13 +110,16 @@ export class DashboardService {
   }
 
 
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred while fetching dashboard data';
 
     if (error.error instanceof ErrorEvent) {
 
+
       errorMessage = `Client Error: ${error.error.message}`;
     } else {
+
 
       switch (error.status) {
         case 0:
@@ -233,8 +241,10 @@ export class DashboardService {
   }
 
 
+
   updateDashboardData(data: Partial<DashboardDTO>): Observable<DashboardDTO> {
     const url = `${this.baseUrl}${this.dashboardEndpoint}`;
+
 
     return this.http.put<DashboardDTO>(url, data).pipe(
       retry(1),
@@ -272,12 +282,14 @@ export class DashboardService {
   }
 
 
+
   getTopCities(limit: number = 5): Observable<Array<{cityName: string, ordersCount: number}>> {
     return this.getDashboardData().pipe(
       map(data => data.topCities.slice(0, limit)),
       catchError(this.handleError)
     );
   }
+
 
 
   getRecentOrders(limit: number = 10): Observable<Array<any>> {
@@ -290,6 +302,7 @@ export class DashboardService {
   checkServerHealth(): Observable<boolean> {
     const url = `${this.baseUrl}/health`;
 
+
     return this.http.get(url, { responseType: 'text' }).pipe(
       map(() => true),
       catchError(() => of(false))
@@ -297,9 +310,12 @@ export class DashboardService {
   }
 
 
+
   refreshData(): Observable<DashboardDTO> {
 
+
     const url = `${this.baseUrl}${this.dashboardEndpoint}?t=${Date.now()}`;
+
 
     return this.http.get<DashboardDTO>(url).pipe(
       retry(1),
@@ -307,4 +323,6 @@ export class DashboardService {
       catchError(this.handleError)
     );
   }
+}
+
 }
