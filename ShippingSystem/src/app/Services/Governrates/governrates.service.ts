@@ -20,7 +20,7 @@ export interface AddGovernrate{
 })
 export class GovernratesService {
 
-  private apiUrl = `${environment.baseUrl}/api/Governorate/paginated`;
+  private apiUrl = `${environment.baseUrl}/api/Governorate`;
   constructor(private http:HttpClient) { }
 
   getAllGovernrates(pageNumber: number = 1, pageSize: number = 10): Observable<PaginatedResponse<Governrate>> {
@@ -28,23 +28,23 @@ export class GovernratesService {
       pageNumber: pageNumber.toString(),
       pageSize: pageSize.toString()
     };
-    return this.http.get<PaginatedResponse<Governrate>>(`${this.baseUrl}/paginated`, { params });
+    return this.http.get<PaginatedResponse<Governrate>>(`${this.apiUrl}/paginated`, { params });
   }
 
   getGovernrateById(id: number): Observable<Governrate> {
-    return this.http.get<Governrate>(`${this.baseUrl}/${id}`);
+    return this.http.get<Governrate>(`${this.apiUrl}/${id}`);
   }
 
   addGovernrate(governrate: AddGovernrate): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, governrate);
+    return this.http.post(`${this.apiUrl}`, governrate);
   }
 
   updateGovernrate(id: number, governrate: AddGovernrate): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, governrate);
+    return this.http.put(`${this.apiUrl}/${id}`, governrate);
   }
 
   deleteGovernrate(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/HardDelete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/HardDelete/${id}`);
   }
 }
 
