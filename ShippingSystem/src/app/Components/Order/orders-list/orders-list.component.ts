@@ -111,6 +111,7 @@ export class OrdersListComponent implements OnInit {
   //#endregion
 
   //#region search
+  //#region search
   get filteredOrders(): ReadOrderDTO[] {
 
     if (!this.searchString.trim()) return this.orders;

@@ -1,160 +1,107 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-<div class="governorate-container">
-  <!-- Header Section -->
-  <div class="governorate-header">
-    <h2 class="governorate-title">Governorates</h2>
-    <button class="assign-btn" (click)="isFormVisible = !isFormVisible">
-      {{ isFormVisible ? 'Close Form' : 'Add Governorate' }}
-    </button>
-  </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
-  <!-- Form Section -->
-  @if (isFormVisible) {
-    <div class="governorate-form">
-      <form [formGroup]="governrateForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="name">Governorate Name</label>
-          <input
-            formControlName="name"
-            id="name"
-            class="form-control"
-            placeholder="Enter governorate name"
-            type="text"
-          />
-          @if (name?.touched && name?.invalid) {
-            <div class="error">Name is required (2–100 characters).</div>
-          }
-        </div>
-
-        <div class="form-actions">
-          <button class="assign-btn" type="submit" [disabled]="isSubmitting">
-            {{ isSubmitting ? 'Adding...' : 'Add Governorate' }}
-          </button>
-        </div>
-
-        @if (successMessage) {
-          <div class="alert alert-success">{{ successMessage }}</div>
-        }
-        @if (errorMessage) {
-          <div class="alert alert-danger">{{ errorMessage }}</div>
-        }
-      </form>
+<div class="page-wrapper">
+  <div class="all-delivery-men-container">
+    <div class="header">
+      <h2>Governorate List</h2>
+      <button class="add-btn" (click)="isFormVisible = !isFormVisible">
+        <svg width="16" height="16" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24" style="margin-right:6px;">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Add Governorate
+      </button>
     </div>
-  }
-
-  <!-- Search Section -->
-  <div class="search-box">
-    <input
-      [(ngModel)]="searchName"
-      (ngModelChange)="onSearchChange(searchName)"
-      placeholder="Search by name"
-      type="text"
-      class="form-control"
-    />
-  </div>
-
-  <!-- Entries Count -->
-  <div class="entries-info mb-3 pagination-controls">
-    <span class="entries-text">Show</span>
-    <select class="entries-select" [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange(itemsPerPage)">
-      <option *ngFor="let size of [5, 10, 20, 50]" [value]="size">{{ size }}</option>
-    </select>
-    <span class="entries-text">entries</span>
-  </div>
-
-  <!-- Table Section -->
-  @if (!isLoading && filteredGovernrates.length > 0) {
-    <table class="table agent-table">
-      <thead>
-        <tr>
-          <th>Governorate ID</th>
-          <th>Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (gov of filteredGovernrates; track gov; let i = $index) {
+    @if (isFormVisible) {
+      <div class="governorate-form">
+        <form [formGroup]="governrateForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Name:</label>
+            <input
+              formControlName="name"
+              placeholder="Enter governorate name"
+              type="text" />
+            @if (name?.touched && name?.invalid) {
+              <div class="error">
+                Name is required (2–100 characters).
+              </div>
+            }
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="add-btn" [disabled]="isSubmitting">Add Governorate</button>
+          </div>
+          @if (successMessage) {
+            <div class="success">{{ successMessage }}</div>
+          }
+          @if (errorMessage) {
+            <div class="error">{{ errorMessage }}</div>
+          }
+        </form>
+      </div>
+    }
+    <div class="search-bar-row">
+      <div class="search-bar">
+        <input
+          [(ngModel)]="searchName"
+          (ngModelChange)="onSearchChange(searchName)"
+          placeholder="Search by name"
+          type="text" />
+      </div>
+    </div>
+    @if (!isLoading && filteredGovernrates.length > 0) {
+      <table class="delivery-table">
+        <thead>
           <tr>
-            <td>{{ gov.id }}</td>
-            <td>
-              @if (editingId === gov.id) {
-                <input
-                  [(ngModel)]="gov.name"
-                  class="form-control inline-edit"
-                  (keyup.enter)="saveEdit(gov)"
-                  (keyup.escape)="cancelEdit()"
-                />
-              } @else {
-                {{ gov.name }}
-              }
-            </td>
-            <td>
-              <div class="action-buttons">
+            <th>#</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (gov of filteredGovernrates; track gov; let i = $index) {
+            <tr>
+              <td>{{ i + 1 }}</td>
+              <td>{{ gov.name }}</td>
+              <td>
+                <i
+                  [ngClass]="gov.isDeleted ? 'bi bi-x-circle text-danger' : 'bi bi-check-circle text-success'"
+                  [title]="gov.isDeleted ? 'Inactive' : 'Active'">
+                </i>
+              </td>
+              <td>
                 @if (editingId === gov.id) {
-                  <button class="assign-btn" (click)="saveEdit(gov)" title="Save">
-                    ✓
-                  </button>
-                  <button class="details-btn" (click)="cancelEdit()" title="Cancel">
-                    ✕
-                  </button>
+                  <input [(ngModel)]="gov.name" class="inline-edit" />
+                  <button (click)="saveEdit(gov)">💾</button>
+                  <button (click)="cancelEdit()">❌</button>
                 } @else {
-                  <button class="details-btn" (click)="startEdit(gov.id)" title="Edit">
-                    ✏️
+                  <button class="edit-btn" (click)="startEdit(gov.id)" title="Edit">
+                    <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
+                      <path d="M12 20h9"/>
+                      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/>
+                    </svg>
                   </button>
-                  <button class="details-btn" (click)="onDelete(gov.id)" title="Delete">
-                    🗑️
+                  <button class="delete-btn" (click)="onDelete(gov.id)" title="Delete">
+                    <svg width="18" height="18" fill="none" stroke="#c62828" stroke-width="2" viewBox="0 0 24 24">
+                      <rect x="3" y="6" width="18" height="15" rx="2"/>
+                      <path d="M9 10v6M15 10v6"/>
+                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
                   </button>
                 }
-              </div>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  }
-
-  <!-- Loading State -->
-  @if (isLoading) {
-    <div class="loading">
-      ⏳ Loading governorates...
-    </div>
-  }
-
-  <!-- No Data State -->
-  @if (!isLoading && filteredGovernrates.length === 0) {
-    <div class="no-data">
-      📭
-      <p>No governorates found.</p>
-      @if (searchName) {
-        <p>Try adjusting your search criteria.</p>
-      }
-    </div>
-  }
-
-  <!-- Pagination -->
-  @if (totalCount > itemsPerPage) {
-    <nav class="pagination-wrapper">
-      <ul class="pagination">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <button class="page-link" (click)="onPageChange(currentPage - 1)">
-            ‹
-          </button>
-        </li>
-
-        @for (page of totalPages(); track page) {
-          <li class="page-item" [class.active]="currentPage === page">
-            <button class="page-link" (click)="onPageChange(page)">
-              {{ page }}
-            </button>
-          </li>
-        }
-
-        <li class="page-item" [class.disabled]="currentPage === totalPages().length">
-          <button class="page-link" (click)="onPageChange(currentPage + 1)">
-            ›
-          </button>
-        </li>
-      </ul>
-    </nav>
-  }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (isLoading) {
+      <div class="loading">Loading governorates...</div>
+    }
+    @if (!isLoading && filteredGovernrates.length === 0) {
+      <div class="no-data">
+        No results found.
+      </div>
+    }
+  </div>
 </div>

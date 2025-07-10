@@ -3,12 +3,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { DashboardDTO } from '../Models/DashboardDTO';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  private readonly baseUrl = 'https://localhost:7294/api';
+  private readonly baseUrl = `${environment.baseUrl}/api`;
+
   private readonly dashboardEndpoint = '/Dashboard/overview';
 
   constructor(private http: HttpClient) {}

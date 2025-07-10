@@ -1,15 +1,21 @@
 .edit-order-container {
-  max-width: 1100px;
-  margin: 40px auto 0 auto;
-  background: var(--glass, rgba(255,255,255,0.7));
-  border-radius: 22px;
-  box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22;
-  padding: 32px 32px 24px 32px;
+
+  max-width: 1400px important;
+  height: 700px important;
+  /* margin: 40px auto 0 auto; */
+  padding: 38px 28px 24px 28px;
+  /* background: var(--glass, rgba(255, 255, 255, 0.7)); */
+  /* border-radius: 22px; */
+  /* box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22; */
+  /* padding: 32px 32px 24px 32px; */
   display: flex;
   flex-direction: column;
   gap: 18px;
-  backdrop-filter: blur(2.5px);
+  /* -webkit-backdrop-filter: blur(2.5px); */
+  /* backdrop-filter: blur(2.5px); */
   position: relative;
+  margin-top: 12px;
+
 }
 
 .header h2 {

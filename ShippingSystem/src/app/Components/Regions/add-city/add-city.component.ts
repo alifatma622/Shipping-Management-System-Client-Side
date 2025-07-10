@@ -1,18 +1,18 @@
-import { AllGovernorate } from '../../../Models/GovernorateModels/all-governorate';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CreateCityModel } from '../../../Models/CityModels/create-city-model';
 import { CityServiceService } from '../../../Services/City_Services/city-service.service';
 import { CommonModule } from '@angular/common';
-
 import Swal from 'sweetalert2';
+import { GovernratesService, Governrate } from '../../../Services/Governrates/governrates.service';
+
 @Component({
   selector: 'app-add-city',
   imports: [FormsModule, CommonModule],
   templateUrl: './add-city.component.html',
   styleUrl: './add-city.component.css',
 })
-export class AddCityComponent {
+export class AddCityComponent implements OnInit {
   newCity: CreateCityModel = {
     name: '',
     normalPrice: 0,
@@ -20,31 +20,25 @@ export class AddCityComponent {
     governorateId: 0,
   };
 
-  governorates: AllGovernorate[] = [];
-
+  governorates: Governrate[] = [];
   serverError: string = '';
 
   constructor(
-    private _cityService: CityServiceService // private _governorateService: GovernorateService
+    private _cityService: CityServiceService,
+    private _governorateService: GovernratesService
   ) {}
 
   ngOnInit(): void {
-    // لما API يشتغل
-    // this._governorateService.getAllGovernorate().subscribe({
-    //   next: (data) => {
-    //     this.governorates = data;
-    //   },
-    //   error: (err) => {
-    //     console.error('Failed to load governorates', err);
-    //   },
-    // });
-
-    this.governorates = [
-      { id: 1, name: 'Cairo', isActive: true },
-      { id: 2, name: 'Alexandria', isActive: false },
-      { id: 3, name: 'Giza', isActive: true },
-    ];
+    this._governorateService.getAllGovernrates(1, 100).subscribe({
+      next: (data) => {
+        this.governorates = data.items;
+      },
+      error: (err) => {
+        console.error('Failed to load governorates', err);
+      },
+    });
   }
+
   onSubmit(form: any) {
     if (form.valid) {
       this._cityService.addCity(this.newCity).subscribe({

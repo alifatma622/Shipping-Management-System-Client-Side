@@ -1,10 +1,12 @@
 .order-details-container {
-  background-color: #f0faff;
-  padding: 40px 20px;
-  font-family: "Segoe UI", sans-serif;
-  max-width: 1000px;
-  margin: 0 auto;
-  color: #3a3362;
+  max-width: 1400px important;
+  height: 700px important;
+  padding: 38px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  margin-top: 12px;
 }
 
 .page-title {

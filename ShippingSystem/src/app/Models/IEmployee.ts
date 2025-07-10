@@ -19,7 +19,8 @@ export interface AddEmployeeDTO {
   firstName?: string | null;
   lastName?: string | null;
   phoneNumber?: string | null;
-  specificRole: string; 
+  specificRole: string;
+  isDeleted?: boolean;
 }
 
 export interface ReadEmployeeDTO {

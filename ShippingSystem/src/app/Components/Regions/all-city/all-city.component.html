@@ -3,29 +3,19 @@
   <div class="all-delivery-men-container">
     <div class="header">
       <h2>City List</h2>
-      <button class="add-btn" (click)="onAddCity()">
-        <svg width="16" height="16" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
-          <line x1="12" y1="5" x2="12" y2="19"/>
-          <line x1="5" y1="12" x2="19" y2="12"/>
-        </svg>
-        Add City
-      </button>
+      <button class="add-btn" (click)="onAddCity()">Add City</button>
     </div>
 
     <div class="search-bar-row">
-      <div class="search-bar">
-        <input
-          type="text"
-          placeholder="Search by name..."
-          [(ngModel)]="searchTerm"
-        />
-        <button class="search-btn">
-          <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="7"/>
-            <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+      <form class="search-bar" (submit)="onSearch()">
+        <input type="text" [(ngModel)]="searchTerm" name="search" placeholder="Search by name..." />
+        <button class="search-btn" type="submit">
+          <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
         </button>
-      </div>
+      </form>
     </div>
 
     <table class="delivery-table">
@@ -39,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let city of pagedCities">
+        <tr *ngFor="let city of filteredCities()">
           <td>{{ city.name }}</td>
           <td>{{ city.normalPrice }}</td>
           <td>{{ city.pickupPrice }}</td>
@@ -52,7 +42,7 @@
               </svg>
             </button>
             <button class="delete-btn" (click)="onDelete(city.id)" title="Delete">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg width="18" height="18" fill="none" stroke="#c62828" stroke-width="2" viewBox="0 0 24 24">
                 <rect x="3" y="6" width="18" height="15" rx="2"/>
                 <path d="M9 10v6M15 10v6"/>
                 <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>

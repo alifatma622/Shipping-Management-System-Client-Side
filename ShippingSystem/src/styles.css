@@ -1,10 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Global color variables */
 :root {
-  --Green: #055866;
-  --Lemon: #DAF87A;
-  --Grey: #E3F2F5;
-  --Jakarta: #3A3362;
+  --primary-color: #055866;
+  --accent-color: #DAF87A;
+  --background-color: #E3F2F5;
+  --secondary-color: #3A3362;
   --white: #ffffff;
   --black: #000000;
    --main-bg: #e3f2f5;
@@ -29,6 +28,10 @@ body {
   background: var(--Grey);
 }
 
+html, body {
+  overflow-x: hidden !important;
+}
+
 #deleteConfirmModal {
   z-index: 1060 !important; /* Above everything */
 }
@@ -36,27 +39,36 @@ body {
 .modal-backdrop {
   z-index: 0 !important; /* Just below modal */
   display: none !important;
+  display: none !important;
 }
 
 .modal-content{
   background-color: var(--white) !important;
 }
 
+.body-trimmed {
+  width: calc(100% - 13.5625rem);
+  margin-left: 14.1625rem;
+  margin-top: 45px !important;
+  padding-top: 0 !important;
+}
+
 /* start default tables container  */
 .all-delivery-men-container {
   max-width: 1400px;
   /* margin: 32px auto 0 auto; */
-  background: var(--glass);
+  /* background: var(--glass); */
   border-radius: 22px;
-  box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22;
-  padding: 28px 28px 24px 28px;
+  /* box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22; */
+  padding: 38px 28px 24px 28px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  backdrop-filter: blur(2.5px);
-  border: 1.5px solid var(--border);
+  /* backdrop-filter: blur(2.5px); */
+  /* border: 1.5px solid var(--border); */
   position: relative;
   min-height: 90vh;
+  margin-top: 12px;
 }
 
 .header {
@@ -646,3 +658,7 @@ body {
 }
 
 /* end pagination */
+
+
+
+

@@ -9,6 +9,7 @@ import { AddEmployeeDTO } from '../../../Models/IEmployee';
 
 import{ReactiveFormsModule} from '@angular/forms';import { IRole } from '../../../Models/IRole';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
+import Swal from 'sweetalert2';
 ; 
 @Component({
   selector: 'app-AddEmployee',
@@ -75,7 +76,7 @@ export class AddEmployeeComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
       ],
-      branchId: ['', [Validators.required, Validators.min(1)]],
+      branchId: [null, [Validators.required, Validators.min(1)]],
       specificRole: ['', [Validators.required, Validators.min(1)]],
     });
   }
@@ -101,37 +102,30 @@ export class AddEmployeeComponent implements OnInit {
     }
     this.isSubmitting = true;
 
-    // تحويل branchId و roleId لأرقام والتأكد من صحتهم
-    const branchId = Number(this.addForm.value.branchId);
-    const specificRole = this.addForm.value.specificRole;
-    if (!branchId) {
-      this.errorMsg = 'Please select a valid branch.';
-      this.isSubmitting = false;
-      return;
-    }
-    if (!specificRole) {
-      this.errorMsg = 'Please select a valid department.';
-      this.isSubmitting = false;
-      return;
-    }
-
     const data: AddEmployeeDTO = {
       ...this.addForm.value,
-      branchId,
-      specificRole
+      branchId: Number(this.addForm.value.branchId),
+      specificRole: this.addForm.value.specificRole
     };
 
-    console.log(data);
+    console.log('Sending data to backend:', data);
 
     this.employeeService.addEmployee(data).subscribe({
       next: () => {
-        this.successMsg = 'Employee added successfully!';
-        setTimeout(() => this.router.navigate(['employee']), 1200);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Employee has been added successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['dashboard/employee']);
+        });
+        this.isSubmitting = false;
       },
-    error: (err) => {
-  console.log('Backend error:', err);
-  this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding employee!';
-  this.isSubmitting = false;
+      error: (err) => {
+        console.log('Backend error:', err);
+        this.errorMsg = err?.error?.error || JSON.stringify(err?.error) || 'Error adding employee!';
+        this.isSubmitting = false;
       },
     });
   }

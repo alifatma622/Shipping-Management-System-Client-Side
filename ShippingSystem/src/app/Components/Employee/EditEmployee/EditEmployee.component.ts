@@ -6,6 +6,7 @@ import { BranchService, IBranch } from '../../../Services/branch.service';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from '../../../Services/Role-Services/Role.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -97,25 +98,31 @@ export class EditEmployeeComponent implements OnInit {
     this.isLoading = true;
     this.errorMsg = '';
 
+    // Disable form while loading
+    this.editForm.disable();
+
     this.employeeService.getEmployeeById(id).subscribe({
       next: (data: ReadEmployeeDTO) => {
         this.editForm.patchValue({
           firstName: data.firstName || '',
-          lastName: data.firstName || '',
+          lastName: data.lastName || '',
           email: data.email || '',
           userName: data.userName || '',
           phoneNumber: data.phoneNumber || '',
           branchId: data.branchId ? Number(data.branchId) : null,
           specificRole: data.specificRole,
           isActive: !data.isDeleted,
-          password:data.password
+          password: data.password
         });
         this.isLoading = false;
+        // Enable form after loading
+        this.editForm.enable();
       },
       error: (err) => {
-        console.error('Error loading delivery man:', err);
-        this.errorMsg = 'Failed to load delivery man data. Please try again.';
+        console.error('Error loading employee:', err);
+        this.errorMsg = 'Failed to load employee data. Please try again.';
         this.isLoading = false;
+        this.editForm.enable();
         setTimeout(() => this.router.navigate(['dashboard/employee']), 2000);
       }
     });
@@ -135,24 +142,39 @@ export class EditEmployeeComponent implements OnInit {
     const data: AddEmployeeDTO = {
       ...this.editForm.value,
       branchId: Number(this.editForm.value.branchId),
-      department: this.editForm.value.department,
-      isActive: this.editForm.value.isActive
+      specificRole: this.editForm.value.specificRole,
+      isDeleted: !this.editForm.value.isActive
     };
+
+    // Remove isActive from data as it's not part of the API model
+    delete (data as any).isActive;
 
     // if (!data.password || data.password.trim() === '') {
     //   delete data.password;
     // }
 
+    console.log('isActive value:', this.editForm.value.isActive);
+    console.log('isDeleted value:', data.isDeleted);
     console.log('Sending data to backend:', data);
 
     this.employeeService.updateEmployee(this.employeeId, data).subscribe({
       next: (res) => {
-        this.successMsg = ' Employee updated successfully!';
+        console.log('API Response:', res);
+        Swal.fire({
+          title: 'Success!',
+          text: 'Employee has been updated successfully.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        }).then(() => {
+          this.router.navigate(['dashboard/employee']);
+        });
         this.isSubmitting = false;
-        setTimeout(() => this.router.navigate(['dashboard/employee']), 1200);
       },
       error: (err) => {
         console.error('Backend error:', err);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
+        console.error('Error details:', err.error);
         this.isSubmitting = false;
 
         if (err?.error?.details) {
@@ -160,7 +182,7 @@ export class EditEmployeeComponent implements OnInit {
         } else if (err?.error?.error) {
           this.errorMsg = err.error.error;
         } else if (err?.status === 404) {
-          this.errorMsg = 'Delivery man not found.';
+          this.errorMsg = 'Employee not found.';
         } else if (err?.status === 409) {
           this.errorMsg = 'Username or email already exists.';
         } else {

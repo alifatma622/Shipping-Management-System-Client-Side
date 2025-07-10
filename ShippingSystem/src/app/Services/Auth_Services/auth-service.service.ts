@@ -15,6 +15,7 @@ export class AuthServiceService {
   private apiUrl = `${environment.baseUrl}/api/Auth`;
 
   register(data: RegisterModel): Observable<any> {
+
     return this._httpClient.post(`${this.apiUrl}/register`, data);
   }
 
@@ -26,6 +27,5 @@ export class AuthServiceService {
 logout() {
   localStorage.removeItem('token');
 }
-
 
 }

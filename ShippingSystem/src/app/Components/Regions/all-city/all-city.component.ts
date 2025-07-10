@@ -15,102 +15,56 @@ import Swal from 'sweetalert2';
 export class AllCityComponent implements OnInit {
   searchTerm: string = '';
   cities: CityModel[] = [];
+  totalCount: number = 0;
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+  itemsPerPageOptions: number[] = [5, 10, 15];
+
   constructor(
     private _cityService: CityServiceService,
     private _router: Router
   ) {}
 
-  // for test pagination
+  ngOnInit(): void {
+    this.getCities();
+  }
 
-  currentPage: number = 1;
-  itemsPerPage: number = 5;
-  itemsPerPageOptions: number[] = [5, 10, 15];
-
-  get pagedCities(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredCities().slice(start, start + this.itemsPerPage);
+  getCities(): void {
+    this._cityService.getAllCities(this.currentPage, this.itemsPerPage).subscribe({
+      next: (data) => {
+        this.cities = data.items;
+        this.totalCount = data.totalCount;
+      },
+      error: (err) => {
+        this.cities = [];
+        this.totalCount = 0;
+        // ممكن تعرض رسالة خطأ هنا
+      }
+    });
   }
 
   get totalPages(): number {
-    return Math.ceil(this.filteredCities().length / this.itemsPerPage);
+    return Math.ceil(this.totalCount / this.itemsPerPage);
   }
 
   onPageChange(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.getCities();
     }
   }
 
   onItemsPerPageChange(): void {
     this.currentPage = 1;
+    this.getCities();
   }
 
-  /* All Of This Will Be Remove When APi Working */
+  onSearch(event?: Event) {
+    if (event) event.preventDefault();
+    this.currentPage = 1;
+    // لو عايز تبحث من السيرفر، ابعت searchTerm في params هنا
+    // حالياً البحث محلي فقط
 
-  ngOnInit(): void {
-    //this Is Code To Catch API When Worked
-    this._cityService.getAllCities().subscribe((data) => {
-      this.cities = data;
-    });
-
-    // this.cities = [
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Cairo',
-    //     normalPrice: 50,
-    //     pickupPrice: 30,
-    //     governorateName: 'Cairo Gov',
-    //     id: 1,
-    //   },
-    //   {
-    //     name: 'Alexandria',
-    //     normalPrice: 60,
-    //     pickupPrice: 40,
-    //     governorateName: 'Alex Gov',
-    //     id: 2,
-    //   },
-    // ];
   }
 
   onEdit(city: CityModel) {
@@ -128,8 +82,6 @@ export class AllCityComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        // This Making For Testing Only
-        this.cities = this.cities.filter((c) => c.id !== id);
         this._cityService.deleteCity(id).subscribe({
           next: () => {
             Swal.fire({
@@ -138,6 +90,7 @@ export class AllCityComponent implements OnInit {
               text: 'City has been deleted.',
               confirmButtonColor: '#055866',
             });
+            this.getCities();
           },
           error: (err) => {
             console.error(err);
@@ -163,8 +116,6 @@ export class AllCityComponent implements OnInit {
   }
 
   onAddCity() {
-    console.log('Add City clicked');
-
     this._router.navigate(['dashboard/Addcity']);
   }
 }

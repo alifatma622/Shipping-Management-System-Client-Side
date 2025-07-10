@@ -47,6 +47,3 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
   }
 
 }
-
-
-

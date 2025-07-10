@@ -203,8 +203,7 @@ export class AdminDashboardComponent implements OnInit {
     'creationDate',
     'customerCityName',
     'status',
-    'totalCost',
-    'actions'
+    'totalCost'
   ];
 
   constructor(private dashboardService: DashboardService) {}
@@ -217,7 +216,8 @@ export class AdminDashboardComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    this.dashboardService.getMockDashboardData().subscribe({
+    this.dashboardService.getDashboardData().subscribe({
+
       next: (data) => {
         this.dashboardData = data;
         this.setupChartData();
@@ -364,15 +364,28 @@ export class AdminDashboardComponent implements OnInit {
   getStatusClass(status: string): string {
     const statusClasses: { [key: string]: string } = {
       'delivered': 'complete',
+      'Delivered': 'complete',
       'pending': 'delivery',
+      'Pending': 'delivery',
       'deliveredToAgent': 'delivery',
+      'DeliveredToAgent': 'delivery',
       'new': 'delivery',
+      'New': 'delivery',
       'cancelledByReceiver': 'cancelled',
+      'CancelledByReceiver': 'cancelled',
       'partiallyDelivered': 'partial',
+      'PartiallyDelivered': 'partial',
       'postponed': 'postponed',
+      'Postponed': 'postponed',
       'notReachable': 'unreachable',
+      'NotReachable': 'unreachable',
       'refusedWithPartialPayment': 'refused',
-      'refusedWithoutPayment': 'refused'
+      'RefusedWithPartialPayment': 'refused',
+      'refusedWithoutPayment': 'refused',
+      'RefusedWithoutPayment': 'refused',
+      'AcceptedByDeliveryCompany': 'complete',
+      'RejectedByDeliveryCompany': 'cancelled',
+      // add more API status mappings as needed
     };
     return statusClasses[status] || 'default';
   }

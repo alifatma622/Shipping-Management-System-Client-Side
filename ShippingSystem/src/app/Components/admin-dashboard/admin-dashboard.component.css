@@ -1,6 +1,6 @@
 /* Modern Dashboard Styles */
 .dashboard-container {
-  background: #F6FAFB;
+  /* background: #F6FAFB; */
   min-height: 100vh;
   padding: 24px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -9,8 +9,25 @@
   /* gap: 24px; */
   animation: fadeIn 0.5s ease-out;
   border-radius: 20px;
+  
 }
 
+.header h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #055866;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin: 0 0 18px 0;
+  line-height: 1.1;
+  border-bottom: 3px solid #daf87a;
+  display: inline-block;
+  padding-bottom: 6px;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+ 
+}
 
 /* Dashboard Row */
 .dashboard-row {
@@ -303,6 +320,8 @@
 .orders-table {
   margin-top: 24px;
   overflow-x: auto;
+  /* max-height: 320px; */
+  /* overflow-y: auto; */
 }
 
 .orders-table table {
@@ -337,6 +356,11 @@
 
 .orders-table tbody tr:last-child td {
   border-bottom: none;
+}
+
+.orders-table td, .orders-table th {
+  white-space: normal;
+  word-break: break-word;
 }
 
 .customer-cell {
@@ -387,6 +411,31 @@
 .status-badge.delivery {
   background: rgba(255, 193, 7, 0.1);
   color: #F59E0B;
+}
+
+.status-badge.cancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+.status-badge.partial {
+  background: rgba(251, 191, 36, 0.1);
+  color: #F59E0B;
+}
+.status-badge.postponed {
+  background: rgba(107, 114, 128, 0.1);
+  color: #6B7280;
+}
+.status-badge.unreachable {
+  background: rgba(156, 163, 175, 0.1);
+  color: #9CA3AF;
+}
+.status-badge.refused {
+  background: rgba(220, 38, 38, 0.1);
+  color: #DC2626;
+}
+.status-badge.default {
+  background: #F3F4F6;
+  color: #6B7280;
 }
 
 .status-dot {
@@ -640,17 +689,23 @@
   transform: translateY(-2px) scale(1.01);
 }
 .stat-icon {
-  width: 54px;
-  height: 54px;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
   border-radius: 50%;
-  background: #DAF87A;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #055866;
-  font-size: 28px;
-  flex-shrink: 0;
-  transition: background 0.2s, color 0.2s;
+  font-weight: 400;
+  margin: 0 auto 10px auto;
+  background: #fff;
+}
+.stat-icon mat-icon {
+  font-size: 20px !important;
+  font-variation-settings: 'wght' 300;
+  font-weight: 300;
+  line-height: 1;
 }
 
 .icon-order{
@@ -694,7 +749,7 @@
 /* === Force 4 Cards Per Row and Full Width === */
 .stats-cards-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 25px;
   width: 100%;
   /* margin-bottom: 20px; */
@@ -769,11 +824,19 @@
 }
 
 .bottom-row-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
+  display: block;
   width: 100%;
   margin-top: 32px;
+}
+.orders-section {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+.orders-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .cities-section,

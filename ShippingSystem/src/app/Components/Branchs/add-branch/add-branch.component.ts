@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CityServiceService } from '../../../Services/City_Services/city-service.service';
-import { CityModel } from '../../../Models/CityModels/city-model';
 import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -13,6 +11,8 @@ import { AddBranch } from '../../../Models/Branch/add-branch';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CityServiceService } from '../../../Services/City_Services/city-service.service';
+import { CityModel } from '../../../Models/CityModels/city-model';
 
 @Component({
   selector: 'app-add-branch',
@@ -21,7 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './add-branch.component.css',
 })
 export class AddBranchComponent implements OnInit {
-  cities!: CityModel[];
+  cities: CityModel[] = [];
   serverError: string = '';
   branchForm!: FormGroup;
   constructor(
@@ -31,35 +31,14 @@ export class AddBranchComponent implements OnInit {
     private _router: Router
   ) {}
   ngOnInit(): void {
-    // This Is Working When API Working
-    // this._cityService.getAllCities().subscribe((data) => {
-    //   this.city = data;
-    // });
-
-    // قائمة مدن وهمية مؤقتًا
-    this.cities = [
-      {
-        id: 1,
-        name: 'Cairo',
-        normalPrice: 0,
-        pickupPrice: 0,
-        governorateName: '',
+    this._cityService.getAllCities(1, 100).subscribe({
+      next: (data) => {
+        this.cities = data.items;
       },
-      {
-        id: 2,
-        name: 'Alexandria',
-        normalPrice: 0,
-        pickupPrice: 0,
-        governorateName: '',
+      error: (err) => {
+        console.error('Failed to load cities', err);
       },
-      {
-        id: 3,
-        name: 'Giza',
-        normalPrice: 0,
-        pickupPrice: 0,
-        governorateName: '',
-      },
-    ];
+    });
 
     this.branchForm = this.fb.group({
       name: ['', Validators.required],
@@ -87,16 +66,14 @@ export class AddBranchComponent implements OnInit {
         error: (err) => {
           console.error('Error adding branch:', err);
 
-          // محاولة استخراج رسالة الخطأ من السيرفر
           if (err.error && typeof err.error === 'string') {
-            this.serverError = err.error; // API رجّع نص مباشر
+            this.serverError = err.error;
           } else if (err.error?.message) {
-            this.serverError = err.error.message; // API فيه message مخصصة
+            this.serverError = err.error.message;
           } else {
             this.serverError = 'Unexpected error occurred.';
           }
 
-          // تنبيه SweetAlert بالأعلى
           Swal.fire({
             title: 'Error!',
             text: this.serverError,

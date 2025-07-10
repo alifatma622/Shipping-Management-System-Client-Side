@@ -73,10 +73,16 @@ onItemsPerPageChange(count: number) {
     if (confirm('Are you sure you want to delete this seller?')) {
       this.sellerService.deleteSeller(id).subscribe({
         next: () => {
+          console.log('Seller deleted successfully');
           this.getAllSellers();
         },
         error: (error) => {
           console.error('Error deleting seller:', error);
+          if (error.status === 404) {
+            alert('Seller not found or already deleted.');
+          } else {
+            alert('Error deleting seller. Please try again.');
+          }
         }
       });
     }

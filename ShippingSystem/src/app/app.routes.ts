@@ -32,6 +32,7 @@ import { OrderDetailsComponent } from './Components/Order/order-details/order-de
 import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.component';
 
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
@@ -94,6 +95,7 @@ export const routes: Routes = [
     },
 
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

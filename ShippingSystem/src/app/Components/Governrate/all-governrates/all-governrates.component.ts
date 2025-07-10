@@ -67,6 +67,7 @@ export class GovernratesListComponent implements OnInit {
       },
       error: () => {
         this.errorMsg = 'Failed to load governorates';
+        this.filteredGovernrates = [];
         this.isLoading = false;
       }
     });
