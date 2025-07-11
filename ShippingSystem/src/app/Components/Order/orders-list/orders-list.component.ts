@@ -8,7 +8,9 @@ import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { ChangeDetectorRef } from '@angular/core';
+// @ts-ignore
 import jsPDF from 'jspdf';
+// @ts-ignore
 import html2canvas from 'html2canvas';
 
 @Component({
@@ -229,7 +231,7 @@ export class OrdersListComponent implements OnInit {
   printOrderDetails(): void {
     const data = document.getElementById('order-details-content');
     if (data) {
-      html2canvas(data).then(canvas => {
+      html2canvas(data).then((canvas: { toDataURL: (arg0: string) => any; }) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
         const imgProps = pdf.getImageProperties(imgData);
