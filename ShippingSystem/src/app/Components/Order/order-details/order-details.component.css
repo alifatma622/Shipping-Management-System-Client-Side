@@ -16,7 +16,25 @@
   font-weight: bold;
   margin-bottom: 30px;
 }
+.btn {
+  color: #055866;
+  background-color: #daf87a;
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
+.btn:hover{
+  color: #daf87a;
+  background-color: #055866;
+  border-radius: 16px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 .card {
   background: #fff;
   border-radius: 16px;
