@@ -1,0 +1,93 @@
+/* Header styles */
+.header {
+    text-align: left;
+    margin-bottom: 18px;
+  }
+  .header h2 {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #055866;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin: 0 0 18px 0;
+    line-height: 1.1;
+    border-bottom: 3px solid #daf87a;
+    display: inline-block;
+    padding-bottom: 6px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .dashboard-container {
+    min-height: 60vh;
+    padding: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 20px;
+    background: #F8FAFC;
+    box-shadow: 0 4px 20px rgba(5, 88, 102, 0.08);
+  }
+  
+  /* Modern section title style */
+  .dashboard-section-title {
+    font-size: 22px;
+    color: #055866;
+    font-weight: 800;
+    margin: 0px 0px 10px 1px;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Force 5 cards per row */
+  .stats-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+  }
+  
+  /* Card */
+  .stat-card {
+    text-align: center;
+    padding: 16px;
+    border-radius: 12px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(5, 88, 102, 0.15);
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: white;
+    font-size: 24px;
+  }
+  
+  .stat-content {}
+  
+  .stat-title {
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #055866;
+    margin-bottom: 4px;
+  }
+  
+  /* Remove old .card styles if present */
+  .card, .dashboard-cards { display: none !important; }

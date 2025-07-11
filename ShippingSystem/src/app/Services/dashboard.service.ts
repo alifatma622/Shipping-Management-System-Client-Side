@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
-import { DashboardDTO } from '../Models/DashboardDTO';
+import { DashboardDTO, OrderStatusCounts, OrderStatusCountsDTO } from '../Models/DashboardDTO';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
@@ -324,5 +324,15 @@ export class DashboardService {
       catchError(this.handleError)
     );
   }
+//////////////////////////////////////////////Deliveryyyyyyy DashBoard//////////////////////////////////////////
+getOrderStatusCountsForDeliveryAgent(): Observable<OrderStatusCountsDTO> {
+  return this.http.get<OrderStatusCountsDTO>(`${this.baseUrl}/Dashboard/orderStatusCountsForDeliveryAgent`);
+}
+
+/////////////////////////////////////////////////////Seller Dashboard/////////////////
+
+getOrderStatusCountsForSeller(): Observable<OrderStatusCountsDTO> {
+  return this.http.get<OrderStatusCountsDTO>(`${this.baseUrl}/Dashboard/orderStatusCountsForSeller`);
+}
 }
 

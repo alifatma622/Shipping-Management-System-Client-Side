@@ -64,7 +64,7 @@ export class LoginComponent {
           }
 
           else if (role === 'DeliveryAgent') {
-            this._router.navigate(['/dashboard']);
+            this._router.navigate(['/dashboard/deliveryman']);
           }
           else {
             this._router.navigate(['/']);

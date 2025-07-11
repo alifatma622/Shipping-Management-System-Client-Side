@@ -24,10 +24,22 @@ export class SidebarComponent implements OnInit {
   }
   items = [
     {
+      routeLink: 'deliveryman',
+      icon: 'fal fa-home',
+      label: 'Dashboard',
+      visibleFor: ['DeliveryAgent'],
+    },
+    {
       routeLink: 'overview',
       icon: 'fal fa-home',
       label: 'Dashboard',
       visibleFor: ['Employee', 'Admin'],
+    },
+    {
+      routeLink: 'seller-dashboard',
+      icon: 'fal fa-home',
+      label: 'Dashboard',
+      visibleFor: ['Seller'],
     },
     {
       icon: 'fal fa-user-tie',
