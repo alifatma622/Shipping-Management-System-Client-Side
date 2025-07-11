@@ -9,10 +9,10 @@ import { environment } from '../../environments/environment.development';
 })
 export class DeliveryManService {
   private apiUrl = `${environment.baseUrl}/api/DeliveryMan`;
+  id:number=0;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) {}
-
-//getAllDeliveryMen
+  //getAllDeliveryMen
   getAllDeliveryMen(): Observable<IReadDeliveryMan[]> {
     return this.http.get<IReadDeliveryMan[]>(this.apiUrl);
   }
@@ -22,7 +22,7 @@ export class DeliveryManService {
     return this.http.get<IReadDeliveryMan>(`${this.apiUrl}/${id}`);
   }
 
- // add new delivery man
+  // add new delivery man
   add(data: IAddDeliveryMan): Observable<any> {
     return this.http.post<any>(this.apiUrl, data); //returns { message } not object
 
@@ -45,10 +45,14 @@ export class DeliveryManService {
   }
 
   getAllPaginated(pageNumber: number, pageSize: number): Observable<IDeliveryResponse> {
-     const params = new HttpParams()
-       .set('pageNumber', pageNumber.toString())
-       .set('pageSize', pageSize.toString());
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
 
-     return this.http.get<IDeliveryResponse>(`${this.apiUrl}/paginated`, { params });
-   }
+    return this.http.get<IDeliveryResponse>(`${this.apiUrl}/paginated`, { params });
+  }
+
+  getId(userId: string | null): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/getId/${userId}`);
+  }
 }
