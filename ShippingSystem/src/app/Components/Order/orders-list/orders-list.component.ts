@@ -8,6 +8,7 @@ import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-orders-list',
   imports: [CommonModule, FormsModule],
@@ -16,12 +17,12 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class OrdersListComponent implements OnInit {
 
-  //#region variables
   orders: ReadOrderDTO[] = [];
   isLoading = true;
   errorMsg = '';
   routes: any;
   searchString: string = '';
+  selectedStatus: string = '';
   selectedOrderId: number = 0;
   deliveryAgents: IReadDeliveryMan[] = [];
   filteredAgents: IReadDeliveryMan[] = [];
@@ -32,16 +33,16 @@ export class OrdersListComponent implements OnInit {
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
 
-
-
   OrderStatus = OrderStatus;
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
-  //#endregion
-  constructor(private orderService: OrderService, private router: Router, private deliveryService: DeliveryManService,
+
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private deliveryService: DeliveryManService,
     private cdr: ChangeDetectorRef
   ) { }
 
-  //#region crud
   ngOnInit(): void {
     this.loadOrders();
 
@@ -53,32 +54,17 @@ export class OrdersListComponent implements OnInit {
         console.error('Error loading delivery agents:', err);
       },
     });
-
   }
-
-  // getAllOrders() {
-  //   this.isLoading = true;
-  //   this.orderService.getOrders().subscribe({
-  //     next: (data) => {
-  //       this.orders = data;
-  //       this.isLoading = false;
-  //     },
-  //     error: (err) => {
-  //       this.errorMsg = 'Error loading orders!';
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
 
   loadOrders() {
     this.isLoading = true;
 
     this.orderService.getPaginatedOrders(
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.selectedStatus // هنا نمرر الفلتر
     ).subscribe({
       next: (response) => {
-        // Add showStatusDropdown property to each order
         this.orders = response.items.map(order => ({
           ...order,
           status: this.getStatusNumberFromName(order.status),
@@ -93,6 +79,12 @@ export class OrdersListComponent implements OnInit {
       }
     });
   }
+
+  onStatusChange() {
+    this.currentPage = 1;
+    this.loadOrders();
+  }
+
   onEdit(id: number) {
     this.router.navigate(['dashboard/Order/Edit', id]);
   }
@@ -108,18 +100,13 @@ export class OrdersListComponent implements OnInit {
   viewDetails(deliveryId: number): void {
     this.router.navigate(['dashboard/Order/Details', deliveryId]);
   }
-  //#endregion
 
-  //#region search
-  //#region search
   get filteredOrders(): ReadOrderDTO[] {
-
     if (!this.searchString.trim()) return this.orders;
 
     const searchTerm = this.searchString.trim().toLowerCase();
 
     return this.orders.filter(o => {
-      // Convert all searchable fields to lowercase strings for comparison
       const fieldsToSearch = [
         o.status.toString(),
         o.branchName,
@@ -130,10 +117,8 @@ export class OrdersListComponent implements OnInit {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
-
         o.customerCityName
-        // Add more fields as needed
-      ].filter(f => f); // Remove undefined/null values
+      ].filter(f => f);
 
       return fieldsToSearch.some(f =>
         f.toLowerCase().includes(searchTerm)
@@ -143,11 +128,8 @@ export class OrdersListComponent implements OnInit {
   onSearchChange(value: string) {
     this.searchString = value;
   }
-  //#endregion
 
-  //#region status text & classes
   getStatusText(status: any): string {
-    // console.log(status);
     switch (status) {
       case 1: return 'Pending';
       case 2: return 'Accepted';
@@ -165,9 +147,7 @@ export class OrdersListComponent implements OnInit {
     }
   }
 
-
   getStatusClass(status: any): string {
-    // console.log(status)
     switch (status) {
       case 1: return 'status-pending';
       case 2: return 'status-accepted';
@@ -186,11 +166,6 @@ export class OrdersListComponent implements OnInit {
     }
   }
 
-
-  //#endregion
-
-  //#region assign agent
-
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
     return this.filteredAgents = this.deliveryAgents.filter(agent => agent.cities?.includes(cityName));
@@ -199,7 +174,6 @@ export class OrdersListComponent implements OnInit {
   selectAgent(agent: IReadDeliveryMan): void {
     this.selectedAgent = agent;
   }
-
 
   assignOrder(orderId: number): void {
     this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
@@ -213,12 +187,8 @@ export class OrdersListComponent implements OnInit {
       }
     });
   }
-  //#endregion
-
-  //#region pagination
 
   get pagedOrders() {
-
     return this.orders;
   }
 
@@ -228,7 +198,6 @@ export class OrdersListComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
-
     this.loadOrders();
   }
   onItemsPerPageChange(count: number) {
@@ -236,11 +205,8 @@ export class OrdersListComponent implements OnInit {
     this.currentPage = 1;
     this.loadOrders();
   }
-  //#endregion
 
-  //#region update status
   updateOrderStatus(order: ReadOrderDTO, newstatus: OrderStatus): void {
-
     this.orderService.changeOrderStatus(order.orderID, newstatus).subscribe({
       next: () => {
         order.status = newstatus;
@@ -251,12 +217,8 @@ export class OrdersListComponent implements OnInit {
     });
   }
   getStatusNumberFromName(status: string | number): number {
-    if (typeof status === 'number') return status; // Already a number, return as is
-
+    if (typeof status === 'number') return status;
     const enumEntry = Object.entries(OrderStatus).find(([key]) => key === status);
-    return enumEntry ? Number(enumEntry[1]) : -1; // Return -1 or a fallback value
+    return enumEntry ? Number(enumEntry[1]) : -1;
   }
-
-  //#endregion
 }
-

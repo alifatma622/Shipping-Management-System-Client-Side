@@ -1,4 +1,3 @@
-import { Product } from './../../Models/IOrder';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -15,23 +14,30 @@ import { OrderType } from '../../Enum/OrderType';
   providedIn: 'root'
 })
 export class OrderService {
-private apiUrl = `${environment.baseUrl}/api/Order`;
-orderResponse: OrderResponse | undefined;
+  private apiUrl = `${environment.baseUrl}/api/Order`;
+  orderResponse: OrderResponse | undefined;
 
-constructor(private http: HttpClient) { }
- getOrders(): Observable<ReadOrderDTO[]> {
-  return this.http.get<OrderResponse>(this.apiUrl).pipe(
-    tap((response: OrderResponse) => this.orderResponse = response),
-    map((response: OrderResponse) => response.items)
-   );
+  constructor(private http: HttpClient) { }
+
+  getOrders(): Observable<ReadOrderDTO[]> {
+    return this.http.get<OrderResponse>(this.apiUrl).pipe(
+      tap((response: OrderResponse) => this.orderResponse = response),
+      map((response: OrderResponse) => response.items)
+    );
   }
- getPaginatedOrders(pageNumber: number, pageSize: number): Observable<OrderResponse> {
-    const params = new HttpParams()
+
+  getPaginatedOrders(pageNumber: number, pageSize: number, status?: string): Observable<OrderResponse> {
+    let params = new HttpParams()
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
 
+    if (status && status !== '') {
+      params = params.set('status', status);
+    }
+
     return this.http.get<OrderResponse>(`${this.apiUrl}/paginated`, { params });
   }
+
   createOrder(order: AddOrderDTO): Observable<ReadOrderDTO> {
     return this.http.post<ReadOrderDTO>(`${this.apiUrl}`, order);
   }
@@ -40,53 +46,49 @@ constructor(private http: HttpClient) { }
     return this.http.post<number>(`${this.apiUrl}/calculate-shipping`, order);
   }
 
-
- assignDeliveryAgent(orderId: number, deliveryAgentId: number): Observable<any> {
-  return this.http.put(
-    `${this.apiUrl}/assignDeliveryAgent`,
-    null,
-    {
-      params: {
-        orderId: orderId.toString(),
-        deliveryAgentId: deliveryAgentId.toString()
-      },
-      responseType: 'text'
-    }
-  );
+  assignDeliveryAgent(orderId: number, deliveryAgentId: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/assignDeliveryAgent`,
+      null,
+      {
+        params: {
+          orderId: orderId.toString(),
+          deliveryAgentId: deliveryAgentId.toString()
+        },
+        responseType: 'text'
+      }
+    );
   }
 
- changeOrderStatus(orderId: number, newStatus: OrderStatus): Observable<any> {
-  return this.http.put(`${this.apiUrl}/changeStatus/${orderId}`,  {newStatus} );
-}
+  changeOrderStatus(orderId: number, newStatus: OrderStatus): Observable<any> {
+    return this.http.put(`${this.apiUrl}/changeStatus/${orderId}`,  {newStatus} );
+  }
 
-addOrder(order:AddOrder): Observable<any> {
+  addOrder(order:AddOrder): Observable<any> {
     return this.http.post(`${this.apiUrl}`, order);
-}
+  }
 
-getOrderById(orderId: number): Observable<ReadOneOrderDTO> {
+  getOrderById(orderId: number): Observable<ReadOneOrderDTO> {
     return this.http.get<ReadOneOrderDTO>(`${this.apiUrl}/${orderId}`);
-}
+  }
 
-getOrderStatuses(): Observable<OrderStatus[]> {
+  getOrderStatuses(): Observable<OrderStatus[]> {
     return of(Object.values(OrderStatus).filter(value => typeof value === 'number') as OrderStatus[]).pipe(delay(1000));
-}
+  }
 
-getShippingTypes(): Observable<ShippingType[]> {
+  getShippingTypes(): Observable<ShippingType[]> {
     return of(Object.values(ShippingType).filter(value => typeof value === 'number') as ShippingType[]).pipe(delay(1000));
-}
+  }
 
-getPaymentTypes(): Observable<PaymentType[]> {
+  getPaymentTypes(): Observable<PaymentType[]> {
     return of(Object.values(PaymentType).filter(value => typeof value === 'number') as PaymentType[]).pipe(delay(1000));
-}
+  }
 
-getOrderTypes(): Observable<OrderType[]> {
+  getOrderTypes(): Observable<OrderType[]> {
     return of(Object.values(OrderType).filter(value => typeof value === 'number') as OrderType[]).pipe(delay(1000));
-}
+  }
 
-updateOrder(order : UpdateOrderDTO): Observable<any> {
+  updateOrder(order : UpdateOrderDTO): Observable<any> {
     return this.http.put(`${this.apiUrl}/${order.id}`, order);
-}
-
-
-
+  }
 }
