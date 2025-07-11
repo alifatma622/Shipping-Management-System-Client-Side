@@ -1,5 +1,5 @@
 <div class="edit-order-container">
-  
+
   <div class="header">
     <h2>Edit Order</h2>
   </div>
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-   
+
 
 
     <!-- Shipping Type -->
@@ -80,21 +80,20 @@
     </div>
      <!-- Move Notes and Checkboxes to the bottom, before products -->
     <!-- Notes and Checkboxes in one row: Notes left, checkboxes right, checkboxes horizontally aligned -->
-<div class="row" style="display: flex; align-items: flex-end; gap: 32px;">
-  <div class="form-group" style="flex: 2; min-width: 250px;">
-    <label for="notes">Notes</label>
-    <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4" style="width: 100%; font-size: 1.1rem;"></textarea>
-  </div>
-  <div class="form-group" style="flex: 1; display: flex; align-items: flex-end; gap: 32px; margin-bottom: 0;">
-    <label style="margin-bottom: 0; display: flex; align-items: center; gap: 6px;">
-      <input class="mt-5" type="checkbox" formControlName="isShippedToVillage" />
-      <span>Shipped to Village</span>
-    </label>
-    <label style="margin-bottom: 0; display: flex; align-items: center; gap: 6px;">
-      <input class="mt-5" type="checkbox" formControlName="isPickup" />
-      <span>Pickup</span>
-    </label>
-  </div>
+
+<div class="form-group">
+  <label>
+    <input type="checkbox" formControlName="isShippedToVillage" /> Shipped to Village
+  </label>
+</div>
+<div class="form-group">
+  <label>
+    <input type="checkbox" formControlName="isPickup" /> Pickup
+  </label>
+</div>
+<div class="form-group">
+  <label for="notes">Notes</label>
+  <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4"></textarea>
 </div>
 
 

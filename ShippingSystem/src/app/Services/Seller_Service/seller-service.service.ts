@@ -34,8 +34,8 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
     return this.http.post(`${this.apiUrl}`, seller);
   }
 
-  updateSeller(id :number ,seller: IUpdateseller): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, seller);
+  updateSeller(id: number, seller: IUpdateseller): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Update`, seller, { responseType: 'text' });
   }
 
   deleteSeller(id: number): Observable<any> {

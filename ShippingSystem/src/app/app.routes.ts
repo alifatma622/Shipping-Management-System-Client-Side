@@ -30,6 +30,8 @@ import { OrderDetailsComponent } from './Components/Order/order-details/order-de
 import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.component';
 
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
+import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
+import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -70,6 +72,8 @@ export const routes: Routes = [
       { path: 'general-settings', component: GeneralSettingsComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
       { path: 'governrates', component: GovernratesListComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
       { path: 'seller', component: AllSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
+      { path: 'seller-dashboard', component: SellerDashboardComponent, canActivate: [authGuard], data: { roles: ['Seller'] } },
+      { path: 'deliveryman', component: DeliverymanDashboardComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
 
       { path: 'overview', component: AdminDashboardComponent , canActivate:[authGuard], data : {roles: ['Employee']}}
 

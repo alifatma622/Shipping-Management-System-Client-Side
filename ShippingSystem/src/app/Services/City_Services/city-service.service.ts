@@ -11,6 +11,7 @@ import { UpdateCity } from '../../Models/CityModels/update-city';
 export class CityServiceService {
   private apiUrl = `${environment.baseUrl}/api/City`;
 
+
   constructor(private _httpClient: HttpClient) {}
 
   getAllCities(pageNumber: number = 1, pageSize: number = 10) {
@@ -31,6 +32,10 @@ export class CityServiceService {
 
   updateCity(id: number, city: UpdateCity) {
     return this._httpClient.put(`${this.apiUrl}/${id}`, city);
+  }
+
+  softdeleteCity(id: number) {
+    return this._httpClient.delete(`${this.apiUrl}/Soft/${id}`);
   }
 
   deleteCity(id: number) {

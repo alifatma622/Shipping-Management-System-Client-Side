@@ -96,7 +96,7 @@ export class EditSellerComponent implements OnInit {
     }
 
     else {
-      const updatedSeller = this.editForm.value;
+      const updatedSeller = { ...this.editForm.value, id: this.sellerId };
 
       this.sellerservice.updateSeller(this.sellerId, updatedSeller).subscribe({
         next: () => {

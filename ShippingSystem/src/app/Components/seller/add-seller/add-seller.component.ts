@@ -63,15 +63,16 @@ export class AddSellerComponent implements OnInit {
     const data = this.addForm.value;
     console.log('Form Data:', data);
     this.sellerService.addSeller(data).subscribe({
-      next: () => {
-        this.successMsg = 'Seller added successfully!';
-        setTimeout(() => this.router.navigate(['/dashboard/seller']), 1500);
-      },
-      error: (err) => {
-        console.error('Backend error:', err);
-        this.errorMsg = err?.error?.err || 'Error adding seller.';
-        this.isSubmitting = false;
-      }
-    });
+  next: (res) => {
+    console.log('Backend response:', res); // <-- تحقق من هذا في الـ console
+    this.successMsg = res.message; // <-- بدلاً من نص ثابت
+    setTimeout(() => this.router.navigate(['/dashboard/seller']), 1500);
+  },
+  error: (err) => {
+    console.error('Backend error:', err);
+    this.errorMsg = err?.error?.message || 'Error adding seller.';
+    this.isSubmitting = false;
+  }
+});
   }
 }
