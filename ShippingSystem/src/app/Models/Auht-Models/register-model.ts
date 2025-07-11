@@ -5,4 +5,7 @@ export interface RegisterModel {
   lastName: string;
   phone: string;
   password: string;
+  address: string;
+  cityId : Number;
+  storeName : string;
 }

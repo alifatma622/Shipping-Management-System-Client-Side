@@ -17,17 +17,21 @@
   box-shadow: 0 10px 20px rgba(58, 51, 98, 0.2);
 }
 
+/* Make the form section narrower */
 .form-section {
   flex: 1;
-  padding: 40px;
+  padding: 20px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 240px;
+  max-width: 360px; /* Smaller max width */
 }
 
+/* Make the form itself a bit narrower */
 .register-form {
   width: 100%;
-  max-width: 500px;
+  max-width: 320px; /* Smaller max width */
 }
 
 .image-section {
@@ -48,7 +52,7 @@
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 label {
@@ -58,12 +62,11 @@ label {
   margin-bottom: 5px;
 }
 
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #daf87a;
-  border-radius: 8px;
-  font-size: 16px;
+/* Reduce input and textarea height further */
+.form-control,
+.address-input {
+  padding: 6px;
+  font-size: 14px;
 }
 
 .text-danger {
@@ -83,7 +86,11 @@ label {
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
-
+.address-input {
+  resize: vertical;
+  min-height: 38px;
+  max-height: 120px;
+}
 .btn-submit:disabled {
   background-color: #8faeb3;
   cursor: not-allowed;
@@ -133,4 +140,46 @@ label {
 
 .nav-btn:hover {
   background-color: #c0e96a;
+}
+
+/* Make the select look more like a dropdown */
+.city-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f8fafc;
+  color: #055866;
+  font-weight: 500;
+  border: 2px solid #daf87a;
+  border-radius: 8px;
+  padding: 10px 36px 10px 10px;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23055866" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7.293 7.293a1 1 0 011.414 0L10 8.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  cursor: pointer;
+}
+.city-select:focus {
+  border-color: #055866;
+  outline: none;
+  background-color: #e3f2f5;
+}
+.city-select:invalid {
+  color: #b0b0b0;
+}
+
+/* Responsive: stack columns on small screens */
+@media (max-width: 900px) {
+  .register-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .form-section,
+  .image-section {
+    max-width: 100%;
+    width: 100%;
+  }
+  .register-form {
+    max-width: 100%;
+  }
 }
