@@ -231,12 +231,19 @@ export class OrdersListComponent implements OnInit {
   printOrderDetails(): void {
     const data = document.getElementById('order-details-content');
     if (data) {
-      html2canvas(data).then((canvas: { toDataURL: (arg0: string) => any; }) => {
+      html2canvas(data).then((canvas: {
+        height: any;
+        width: any; toDataURL: (arg0: string) => any; 
+}) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgProps = pdf.getImageProperties(imgData);
+        // The canvas object itself has width and height properties after html2canvas renders it.
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
         const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        // Calculate the height of the image on the PDF page to maintain aspect ratio,
+        // scaling it to fit the full width of the PDF page.
+        const pdfHeight = (imgHeight * pdfWidth) / imgWidth;
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`order-details-${this.selectedOrderId}.pdf`);
       });
