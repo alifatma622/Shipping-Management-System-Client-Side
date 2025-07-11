@@ -130,7 +130,7 @@ html, body {
     border-radius: 10px;
     padding: 7px 16px;
     box-shadow: 0 2px 8px #969985;
-    width: 350px;
+    width: 500px;
     border: .5px solid var(--border);
     transition: box-shadow 0.18s, border 0.18s;
     margin: 0;

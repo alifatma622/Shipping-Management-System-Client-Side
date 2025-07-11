@@ -228,19 +228,13 @@ export class OrdersListComponent implements OnInit {
 
   //#endregion
 
-
-
-}
-
-
-
   printOrderDetails(): void {
     const data = document.getElementById('order-details-content');
     if (data) {
       html2canvas(data).then((canvas: {
         height: any;
         width: any; toDataURL: (arg0: string) => any;
-}) => {
+      }) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jsPDF('p', 'mm', 'a4');
         // The canvas object itself has width and height properties after html2canvas renders it.
@@ -255,4 +249,5 @@ export class OrdersListComponent implements OnInit {
       });
     }
   }
+
 }
