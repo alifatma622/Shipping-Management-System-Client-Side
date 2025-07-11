@@ -58,6 +58,36 @@
           </div>
         </div>
 
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Store Name</label>
+            <input class="form-control" formControlName="storeName" />
+            <div *ngIf="registerForm.get('storeName')?.invalid && registerForm.get('storeName')?.touched" class="text-danger">
+              Store Name is required
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label for="city">City</label>
+            <select id="city" formControlName="cityId" class="form-control city-select">
+              <option value="" disabled selected hidden>Select your city…</option>
+              <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+            </select>
+            <div *ngIf="registerForm.get('cityId')?.touched && registerForm.get('cityId')?.invalid" class="text-danger">
+              City is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <textarea class="form-control address-input" formControlName="address" rows="3"></textarea>
+          <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="text-danger">
+            Address is required
+          </div>
+        </div>
+
+
         <div class="form-group">
           <label>Password</label>
           <input type="password" class="form-control" formControlName="password" />
@@ -84,7 +114,7 @@
                   <button type="button" class="btn btn-danger btn-sm me-1" (click)="removePhone(i)">−</button>
                 }
                 @if (i === phones.length - 1) {
-                  <button type="button" class="btn btn-success btn-sm" (click)="addPhone()">+</button>
+                  <!-- <button type="button" class="btn btn-success btn-sm" (click)="addPhone()">+</button> -->
                 }
               </div>
               @if (phone.invalid && phone.touched) {
