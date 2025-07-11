@@ -259,8 +259,7 @@ export class OrdersListComponent implements OnInit {
 
   //#endregion
 
-  //#region getRole
-  
-  //#endregion
+
+
 }
 

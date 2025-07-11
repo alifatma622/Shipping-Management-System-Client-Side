@@ -16,30 +16,30 @@
         <div class="info-box">
           <ng-container [ngSwitch]="section.key">
             <ng-container *ngSwitchCase="'general'">
-              <p><strong>Order ID:</strong> {{ orderDetails?.orderID }}</p>
-              <p><strong>Date:</strong> {{ orderDetails?.creationDate | date:'yyyy-MM-dd' }}</p>
-              <p><strong>Status:</strong> <span class="status">{{ orderDetails?.status }}</span></p>
-              <p><strong>Order Type:</strong> {{ orderDetails?.orderType }}</p>
+              <p><strong>Order ID:</strong> {{ orderDetails.orderID }}</p>
+              <p><strong>Date:</strong> {{ orderDetails.creationDate | date:'yyyy-MM-dd' }}</p>
+              <p><strong>Status:</strong> <span class="status">{{ orderDetails.status }}</span></p>
+              <p><strong>Order Type:</strong> {{ orderDetails.orderType }}</p>
             </ng-container>
 
             <ng-container *ngSwitchCase="'customer'">
-              <p><strong>Name:</strong> {{ orderDetails?.customerName }}</p>
-              <p><strong>Phone:</strong> {{ orderDetails?.customerPhone }}</p>
-              <p><strong>Address:</strong> {{ orderDetails?.address }}</p>
-              <p><strong>City:</strong> {{ orderDetails?.customerCityName }}</p>
+              <p><strong>Name:</strong> {{ orderDetails.customerName }}</p>
+              <p><strong>Phone:</strong> {{ orderDetails.customerPhone }}</p>
+              <p><strong>Address:</strong> {{ orderDetails.address }}</p>
+              <p><strong>City:</strong> {{ orderDetails.customerCityName }}</p>
             </ng-container>
 
             <ng-container *ngSwitchCase="'shipping'">
-              <p><strong>Agent:</strong> {{ orderDetails?.deliveryAgentName }}</p>
-              <p><strong>To Village:</strong> {{ orderDetails?.isShippedToVillage ? 'Yes' : 'No' }}</p>
-              <p><strong>Shipping Cost:</strong> {{ orderDetails?.shippingCost }} LE</p>
-              <p><strong>Weight:</strong> {{ orderDetails?.totalWeight }} Kg</p>
+              <p><strong>Agent:</strong> {{ orderDetails.deliveryAgentName }}</p>
+              <p><strong>To Village:</strong> {{ orderDetails.isShippedToVillage ? 'Yes' : 'No' }}</p>
+              <p><strong>Shipping Cost:</strong> {{ orderDetails.shippingCost }} LE</p>
+              <p><strong>Weight:</strong> {{ orderDetails.totalWeight }} Kg</p>
             </ng-container>
 
             <ng-container *ngSwitchCase="'seller'">
-              <p><strong>Seller:</strong> {{ orderDetails?.sellerName }}</p>
-              <p><strong>Seller City:</strong> {{ orderDetails?.sellerCityName }}</p>
-              <p><strong>Branch:</strong> {{ orderDetails?.branchName }}</p>
+              <p><strong>Seller:</strong> {{ orderDetails.sellerName }}</p>
+              <p><strong>Seller City:</strong> {{ orderDetails.sellerCityName }}</p>
+              <p><strong>Branch:</strong> {{ orderDetails.branchName }}</p>
             </ng-container>
           </ng-container>
         </div>

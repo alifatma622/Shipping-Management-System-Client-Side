@@ -39,8 +39,7 @@
     </label>
   </div>
   <!--  -->
-
-  <table class="delivery-table" style="overflow:visible;">
+  <table class="delivery-table" style="overflow:visible ;">
     <thead>
       <tr>
         <th>Order id</th>
@@ -64,7 +63,7 @@
         <td>
           <span class="branch-link">{{ order.branchName }}</span>
         </td>
-        <td>
+        <td style="overflow: visible;">
           <div class="status-dropdown" style="position: relative;">
             <span class="status-badge" [ngClass]="getStatusClass(order.status)"
               (click)="order.showStatusDropdown = !order.showStatusDropdown" style="cursor:pointer;">
@@ -74,7 +73,7 @@
               </svg>
             </span>
             <ul *ngIf="order.showStatusDropdown" class="status-dropdown-list"
-              style="position: absolute; z-index: 10; background: #fff; border: 1px solid #ccc; list-style: none; padding: 0; margin: 4px 0 0 0; min-width: 120px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+              style="position: absolute; z-index: 10000; background: #fff; border: 1px solid #ccc; list-style: none; padding: 0; margin: 4px 0 0 0; min-width: 120px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
               <li *ngFor="let status of orderStatuses"
                 (click)="updateOrderStatus(order,status); order.showStatusDropdown = false"
                 [ngClass]="{'active': order.status === status}" style="padding: 8px 12px; cursor: pointer;">
