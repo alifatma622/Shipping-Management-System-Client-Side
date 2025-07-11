@@ -11,6 +11,7 @@ import { UpdateCity } from '../../Models/CityModels/update-city';
 export class CityServiceService {
   private apiUrl = `${environment.baseUrl}/api/City`;
 
+
   constructor(private _httpClient: HttpClient) {}
 
   getAllCities(pageNumber: number = 1, pageSize: number = 10) {

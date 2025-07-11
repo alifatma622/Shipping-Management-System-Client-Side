@@ -217,7 +217,6 @@ export class AdminDashboardComponent implements OnInit {
     this.error = null;
 
     this.dashboardService.getDashboardData().subscribe({
-
       next: (data) => {
         this.dashboardData = data;
         this.setupChartData();

@@ -228,3 +228,16 @@ export interface TimePerformanceMetrics {
   worstPerformingMonth: string;
   weeklyGrowthRate: number;
 }
+
+export interface OrderStatusCountsDTO {
+  new: number;
+  pending: number;
+  deliveredToAgent: number;
+  delivered: number;
+  cancelledByReceiver: number;
+  partiallyDelivered: number;
+  postponed: number;
+  notReachable: number;
+  refusedWithPartialPayment: number;
+  refusedWithoutPayment: number;
+}
