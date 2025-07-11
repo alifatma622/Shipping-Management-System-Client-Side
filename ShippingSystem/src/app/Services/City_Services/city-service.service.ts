@@ -34,6 +34,10 @@ export class CityServiceService {
     return this._httpClient.put(`${this.apiUrl}/${id}`, city);
   }
 
+  softdeleteCity(id: number) {
+    return this._httpClient.delete(`${this.apiUrl}/Soft/${id}`);
+  }
+
   deleteCity(id: number) {
     return this._httpClient.delete(`${this.apiUrl}/${id}`);
   }

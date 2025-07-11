@@ -82,7 +82,7 @@ export class AllCityComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this._cityService.deleteCity(id).subscribe({
+        this._cityService.softdeleteCity(id).subscribe({
           next: () => {
             Swal.fire({
               icon: 'success',
