@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 
-export interface GeneralSettings {
+export interface GeneralSetting {
   id: number;
   defaultWeight: number;
   extraPriceKg: number;
@@ -23,13 +23,14 @@ export interface GeneralSettings {
 export class GeneralSettingsServiceTsService {
   private apiUrl = `${environment.baseUrl}/api/GeneralSettings`;
   constructor(private http: HttpClient){}
-  getSettings(): Observable<GeneralSettings> {
-    return this.http.get<GeneralSettings>(this.apiUrl);
+  getSettings(): Observable<GeneralSetting> {
+    return this.http.get<GeneralSetting>(this.apiUrl);
   }
-  updateSettings(data: Omit<GeneralSettings, 'employee' | 'modifiedAt'>): Observable<any> {
+
+  updateSettings(data: Omit<GeneralSetting, 'employee' | 'modifiedAt'>): Observable<any> {
     return this.http.put(this.apiUrl, {
       ...data,
-      employeeId: 1
+      employeeId: 2
     });
   }
 
