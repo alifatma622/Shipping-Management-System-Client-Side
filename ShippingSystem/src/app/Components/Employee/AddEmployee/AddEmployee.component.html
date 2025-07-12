@@ -73,7 +73,7 @@
 
     <div class="form-group">
       <label for="branchId">Branch</label>
-      <select id="branchId" formControlName="branchId"
+      <select id="branchId" formControlName="branchId" 
         [class.invalid]="addForm.get('branchId')?.invalid && addForm.get('branchId')?.touched">
         <option value="" disabled hidden>Select branch</option>
         @for (branch of branches; track branch) {

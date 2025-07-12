@@ -7,5 +7,7 @@ export interface IUpdateseller {
   lastName: string,
   username: string,
   email: string,
-  phoneNumber: number
+  phoneNumber: number,
+  isDeleted:boolean,
+  password:string
 };

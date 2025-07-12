@@ -74,7 +74,7 @@
 .sidenav-nav .sidenav-nav-item .sidenav-nav-link {
   display: flex;
   align-items: center;
-  height: 2.5rem;
+  height: 2.4rem;
   color: #f3f3f3;
   text-decoration: none;
   border-radius: 0.625rem;
@@ -131,7 +131,7 @@
 .submenu-link {
   display: flex;
   align-items: center;
-  height: 2.3rem;
+  height: 2.2rem;
   color: #f3f3f3; 
   background: transparent;
   text-decoration: none;

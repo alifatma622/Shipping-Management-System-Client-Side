@@ -15,7 +15,7 @@ export interface AddEmployeeDTO {
   branchId?: number | null;
   userName: string;
   email: string;
-  password: string;
+  password?: string;
   firstName?: string | null;
   lastName?: string | null;
   phoneNumber?: string | null;

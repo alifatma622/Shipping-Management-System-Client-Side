@@ -112,7 +112,7 @@ export class EditEmployeeComponent implements OnInit {
           branchId: data.branchId ? Number(data.branchId) : null,
           specificRole: data.specificRole,
           isActive: !data.isDeleted,
-          password: data.password
+          password:''
         });
         this.isLoading = false;
         // Enable form after loading
@@ -149,9 +149,9 @@ export class EditEmployeeComponent implements OnInit {
     // Remove isActive from data as it's not part of the API model
     delete (data as any).isActive;
 
-    // if (!data.password || data.password.trim() === '') {
-    //   delete data.password;
-    // }
+    if (!data.password || data.password.trim() === '') {
+      delete data.password;
+    }
 
     console.log('isActive value:', this.editForm.value.isActive);
     console.log('isDeleted value:', data.isDeleted);

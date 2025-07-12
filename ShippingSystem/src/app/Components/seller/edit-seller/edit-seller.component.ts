@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SellerServiceService } from '../../../Services/Seller_Service/seller-service.service';
 import { CommonModule } from '@angular/common';
 import { CityService, ICity } from '../../../Services/city.service';
+import { IUpdateseller } from '../../../Models/seller_models/IUpdateseller-models';
 
 @Component({
   selector: 'app-edit-seller',
@@ -32,6 +33,11 @@ export class EditSellerComponent implements OnInit {
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')]],
+      isActive: [true],
+      password: ['', [
+              Validators.minLength(8),
+              Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-={}:;<>.,?]).+$')
+            ]],
     });
   }
 
@@ -63,7 +69,9 @@ export class EditSellerComponent implements OnInit {
               email: data.email,
               phoneNumber: data.phoneNumber,
               firstName: data.fullName.split(' ')[0],
-              lastName: data.fullName.split(' ').slice(1).join(' ')
+              lastName: data.fullName.split(' ').slice(1).join(' '),
+              isActive:!data.isDeleted,
+              password:data.password
             });
           },
           error: (err) => {
@@ -90,14 +98,17 @@ export class EditSellerComponent implements OnInit {
   onSubmit() {
     this.isSubmitting = true;
 
+    // if (!data.password || data.password.trim() === '') {
+    //   delete data.password;
+    // }
      if (this.editForm.invalid) {
       this.editForm.markAllAsTouched();
       return;
     }
 
     else {
-      const updatedSeller = { ...this.editForm.value, id: this.sellerId };
-
+      const updatedSeller = { ...this.editForm.value, id: this.sellerId,isDeleted: !this.editForm.value.isActive };
+      // delete (data as any).isActive;
       this.sellerservice.updateSeller(this.sellerId, updatedSeller).subscribe({
         next: () => {
           this.successMsg = 'Seller updated successfully';

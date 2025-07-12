@@ -81,6 +81,23 @@
         Valid email is required.
       </div>
     </div>
+    <!-- password -->
+<div class="form-group">
+        <label for="password">New Password (optional)</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Leave blank to keep current password"
+          [class.invalid]="editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value"
+          [disabled]="isSubmitting" />
+        @if (editForm.get('password')?.invalid && editForm.get('password')?.touched && editForm.get('password')?.value) {
+          <div class="error"
+            >
+            Password must be at least 8 characters, include uppercase, lowercase, number, and symbol.
+          </div>
+        }
+      </div>
 
     <!-- Phone Number -->
     <div class="form-group">
@@ -90,7 +107,26 @@
         Must be a valid Egyptian number.
       </div>
     </div>
-
+       <!-- Activity -->
+    <div class="form-group status-group">
+      <label for="isActive">Status</label>
+      <div class="status-toggle">
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            formControlName="isActive"
+            [disabled]="isSubmitting"
+            id="isActive" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="status-text">
+          {{ editForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+      <small class="help-text">
+        {{ editForm.get('isActive')?.value ? 'Seller is currently active.' : 'Seller is inactive.' }}
+      </small>
+    </div>
     <!-- Submit -->
     <div class="form-actions">
       <button type="submit"  class="add-btn" [disabled]="editForm.invalid || isSubmitting">

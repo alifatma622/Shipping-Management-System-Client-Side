@@ -8,6 +8,8 @@ export interface ISellerModels {
     storeName: string;
     address: string;
     cancelledOrderPercentage: number;
+    isDeleted:boolean,
+    password:string
 }
 
 
