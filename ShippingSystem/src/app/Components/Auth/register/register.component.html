@@ -1,13 +1,13 @@
 <div class="register-page">
   <div class="register-container">
 
-    <div class="form-section" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div class="form-section" style="display: flex; flex-direction: column; justify-content: center; align-items: center; ">
       <form
         [formGroup]="registerForm"
         (ngSubmit)="onSubmit()"
         class="register-form"
         >
-        <h2 class="title mb-4">Register</h2>
+        <h2 class="title mb-4" style="color: #055866;">Register as a <span style="color: #89c93b;">Seller</span></h2>
 
         <div class="row">
           <div class="col-md-6 form-group">
@@ -19,7 +19,6 @@
               </small>
             }
           </div>
-
           <div class="col-md-6 form-group">
             <label>Email</label>
             <input class="form-control" formControlName="email" />
@@ -37,7 +36,7 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6 form-group">
+          <div class="col-md-4 form-group">
             <label>First Name</label>
             <input class="form-control" formControlName="firstName" />
             @if (registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched) {
@@ -46,8 +45,7 @@
               </small>
             }
           </div>
-
-          <div class="col-md-6 form-group">
+          <div class="col-md-4 form-group">
             <label>Last Name</label>
             <input class="form-control" formControlName="lastName" />
             @if (registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched) {
@@ -55,6 +53,53 @@
                 Last Name is required
               </small>
             }
+          </div>
+          <div class="col-md-4 form-group">
+            <label>Store Name</label>
+            <input class="form-control" formControlName="storeName" />
+            <div *ngIf="registerForm.get('storeName')?.invalid && registerForm.get('storeName')?.touched" class="text-danger">
+              Store Name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label for="city">City</label>
+            <select id="city" formControlName="cityId" class="form-control city-select">
+              <option value="" disabled selected hidden>Select your city…</option>
+              <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+            </select>
+            <div *ngIf="registerForm.get('cityId')?.touched && registerForm.get('cityId')?.invalid" class="text-danger">
+              City is required.
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Phone Number</label>
+            <div formArrayName="phones">
+              <input [formControlName]="0" class="form-control" />
+              @if (phones.controls[0].invalid && phones.controls[0].touched) {
+                <small class="text-danger d-block mt-1">
+                  @if (phones.controls[0].errors?.['required']) {
+                    <span>Phone number is required</span>
+                  }
+                  @if (phones.controls[0].errors?.['minlength']) {
+                    <span>Phone number must be at least 11 digits</span>
+                  }
+                  @if (phones.controls[0].errors?.['pattern']) {
+                    <span>Phone must start with 010, 011, 012, or 015 and contain 11 digits</span>
+                  }
+                </small>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <textarea class="form-control address-input" formControlName="address" rows="2"></textarea>
+          <div *ngIf="registerForm.get('address')?.invalid && registerForm.get('address')?.touched" class="text-danger">
+            Address is required
           </div>
         </div>
 
@@ -73,36 +118,7 @@
           }
         </div>
 
-        <!-- ✅ Phone Numbers -->
-        <div formArrayName="phones">
-          <label>Phone Numbers</label>
-          @for (phone of phones.controls; track phone; let i = $index) {
-            <div class="mb-3">
-              <div class="d-flex align-items-center">
-                <input [formControlName]="i" class="form-control me-2" />
-                @if (phones.length > 1) {
-                  <button type="button" class="btn btn-danger btn-sm me-1" (click)="removePhone(i)">−</button>
-                }
-                @if (i === phones.length - 1) {
-                  <button type="button" class="btn btn-success btn-sm" (click)="addPhone()">+</button>
-                }
-              </div>
-              @if (phone.invalid && phone.touched) {
-                <small class="text-danger d-block mt-1">
-                  @if (phone.errors?.['required']) {
-                    <span>Phone number is required</span>
-                  }
-                  @if (phone.errors?.['minlength']) {
-                    <span>Phone number must be at least 11 digits</span>
-                  }
-                  @if (phone.errors?.['pattern']) {
-                    <span>Phone must start with 010, 011, 012, or 015 and contain 11 digits</span>
-                  }
-                </small>
-              }
-            </div>
-          }
-        </div>
+       
 
         <button type="submit" class="btn-submit mt-3" [disabled]="registerForm.invalid">Register</button>
 
