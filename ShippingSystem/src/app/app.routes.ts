@@ -4,7 +4,7 @@ import { UpdateCityComponent } from './Components/Regions/update-city/update-cit
 import { AllBranchComponent } from './Components/Branchs/all-branch/all-branch.component';
 import { UpdateBranchComponent } from './Components/Branchs/update-branch/update-branch.component';
 import { AddBranchComponent } from './Components/Branchs/add-branch/add-branch.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/Auth/login/login.component';
 import { RegisterComponent } from './Components/Auth/register/register.component';
@@ -32,9 +32,11 @@ import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.co
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
 import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
+import { OrderListSellerComponent } from './Components/Test/order-list-seller/order-list-seller.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: 'test', component: OrderListSellerComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -44,46 +46,191 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],
-    data: { roles: ['Admin', 'Employee' , 'Seller' , 'DeliveryAgent'] },
+    data: { roles: ['Admin', 'Employee', 'Seller', 'DeliveryAgent'] },
     children: [
       { path: '', component: MainComponent },
-      { path: 'employee', component: MainEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'delivery-men', component: AllDeliveryMenComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'delivery-men/add', component: AddDeliveryManComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'seller', component: AllSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'seller/add', component: AddSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'seller/edit/:id', component: EditSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'order/add', component: AddOrderComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'employee/add', component: AddEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'employee/edit/:id', component: EditEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'order', component: OrdersListComponent , canActivate:[authGuard], data : {roles: ['Employee' , 'Seller' , 'DeliveryAgent']}},
-      { path: 'Order/Details/:id', component: OrderDetailsComponent , canActivate:[authGuard], data : {roles: ['Employee' , 'Seller', 'DeliveryAgent']}},
-      {path: 'Order/Edit/:id', component: EditOrderComponent, canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'Allcity', component: AllCityComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'Addcity', component: AddCityComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'Updatecity/:id', component: UpdateCityComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'AllBranch', component: AllBranchComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'UpdateBranch/:id', component: UpdateBranchComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'AddBranch', component: AddBranchComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'delivery-men', component: AllDeliveryMenComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'delivery-men/add', component: AddDeliveryManComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'delivery-men/edit/:id', component: EditDeliveryManComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'general-settings', component: GeneralSettingsComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'governrates', component: GovernratesListComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'seller', component: AllSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'seller-dashboard', component: SellerDashboardComponent, canActivate: [authGuard], data: { roles: ['Seller'] } },
-      { path: 'deliveryman', component: DeliverymanDashboardComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
+      {
+        path: 'employee',
+        component: MainEmployeeComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men',
+        component: AllDeliveryMenComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men/add',
+        component: AddDeliveryManComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men/edit/:id',
+        component: EditDeliveryManComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller',
+        component: AllSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller/add',
+        component: AddSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller/edit/:id',
+        component: EditSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'order/add',
+        component: AddOrderComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'employee/add',
+        component: AddEmployeeComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'employee/edit/:id',
+        component: EditEmployeeComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      // {
 
-      { path: 'overview', component: AdminDashboardComponent , canActivate:[authGuard], data : {roles: ['Employee']}}
+      //   path: 'order',
+      //   component: OrdersListComponent,
+      //   canActivate: [authGuard],
+      //   data: { roles: ['Employee', 'Seller', 'DeliveryAgent'] },
+      // },
+      {
+        path: 'order',
+        canActivate: [authGuard],
+        data: { roles: ['Employee', 'Seller', 'DeliveryAgent'] },
+        loadComponent: () =>
+          import('./Components/Order/orders-list/orders-list.component').then(
+            (m) => m.OrdersListComponent
+          ),
+      },
+      {
+        path: 'Order/Details/:id',
+        component: OrderDetailsComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee', 'Seller', 'DeliveryAgent'] },
+      },
+      {
+        path: 'Order/Edit/:id',
+        component: EditOrderComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'Allcity',
+        component: AllCityComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'Addcity',
+        component: AddCityComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'Updatecity/:id',
+        component: UpdateCityComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'AllBranch',
+        component: AllBranchComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'UpdateBranch/:id',
+        component: UpdateBranchComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'AddBranch',
+        component: AddBranchComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men',
+        component: AllDeliveryMenComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men/add',
+        component: AddDeliveryManComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'delivery-men/edit/:id',
+        component: EditDeliveryManComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'general-settings',
+        component: GeneralSettingsComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'governrates',
+        component: GovernratesListComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller',
+        component: AllSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller-dashboard',
+        component: SellerDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+      {
+        path: 'deliveryman',
+        component: DeliverymanDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['DeliveryAgent'] },
+      },
 
-    ]
+      {
+        path: 'overview',
+        component: AdminDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+    ],
   },
-
-
-
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
