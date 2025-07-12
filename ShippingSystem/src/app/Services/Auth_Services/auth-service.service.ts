@@ -67,7 +67,7 @@ hasAnyRole(roles: string[]): boolean {
 
 getUserId(): string | null {
 
-  const token = this.getToken(); 
+  const token = this.getToken();
   if (!token) {
     console.warn("No token found");
     return null;
@@ -80,11 +80,11 @@ getUserId(): string | null {
       return null;
     }
     const payload = JSON.parse(atob(tokenParts[1]));
-    const userId = 
-      payload.sub || 
-      payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']; 
+    const userId =
+      payload.sub ||
+      payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
-    
+
     if (typeof userId === 'string' && userId.trim() !== '') {
       return userId;
     } else {

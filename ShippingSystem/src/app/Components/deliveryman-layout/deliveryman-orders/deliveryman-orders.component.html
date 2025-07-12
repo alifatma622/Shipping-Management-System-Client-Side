@@ -27,7 +27,7 @@
       (change)="onStatusChange()"
     >
       <option value="">All Statuses</option>
-      <option *ngFor="let status of orderStatuses" [value]="status">
+      <option *ngFor="let status of orderStatuses" [value]="status.toString()">
         {{ getStatusText(status) }}
       </option>
     </select>

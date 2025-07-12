@@ -29,10 +29,10 @@ export class SidebarComponent implements OnInit {
   orderListRouteLink: string = '';
   newOrderRouteLink: string = '';
   items: MenuItem[] = [];
-  
+
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
-  
+
   logout = {
     routeLink: 'logout',
     icon: 'fal fa-sign-out',
@@ -50,15 +50,15 @@ export class SidebarComponent implements OnInit {
   private initializeUserRoles(): void {
     this.userRole = this.authService.getRole();
     console.log("✅ User roles:", this.userRole);
-    
+
     if (this.authService.hasRole('Admin')) {
       this.orderListRouteLink = 'order';
       this.newOrderRouteLink = 'order/add';
     } else if (this.authService.hasRole('DeliveryAgent')) {
       this.orderListRouteLink = 'order-delivery';
     } else if (this.authService.hasRole('Seller')) {
-      this.orderListRouteLink = 'order-seller';
-      this.newOrderRouteLink = 'order-seller/add';
+      this.orderListRouteLink = 'orders-seller';
+      this.newOrderRouteLink = 'add-order-seller';
     }
   }
 
@@ -120,8 +120,8 @@ export class SidebarComponent implements OnInit {
         subItems: [
           { label: 'Orders list', routeLink: this.orderListRouteLink },
           ...(this.newOrderRouteLink ? [{
-            label: 'New order', 
-            routeLink: this.newOrderRouteLink, 
+            label: 'New order',
+            routeLink: this.newOrderRouteLink,
             visibleFor: ['Employee', 'Admin', 'Seller']
           }] : [])
         ],

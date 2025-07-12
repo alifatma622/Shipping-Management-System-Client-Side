@@ -255,4 +255,3 @@ export class OrdersListComponent implements OnInit {
 }
 
 
-}

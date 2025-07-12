@@ -86,7 +86,7 @@ export class DeliverymanOrdersComponent {
         // Add showStatusDropdown property to each order
         this.orders = response.items.map(order => ({
           ...order,
-          status: this.getStatusNumberFromName(order.status),
+          status: this.getStatusNumberFromName(order.status), // always a number
           showStatusDropdown: false
         }));
         this.totalCount = response.totalCount;
@@ -126,32 +126,34 @@ export class DeliverymanOrdersComponent {
 
   //#region search
   get filteredOrders(): ReadOrderDTO[] {
+    let filtered = this.orders;
 
-    if (!this.searchString.trim()) return this.orders;
+    // 1. Filter by status if selected
+    if (this.selectedStatus) {
+      filtered = filtered.filter(o => o.status === Number(this.selectedStatus));
+    }
 
-    const searchTerm = this.searchString.trim().toLowerCase();
+    // 2. Filter by search string (on other fields)
+    if (this.searchString.trim()) {
+      const searchTerm = this.searchString.trim().toLowerCase();
+      filtered = filtered.filter((o) => {
+        const fieldsToSearch = [
+          o.branchName,
+          o.address,
+          o.customerName,
+          o.orderID?.toString(),
+          o.creationDate.toString(),
+          o.sellerName,
+          o.totalCost.toString(),
+          o.totalWeight.toString(),
+          o.customerCityName
+        ].filter(Boolean);
 
-    return this.orders.filter(o => {
-      // Convert all searchable fields to lowercase strings for comparison
-      const fieldsToSearch = [
-        o.status.toString(),
-        o.branchName,
-        o.address,
-        o.customerName,
-        o.orderID?.toString(),
-        o.creationDate.toString(),
-        o.sellerName,
-        o.totalCost.toString(),
-        o.totalWeight.toString(),
+        return fieldsToSearch.some((f) => f!.toLowerCase().includes(searchTerm));
+      });
+    }
 
-        o.customerCityName
-        // Add more fields as needed
-      ].filter(f => f); // Remove undefined/null values
-
-      return fieldsToSearch.some(f =>
-        f.toLowerCase().includes(searchTerm)
-      );
-    });
+    return filtered;
   }
 
   onSearchChange(value: string) {
@@ -231,13 +233,16 @@ export class DeliverymanOrdersComponent {
   //#region pagination
 
   get pagedOrders() {
-
-    return this.orders;
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.filteredOrders.slice(start, end);
   }
+  
 
   get totalPages() {
-    return Math.ceil(this.totalCount / this.itemsPerPage);
+    return Math.ceil(this.filteredOrders.length / this.itemsPerPage);
   }
+  
 
   onPageChange(page: number) {
     this.currentPage = page;
