@@ -1,9 +1,23 @@
-<app-Sidebar
-  [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
-  (changeIsLeftSidebarCollapsed)="changeIsLeftSidebarCollapsed($event)"
-></app-Sidebar>
+<div class="header">
+  <h2>Deliveryman Dashboard</h2>
+</div>
 
-<app-Main
-  [isLeftSidebarCollapsed]="isLeftSidebarCollapsed()"
-  [screenWidth]="screenWidth()"
-></app-Main>
+<div class="dashboard-container" *ngIf="!isLoading && !error">
+  <h2 class="dashboard-section-title">Order Status</h2>
+  <div class="stats-cards-row">
+    <ng-container *ngFor="let status of statusList">
+      <div class="stat-card">
+        <div class="stat-icon" [style.background-color]="status.color">
+          <mat-icon>{{status.icon}}</mat-icon>
+        </div>
+        <div class="stat-content">
+          <div class="stat-title">{{status.label}}</div>
+          <div class="stat-value">{{getStatusCount(status.key)}}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="error">{{error}}</div>

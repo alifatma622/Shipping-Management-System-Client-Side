@@ -8,6 +8,7 @@ import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
+
 @Component({
   selector: 'app-deliveryman-orders',
   imports: [FormsModule , CommonModule],
@@ -22,6 +23,9 @@ export class DeliverymanOrdersComponent {
   errorMsg = '';
   routes: any;
   searchString: string = '';
+
+  selectedStatus: string = ''; // أضفت هذا المتغير
+
   selectedOrderId: number = 0;
   deliveryAgents: IReadDeliveryMan[] = [];
   filteredAgents: IReadDeliveryMan[] = [];
@@ -38,39 +42,51 @@ export class DeliverymanOrdersComponent {
   userId:string|null='';
   deliveryId:number=0;
   //#endregion
-  constructor(private orderService: OrderService, private router: Router, private deliveryService: DeliveryManService,
+
+
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private deliveryService: DeliveryManService,
+
     private authService: AuthServiceService
   ) {}
 
   //#region init
   ngOnInit(): void {
      this.userId = this.getUserId();
-  
-  // First get the delivery ID, THEN load orders
-  this.deliveryService.getId(this.userId).subscribe({
-    next: (deliveryId) => {
-      this.deliveryId = deliveryId;
-      this.loadOrders();  
-    },
-    error: (err) => {
-      this.errorMsg = 'Failed to load delivery ID';
-      this.isLoading = false;
-    }
-  });
+
+
+    // First get the delivery ID, THEN load orders
+    this.deliveryService.getId(this.userId).subscribe({
+      next: (deliveryId) => {
+        this.deliveryId = deliveryId;
+        this.loadOrders();
+      },
+      error: (err) => {
+        this.errorMsg = 'Failed to load delivery ID';
+        this.isLoading = false;
+      }
+    });
+
   }
 
   loadOrders() {
     this.isLoading = true;
 
-    this.orderService.getOrdersByDeliveryAgent(this.deliveryId,
+
+    this.deliveryService.getOrdersByDeliveryAgent(
+      this.deliveryId,
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.selectedStatus // أضفت هذا الباراميتر
+
     ).subscribe({
       next: (response) => {
         // Add showStatusDropdown property to each order
         this.orders = response.items.map(order => ({
           ...order,
-          status: this.getStatusNumberFromName(order.status),
+          status: this.getStatusNumberFromName(order.status), // always a number
           showStatusDropdown: false
         }));
         this.totalCount = response.totalCount;
@@ -82,6 +98,15 @@ export class DeliverymanOrdersComponent {
       }
     });
   }
+
+
+  // أضفت دالة onStatusChange
+  onStatusChange() {
+    this.currentPage = 1;
+    this.loadOrders();
+  }
+
+
   onEdit(id: number) {
     this.router.navigate(['dashboard/Order/Edit', id]);
   }
@@ -101,33 +126,36 @@ export class DeliverymanOrdersComponent {
 
   //#region search
   get filteredOrders(): ReadOrderDTO[] {
+    let filtered = this.orders;
 
-    if (!this.searchString.trim()) return this.orders;
+    // 1. Filter by status if selected
+    if (this.selectedStatus) {
+      filtered = filtered.filter(o => o.status === Number(this.selectedStatus));
+    }
 
-    const searchTerm = this.searchString.trim().toLowerCase();
+    // 2. Filter by search string (on other fields)
+    if (this.searchString.trim()) {
+      const searchTerm = this.searchString.trim().toLowerCase();
+      filtered = filtered.filter((o) => {
+        const fieldsToSearch = [
+          o.branchName,
+          o.address,
+          o.customerName,
+          o.orderID?.toString(),
+          o.creationDate.toString(),
+          o.sellerName,
+          o.totalCost.toString(),
+          o.totalWeight.toString(),
+          o.customerCityName
+        ].filter(Boolean);
 
-    return this.orders.filter(o => {
-      // Convert all searchable fields to lowercase strings for comparison
-      const fieldsToSearch = [
-        o.status.toString(),
-        o.branchName,
-        o.address,
-        o.customerName,
-        o.orderID?.toString(),
-        o.creationDate.toString(),
-        o.sellerName,
-        o.totalCost.toString(),
-        o.totalWeight.toString(),
+        return fieldsToSearch.some((f) => f!.toLowerCase().includes(searchTerm));
+      });
+    }
 
-        o.customerCityName
-        // Add more fields as needed
-      ].filter(f => f); // Remove undefined/null values
-
-      return fieldsToSearch.some(f =>
-        f.toLowerCase().includes(searchTerm)
-      );
-    });
+    return filtered;
   }
+
   onSearchChange(value: string) {
     this.searchString = value;
   }
@@ -174,7 +202,6 @@ export class DeliverymanOrdersComponent {
     }
   }
 
-
   //#endregion
 
   //#region assign agent
@@ -206,19 +233,24 @@ export class DeliverymanOrdersComponent {
   //#region pagination
 
   get pagedOrders() {
-
-    return this.orders;
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return this.filteredOrders.slice(start, end);
   }
+  
 
   get totalPages() {
-    return Math.ceil(this.totalCount / this.itemsPerPage);
+    return Math.ceil(this.filteredOrders.length / this.itemsPerPage);
   }
+  
 
   onPageChange(page: number) {
     this.currentPage = page;
 
     this.loadOrders();
   }
+
+
   onItemsPerPageChange(count: number) {
     this.itemsPerPage = count;
     this.currentPage = 1;
@@ -238,21 +270,19 @@ export class DeliverymanOrdersComponent {
       }
     });
   }
+
   getStatusNumberFromName(status: string | number): number {
     if (typeof status === 'number') return status; // Already a number, return as is
 
     const enumEntry = Object.entries(OrderStatus).find(([key]) => key === status);
     return enumEntry ? Number(enumEntry[1]) : -1; // Return -1 or a fallback value
   }
-
   //#endregion
-
 
   getUserId(){
    return this.authService.getUserId();
   }
 
- 
 }
 
 
