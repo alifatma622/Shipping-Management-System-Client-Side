@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { OrderStatusCountsDTO } from '../../../Models/DashboardDTO';
 import { DashboardService } from '../../../Services/dashboard.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { MainComponent } from "../../Main/Main.component";
+import { SidebarComponent } from "../../Sidebar/Sidebar.component";
 
 @Component({
   selector: 'app-seller-dashboard',
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, RouterOutlet, MainComponent, SidebarComponent],
   templateUrl: './seller-dashboard.component.html',
   styleUrl: './seller-dashboard.component.css'
 })
@@ -15,6 +18,26 @@ export class SellerDashboardComponent implements OnInit{
   statusCounts?: OrderStatusCountsDTO;
   isLoading = true;
   error: string | null = null;
+
+
+  isLeftSidebarCollapsed = signal<boolean>(false);
+  screenWidth = signal<number>(window.innerWidth);
+
+  @HostListener('window:resize')
+  onResize() {
+    this.screenWidth.set(window.innerWidth);
+    if (this.screenWidth() < 768) {
+      this.isLeftSidebarCollapsed.set(true);
+    }
+  }
+
+  ngoninit(): void {
+    this.isLeftSidebarCollapsed.set(this.screenWidth() < 768);
+  }
+
+  changeIsLeftSidebarCollapsed(isLeftSidebarCollapsed: boolean): void {
+    this.isLeftSidebarCollapsed.set(isLeftSidebarCollapsed);
+  }
 
   statusList = [
     { key: 'new', label: 'New', icon: 'fiber_new', color: '#3B82F6' },
@@ -49,3 +72,6 @@ export class SellerDashboardComponent implements OnInit{
   }
 
 }
+
+
+

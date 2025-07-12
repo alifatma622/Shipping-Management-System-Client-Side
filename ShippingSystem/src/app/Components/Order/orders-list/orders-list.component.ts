@@ -8,6 +8,9 @@ import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { ChangeDetectorRef } from '@angular/core';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 @Component({
   selector: 'app-orders-list',
   imports: [CommonModule, FormsModule],
@@ -260,6 +263,20 @@ export class OrdersListComponent implements OnInit {
   //#endregion
 
 
+  printOrderDetails(): void {
+    const data = document.getElementById('order-details-content');
+    if (data) {
+      html2canvas(data).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`order-details-${this.selectedOrderId}.pdf`);
+      });
+    }
+  }
 
 }
 

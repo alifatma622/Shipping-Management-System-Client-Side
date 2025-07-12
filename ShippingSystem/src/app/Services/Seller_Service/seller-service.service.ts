@@ -46,4 +46,8 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
     return this.http.get<ISellerModels>(`${this.apiUrl}/${id}`);
   }
 
+  getSellerByUserId(userId: string) {
+    return this.http.get<any>(`${environment.baseUrl}/api/Seller/${userId}`);
+  }
+
 }
