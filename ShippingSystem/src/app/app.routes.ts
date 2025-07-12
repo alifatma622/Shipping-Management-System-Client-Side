@@ -32,7 +32,12 @@ import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.co
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
 import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
+
 import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deliveryman-orders/deliveryman-orders.component';
+
+import { AddOrderSellerComponent } from './Components/Seller-layout/add-order-seller/add-order-seller.component';
+import { OrderSellerComponent } from './Components/Seller-layout/order-seller/order-seller.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -45,7 +50,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard],
-    data: { roles: ['Admin', 'Employee' , 'Seller' , 'DeliveryAgent'] },
+    data: { roles: ['Admin', 'Employee'  , 'DeliveryAgent'] },
     children: [
       { path: '', component: MainComponent },
       { path: 'employee', component: MainEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
@@ -73,7 +78,7 @@ export const routes: Routes = [
       { path: 'general-settings', component: GeneralSettingsComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
       { path: 'governrates', component: GovernratesListComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
       { path: 'seller', component: AllSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
-      { path: 'seller-dashboard', component: SellerDashboardComponent, canActivate: [authGuard], data: { roles: ['Seller'] } },
+     
       { path: 'deliveryman', component: DeliverymanDashboardComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
       { path: 'order-delivery', component: DeliverymanOrdersComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
 
@@ -82,6 +87,17 @@ export const routes: Routes = [
     ]
   },
 
+  {
+  path: 'seller-dashboard',
+  component: SellerDashboardComponent,
+  canActivate: [authGuard],
+  data: { roles: ['Seller'] },
+  children: [
+    { path: '', redirectTo: 'orders', pathMatch: 'full' }, // default child route
+    { path: 'add-order', component: AddOrderSellerComponent }, // ✅ عدلت الاسم هنا
+    { path: 'orders', component: OrderSellerComponent } // ✅ وعدلت الاسم هنا
+  ]
+}
 
 
 ];

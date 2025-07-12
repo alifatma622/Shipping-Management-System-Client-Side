@@ -87,6 +87,7 @@ updateOrder(order : UpdateOrderDTO): Observable<any> {
     return this.http.put(`${this.apiUrl}/${order.id}`, order);
 }
 
+
 // Get orders by delivery agent ID
  getOrdersByDeliveryAgent(deliveryAgentId: number, pageNumber:number,pageSize:number): Observable<OrderResponse> {
     let params = new HttpParams()
@@ -110,5 +111,6 @@ updateOrder(order : UpdateOrderDTO): Observable<any> {
       { params }
     );
   }
+
 
 }
