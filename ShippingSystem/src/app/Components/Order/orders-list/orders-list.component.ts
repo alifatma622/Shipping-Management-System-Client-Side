@@ -20,11 +20,6 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
-<<<<<<< HEAD
-  //#region variables
-=======
-
->>>>>>> origin/main
   orders: ReadOrderDTO[] = [];
   isLoading = true;
   errorMsg = '';
@@ -67,26 +62,6 @@ export class OrdersListComponent implements OnInit {
   loadOrders() {
     this.isLoading = true;
 
-<<<<<<< HEAD
-    this.orderService
-      .getPaginatedOrders(this.currentPage, this.itemsPerPage)
-      .subscribe({
-        next: (response) => {
-          // Add showStatusDropdown property to each order
-          this.orders = response.items.map((order) => ({
-            ...order,
-            status: this.getStatusNumberFromName(order.status),
-            showStatusDropdown: false,
-          }));
-          this.totalCount = response.totalCount;
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMsg = 'Error loading orders';
-          this.isLoading = false;
-        },
-      });
-=======
     this.orderService.getPaginatedOrders(
       this.currentPage,
       this.itemsPerPage,
@@ -106,7 +81,6 @@ export class OrdersListComponent implements OnInit {
         this.isLoading = false;
       }
     });
->>>>>>> origin/main
   }
 
   onStatusChange() {
@@ -135,12 +109,7 @@ export class OrdersListComponent implements OnInit {
 
     const searchTerm = this.searchString.trim().toLowerCase();
 
-<<<<<<< HEAD
-    return this.orders.filter((o) => {
-      // Convert all searchable fields to lowercase strings for comparison
-=======
     return this.orders.filter(o => {
->>>>>>> origin/main
       const fieldsToSearch = [
         o.status.toString(),
         o.branchName,
@@ -151,15 +120,8 @@ export class OrdersListComponent implements OnInit {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
-<<<<<<< HEAD
-
-        o.customerCityName,
-        // Add more fields as needed
-      ].filter((f) => f); // Remove undefined/null values
-=======
         o.customerCityName
       ].filter(f => f);
->>>>>>> origin/main
 
       return fieldsToSearch.some((f) => f.toLowerCase().includes(searchTerm));
     });
@@ -227,13 +189,6 @@ export class OrdersListComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
-  //#endregion
-
-  //#region assign agent
-
-=======
->>>>>>> origin/main
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
     return (this.filteredAgents = this.deliveryAgents.filter((agent) =>
@@ -289,18 +244,9 @@ export class OrdersListComponent implements OnInit {
     });
   }
   getStatusNumberFromName(status: string | number): number {
-<<<<<<< HEAD
-    if (typeof status === 'number') return status; // Already a number, return as is
-
-    const enumEntry = Object.entries(OrderStatus).find(
-      ([key]) => key === status
-    );
-    return enumEntry ? Number(enumEntry[1]) : -1; // Return -1 or a fallback value
-=======
     if (typeof status === 'number') return status;
     const enumEntry = Object.entries(OrderStatus).find(([key]) => key === status);
     return enumEntry ? Number(enumEntry[1]) : -1;
->>>>>>> origin/main
   }
 
   //#endregion
@@ -327,11 +273,6 @@ export class OrdersListComponent implements OnInit {
       });
     }
   }
-
-
 }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/main
