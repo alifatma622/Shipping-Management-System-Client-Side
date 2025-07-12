@@ -23,7 +23,9 @@ export class DeliverymanOrdersComponent {
   errorMsg = '';
   routes: any;
   searchString: string = '';
+
   selectedStatus: string = ''; // أضفت هذا المتغير
+
   selectedOrderId: number = 0;
   deliveryAgents: IReadDeliveryMan[] = [];
   filteredAgents: IReadDeliveryMan[] = [];
@@ -41,16 +43,19 @@ export class DeliverymanOrdersComponent {
   deliveryId:number=0;
   //#endregion
 
+
   constructor(
     private orderService: OrderService,
     private router: Router,
     private deliveryService: DeliveryManService,
+
     private authService: AuthServiceService
   ) {}
 
   //#region init
   ngOnInit(): void {
      this.userId = this.getUserId();
+
 
     // First get the delivery ID, THEN load orders
     this.deliveryService.getId(this.userId).subscribe({
@@ -63,16 +68,19 @@ export class DeliverymanOrdersComponent {
         this.isLoading = false;
       }
     });
+
   }
 
   loadOrders() {
     this.isLoading = true;
+
 
     this.deliveryService.getOrdersByDeliveryAgent(
       this.deliveryId,
       this.currentPage,
       this.itemsPerPage,
       this.selectedStatus // أضفت هذا الباراميتر
+
     ).subscribe({
       next: (response) => {
         // Add showStatusDropdown property to each order
@@ -91,11 +99,13 @@ export class DeliverymanOrdersComponent {
     });
   }
 
+
   // أضفت دالة onStatusChange
   onStatusChange() {
     this.currentPage = 1;
     this.loadOrders();
   }
+
 
   onEdit(id: number) {
     this.router.navigate(['dashboard/Order/Edit', id]);
@@ -133,6 +143,7 @@ export class DeliverymanOrdersComponent {
         o.sellerName,
         o.totalCost.toString(),
         o.totalWeight.toString(),
+
         o.customerCityName
         // Add more fields as needed
       ].filter(f => f); // Remove undefined/null values
@@ -168,6 +179,7 @@ export class DeliverymanOrdersComponent {
     }
   }
 
+
   getStatusClass(status: any): string {
     // console.log(status)
     switch (status) {
@@ -187,9 +199,11 @@ export class DeliverymanOrdersComponent {
       default: return 'status-unknown';
     }
   }
+
   //#endregion
 
   //#region assign agent
+
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
     return this.filteredAgents = this.deliveryAgents.filter(agent => agent.cities?.includes(cityName));
@@ -198,6 +212,7 @@ export class DeliverymanOrdersComponent {
   selectAgent(agent: IReadDeliveryMan): void {
     this.selectedAgent = agent;
   }
+
 
   assignOrder(orderId: number): void {
     this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
@@ -214,7 +229,9 @@ export class DeliverymanOrdersComponent {
   //#endregion
 
   //#region pagination
+
   get pagedOrders() {
+
     return this.orders;
   }
 
@@ -224,8 +241,10 @@ export class DeliverymanOrdersComponent {
 
   onPageChange(page: number) {
     this.currentPage = page;
+
     this.loadOrders();
   }
+
 
   onItemsPerPageChange(count: number) {
     this.itemsPerPage = count;
@@ -236,6 +255,7 @@ export class DeliverymanOrdersComponent {
 
   //#region update status
   updateOrderStatus(order: ReadOrderDTO, newstatus: OrderStatus): void {
+
     this.orderService.changeOrderStatus(order.orderID, newstatus).subscribe({
       next: () => {
         order.status = newstatus;
@@ -257,4 +277,8 @@ export class DeliverymanOrdersComponent {
   getUserId(){
    return this.authService.getUserId();
   }
+
 }
+
+
+

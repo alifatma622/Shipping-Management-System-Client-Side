@@ -10,7 +10,9 @@ import { environment } from '../../environments/environment.development';
 })
 export class DeliveryManService {
   private apiUrl = `${environment.baseUrl}/api/DeliveryMan`;
+
   private orderApiUrl = `${environment.baseUrl}/api/Order`; //
+
   id:number=0;
   constructor(private http: HttpClient) { }
 
@@ -51,6 +53,7 @@ export class DeliveryManService {
       .set('pageNumber', pageNumber.toString())
       .set('pageSize', pageSize.toString());
 
+
     return this.http.get<IDeliveryResponse>(`${this.apiUrl}/paginated`, { params });
   }
 
@@ -70,4 +73,5 @@ export class DeliveryManService {
 
     return this.http.get<OrderResponse>(`${this.orderApiUrl}/GetOrdersByDeliveryAgent/${deliveryAgentId}`, { params });
   }
+
 }

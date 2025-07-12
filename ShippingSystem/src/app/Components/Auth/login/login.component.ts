@@ -60,6 +60,7 @@ export class LoginComponent {
           if (role[0] === 'Admin' && role[1] === 'Employee') {
             this._router.navigate(['/dashboard/overview']);
           } else if (role === 'Seller') {
+
             this._router.navigate(['/dashboard/seller-dashboard']);
           }
 

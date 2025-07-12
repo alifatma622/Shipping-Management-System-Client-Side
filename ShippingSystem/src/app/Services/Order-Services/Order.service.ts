@@ -104,6 +104,7 @@ export class OrderService {
     );
   }
 
+
   // Get orders by seller ID
   getOrdersBySeller(sellerId: number, pageNumber:number,pageSize:number): Observable<OrderResponse> {
     let params = new HttpParams()
@@ -115,5 +116,6 @@ export class OrderService {
       { params }
     );
   }
+
 
 }
