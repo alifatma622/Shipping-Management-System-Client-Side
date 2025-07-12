@@ -1,0 +1,99 @@
+<div class="all-delivery-men-container">
+  <div class="header">
+    <h2>Orders</h2>
+    <button class="add-btn" (click)="onAdd()">Add Order</button>
+  </div>
+
+  <div class="search-bar-row">
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Search by anything"
+        [(ngModel)]="searchString"
+        (ngModelChange)="onSearchChange($event)"
+      />
+      <button class="search-btn">
+        <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">Loading...</div>
+  <div *ngIf="errorMsg" class="error">{{ errorMsg }}</div>
+
+  <ng-container *ngIf="!isLoading && filteredOrders.length">
+    <div class="pagination-controls">
+      <label>
+        Show
+        
+
+        <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange(itemsPerPage)">
+          <option *ngFor="let opt of itemsPerPageOptions" [value]="opt">{{ opt }}</option>
+        </select>
+
+        entries
+      </label>
+    </div>
+
+    <table class="agent-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Weight</th>
+          <th>Cost</th>
+          <th>Address</th>
+          <th>Branch</th>
+          <th>Details</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of pagedOrders; trackBy: trackByOrderId">
+          <td>{{ order.orderID }}</td>
+          <td>{{ order.totalWeight + ' Kg' }}</td>
+          <td>{{ order.totalCost + ' LE' }}</td>
+          <td>{{ order.address }}</td>
+          <td>
+            <span class="branch-badge">{{ order.branchName }}</span>
+          </td>
+          <td>
+            <button class="details-btn" (click)="viewDetails(order.orderID)" title="View Details">
+              <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              Details
+            </button>
+          </td>
+          <td>
+            <button class="edit-btn" (click)="onEdit(order.orderID)" title="Edit">
+              <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pagination-controls" *ngIf="totalPages > 1">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
+      <button
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        (click)="onPageChange(i + 1)"
+        [class.active]="currentPage === i + 1"
+      >
+        {{ i + 1 }}
+      </button>
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">&raquo;</button>
+    </div>
+  </ng-container>
+
+  <div class="no-data" *ngIf="!isLoading && !filteredOrders.length">
+    No orders found.
+  </div>
+</div>

@@ -87,6 +87,9 @@ updateOrder(order : UpdateOrderDTO): Observable<any> {
     return this.http.put(`${this.apiUrl}/${order.id}`, order);
 }
 
-
+// order.service.ts
+getOrdersBySellerId(sellerId: number, page: number, pageSize: number) {
+  return this.http.get<any>(`${environment.baseUrl}/api/Order/GetOrdersBySeller/${sellerId}?PageNumber=${page}&PageSize=${pageSize}`);
+}
 
 }
