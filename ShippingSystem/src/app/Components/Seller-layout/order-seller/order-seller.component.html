@@ -19,6 +19,16 @@
         </svg>
       </button>
     </div>
+    <select
+      class="status-select"
+      [(ngModel)]="selectedStatus"
+      (change)="onStatusChange()"
+    >
+      <option value="">All Statuses</option>
+      <option *ngFor="let status of orderStatuses" [value]="status">
+        {{ getStatusText(status) }}
+      </option>
+    </select>
   </div>
 
   <div *ngIf="isLoading" class="loading">Loading...</div>
@@ -46,6 +56,7 @@
           <th>Cost</th>
           <th>Address</th>
           <th>Branch</th>
+          <th>Status</th>
           <th>Details</th>
           <th>Edit</th>
         </tr>
@@ -58,6 +69,11 @@
           <td>{{ order.address }}</td>
           <td>
             <span class="branch-badge">{{ order.branchName }}</span>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ getStatusText(order.status) }}
+            </span>
           </td>
           <td>
             <button class="details-btn" (click)="viewDetails(order.orderID)" title="View Details">
