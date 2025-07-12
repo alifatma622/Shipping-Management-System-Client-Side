@@ -8,6 +8,7 @@ import { DeliveryManService } from '../../../Services/delivery-man.service';
 import { IReadDeliveryMan } from '../../../Models/IDeliveryMan_model';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
+
 @Component({
   selector: 'app-deliveryman-orders',
   imports: [FormsModule , CommonModule],
@@ -22,6 +23,9 @@ export class DeliverymanOrdersComponent {
   errorMsg = '';
   routes: any;
   searchString: string = '';
+
+  selectedStatus: string = ''; // أضفت هذا المتغير
+
   selectedOrderId: number = 0;
   deliveryAgents: IReadDeliveryMan[] = [];
   filteredAgents: IReadDeliveryMan[] = [];
@@ -38,33 +42,45 @@ export class DeliverymanOrdersComponent {
   userId:string|null='';
   deliveryId:number=0;
   //#endregion
-  constructor(private orderService: OrderService, private router: Router, private deliveryService: DeliveryManService,
+
+
+  constructor(
+    private orderService: OrderService,
+    private router: Router,
+    private deliveryService: DeliveryManService,
+
     private authService: AuthServiceService
   ) {}
 
   //#region init
   ngOnInit(): void {
      this.userId = this.getUserId();
-  
-  // First get the delivery ID, THEN load orders
-  this.deliveryService.getId(this.userId).subscribe({
-    next: (deliveryId) => {
-      this.deliveryId = deliveryId;
-      this.loadOrders();  
-    },
-    error: (err) => {
-      this.errorMsg = 'Failed to load delivery ID';
-      this.isLoading = false;
-    }
-  });
+
+
+    // First get the delivery ID, THEN load orders
+    this.deliveryService.getId(this.userId).subscribe({
+      next: (deliveryId) => {
+        this.deliveryId = deliveryId;
+        this.loadOrders();
+      },
+      error: (err) => {
+        this.errorMsg = 'Failed to load delivery ID';
+        this.isLoading = false;
+      }
+    });
+
   }
 
   loadOrders() {
     this.isLoading = true;
 
-    this.orderService.getOrdersByDeliveryAgent(this.deliveryId,
+
+    this.deliveryService.getOrdersByDeliveryAgent(
+      this.deliveryId,
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.selectedStatus // أضفت هذا الباراميتر
+
     ).subscribe({
       next: (response) => {
         // Add showStatusDropdown property to each order
@@ -82,6 +98,15 @@ export class DeliverymanOrdersComponent {
       }
     });
   }
+
+
+  // أضفت دالة onStatusChange
+  onStatusChange() {
+    this.currentPage = 1;
+    this.loadOrders();
+  }
+
+
   onEdit(id: number) {
     this.router.navigate(['dashboard/Order/Edit', id]);
   }
@@ -128,6 +153,7 @@ export class DeliverymanOrdersComponent {
       );
     });
   }
+
   onSearchChange(value: string) {
     this.searchString = value;
   }
@@ -174,7 +200,6 @@ export class DeliverymanOrdersComponent {
     }
   }
 
-
   //#endregion
 
   //#region assign agent
@@ -219,6 +244,8 @@ export class DeliverymanOrdersComponent {
 
     this.loadOrders();
   }
+
+
   onItemsPerPageChange(count: number) {
     this.itemsPerPage = count;
     this.currentPage = 1;
@@ -238,21 +265,19 @@ export class DeliverymanOrdersComponent {
       }
     });
   }
+
   getStatusNumberFromName(status: string | number): number {
     if (typeof status === 'number') return status; // Already a number, return as is
 
     const enumEntry = Object.entries(OrderStatus).find(([key]) => key === status);
     return enumEntry ? Number(enumEntry[1]) : -1; // Return -1 or a fallback value
   }
-
   //#endregion
-
 
   getUserId(){
    return this.authService.getUserId();
   }
 
- 
 }
 
 

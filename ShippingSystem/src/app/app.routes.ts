@@ -32,6 +32,7 @@ import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.co
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
 import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
+import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deliveryman-orders/deliveryman-orders.component';
 
 import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deliveryman-orders/deliveryman-orders.component';
 
