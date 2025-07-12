@@ -1,6 +1,5 @@
 /* Use only global styles for table and search bar */
 
-
 .pagination-controls {
   margin-top: 20px;
   display: flex;
@@ -51,4 +50,24 @@
   color: #fff;
   border-color: var(--main-dark);
   font-weight: bold;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-active {
+  background: #e6f9e6;
+  color: #218838;
+  border-color: #b2e5b2;
+}
+.status-inactive {
+  background: #fff3e6;
+  color: #d35400;
+  border-color: #ffd6b3;
 }
