@@ -35,7 +35,7 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
   }
 
   updateSeller(id: number, seller: IUpdateseller): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Update`, seller, { responseType: 'text' });
+    return this.http.put<any>(`${this.apiUrl}/Update/${id}`,seller);
   }
 
   deleteSeller(id: number): Observable<any> {
@@ -44,6 +44,10 @@ getAllSellersSelect(): Observable<ISellerModels[]> {
 
   getSellerById(id: number): Observable<ISellerModels> {
     return this.http.get<ISellerModels>(`${this.apiUrl}/${id}`);
+  }
+
+  getSellerByUserId(userId: string) {
+    return this.http.get<any>(`${environment.baseUrl}/api/Seller/${userId}`);
   }
 
 }

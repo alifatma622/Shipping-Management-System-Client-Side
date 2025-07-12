@@ -137,3 +137,468 @@
     justify-content: center;
   }
 }
+
+
+
+
+
+.add-delivery-man-container {
+  max-width: 1400px important;
+  height: 700px important;
+  padding: 38px 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  margin-top: 12px;
+}
+
+.header {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.header h2 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #055866;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  margin: 0 0 18px 0;
+  line-height: 1.1;
+  border-bottom: 3px solid var(--main-accent, #daf87a);
+  display: inline-block;
+  padding-bottom: 6px;
+  background: transparent;
+}
+
+/* Loading States */
+.loading-container {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 16px;
+  margin: 20px 0;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #daf87a;
+  border-top: 4px solid #055866;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-container {
+  text-align: center;
+  padding: 24px;
+  background: rgba(255, 245, 245, 0.9);
+  border: 1.5px solid #d32f2f;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(2.5px);
+}
+
+.retry-btn {
+  background: #d32f2f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: all 0.18s;
+}
+
+.retry-btn:hover {
+  background: #b71c1c;
+  transform: translateY(-1px);
+}
+
+/* Form Styling */
+.delivery-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 22px 32px;
+  margin-top: 10px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #055866;
+  margin-bottom: 2px;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 9px 12px;
+  border: 1.5px solid #daf87a;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #055866;
+  transition: border 0.18s, box-shadow 0.18s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #055866;
+  box-shadow: 0 2px 8px #daf87a33;
+}
+
+.form-group input.invalid,
+.form-group select.invalid {
+  border-color: #d32f2f;
+  background: #fff6f6;
+}
+
+.form-group input:disabled,
+.form-group select:disabled {
+  background: rgba(248, 249, 250, 0.8);
+  cursor: not-allowed;
+  opacity: 0.7;
+  border-color: #ccc;
+}
+
+/* Multiple Select Styling */
+.form-group select[multiple] {
+  min-height: 70px;
+  max-height: 410px; /* لا تجعل السلكت طويل جداً */
+}
+
+.help-text {
+  color: #055866;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+/* Error Messages */
+.error {
+  color: #d32f2f;
+  font-size: 0.93rem;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error::before {
+  content: "⚠";
+  font-size: 14px;
+}
+
+/* Status Toggle Styling */
+.status-toggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  border: 2px solid #daf87a;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .toggle-slider {
+  background-color: #055866;
+  border-color: #055866;
+}
+
+input:disabled + .toggle-slider {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+.status-text {
+  font-weight: 600;
+  color: #055866;
+  font-size: 1rem;
+}
+
+/* Form Actions */
+.form-actions {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+.save-btn {
+  background: var(--main-accent, #daf87a);
+  color: #055866;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 32px;
+  font-weight: 700;
+  font-size: 1.08rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #daf87a33;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #055866;
+  color: #fff;
+  box-shadow: 0 4px 18px #daf87a55;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/* Spinner for submit button */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Success/Error Messages */
+.success-msg,
+.error-msg {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 500;
+  backdrop-filter: blur(2.5px);
+}
+
+.success-msg {
+  background: rgba(212, 237, 218, 0.9);
+  color: #155724;
+  border: 1.5px solid #c3e6cb;
+}
+
+.error-msg {
+  background: rgba(248, 215, 218, 0.9);
+  color: #721c24;
+  border: 1.5px solid #f5c6cb;
+}
+
+/* New Form Row Styling */
+.form-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  margin-bottom: 18px;
+  grid-column: 1 / -1;
+}
+
+.cities-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 450px;   /* أكبر من قبل */
+  max-width: 600px;   /* أكبر من قبل */
+  flex: 1 1 0;
+}
+
+.cities-group label {
+  font-weight: 500;
+  color: #055866;
+  margin-bottom: 2px;
+}
+
+.cities-group select[multiple] {
+  padding: 9px 12px;
+  border: 1.5px solid #daf87a;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #055866;
+  transition: border 0.18s, box-shadow 0.18s;
+  box-sizing: border-box;
+  min-height: 70px;
+  max-height: 180px;
+  width: 100%;        }
+
+.cities-group select[multiple]:focus {
+  border-color: #055866;
+  box-shadow: 0 2px 8px #daf87a33;
+}
+
+.cities-group select.invalid {
+  border-color: #d32f2f;
+  background: #fff6f6;
+}
+
+.cities-group .help-text {
+  color: #055866;
+  font-size: 0.93rem;
+  margin-top: 4px;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+.status-group {
+  flex: 0 0 210px;
+  min-width: 170px;
+  max-width: 230px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-left: 0;
+  margin-bottom: 0;
+  background: transparent;
+  padding-top: 0;
+}
+
+.status-toggle {
+  margin-top: 6px;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 900px) {
+  .add-delivery-man-container {
+    margin: 20px 15px 0 15px;
+    padding: 24px 20px 20px 20px;
+  }
+
+  .delivery-form {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-btn,
+  .save-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .header h2 {
+    font-size: 1.75rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .cities-group,
+  .status-group {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .status-group {
+    margin-top: 18px;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-delivery-man-container {
+    margin: 10px 10px 0 10px;
+    padding: 20px 16px 16px 16px;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 8px 10px;
+    font-size: 0.95rem;
+  }
+
+  .header h2 {
+    font-size: 1.5rem;
+  }
+
+  .save-btn {
+    font-size: 1rem;
+    padding: 10px 24px;
+  }
+}

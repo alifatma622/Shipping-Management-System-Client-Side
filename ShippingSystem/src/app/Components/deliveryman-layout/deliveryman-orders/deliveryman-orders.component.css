@@ -1,0 +1,115 @@
+
+.details-btn {
+  background: var(--main-white);
+  color: var(--main-gray);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.details-btn:hover {
+  background: #f0f7f8;
+  border-color: var(--main-dark);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-btn svg {
+  margin-right: 4px;
+}
+
+/* Assign Button */
+.assign-btn {
+  background: var(--main-accent);
+  color: var(--main-dark);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 85px;
+}
+
+.assign-btn:hover:not(:disabled) {
+  background: #c5e866;
+  box-shadow: 0 4px 8px rgba(218, 248, 122, 0.3);
+  transform: translateY(-1px);
+}
+
+.assign-btn:disabled {
+  background: #e0e0e0;
+  color: #9e9e9e;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Status Dropdown Styles - Updated to match project theme */
+.status-dropdown-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 2px 0;
+  font-weight: 500;
+  color: var(--main-gray);
+}
+
+.status-dropdown-list li.active {
+  background: linear-gradient(135deg, var(--main-dark), #2f8e9f);
+  color: var(--main-white);
+  box-shadow: 0 2px 8px rgba(5, 88, 102, 0.3);
+}
+
+.status-dropdown-list li:not(.active):hover {
+  background: linear-gradient(135deg, rgba(218, 248, 122, 0.1), rgba(5, 88, 102, 0.05));
+  color: var(--main-dark);
+  transform: translateX(2px);
+}
+
+/* Status Select - Updated to match project theme */
+.status-select {
+  width: 200px;
+  height: 48px;
+  border: 1.5px solid var(--main-dark);
+  border-radius: 14px;
+  padding: 0 18px;
+  font-size: 1.05rem;
+  color: var(--main-gray);
+  background: var(--main-white);
+  box-shadow: 0 4px 16px rgba(5, 88, 102, 0.08);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  font-weight: 500;
+  margin-left: 8px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.status-select:focus {
+  border-color: var(--main-accent);
+  box-shadow: 0 0 0 3px rgba(218, 248, 122, 0.18);
+  background: #f8fafc;
+}
+
+.status-select::placeholder {
+  color: #8faeb3;
+  opacity: 1;
+}
+
+.status-select:hover {
+  border-color: var(--main-accent);
+  box-shadow: 0 4px 18px rgba(218, 248, 122, 0.18);
+  background: #f6fdfb;
+
+}

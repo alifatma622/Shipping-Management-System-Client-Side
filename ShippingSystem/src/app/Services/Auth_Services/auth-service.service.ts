@@ -38,7 +38,7 @@ getRole(): string[] {
 
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log("Decoded payload:", payload);
+    // console.log("Decoded payload:", payload);
 
     const roles = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
@@ -65,6 +65,37 @@ hasAnyRole(roles: string[]): boolean {
 }
 
 
+getUserId(): string | null {
 
+  const token = this.getToken();
+  if (!token) {
+    console.warn("No token found");
+    return null;
+  }
+
+  try {
+    const tokenParts = token.split('.');
+    if (tokenParts.length !== 3) {
+      console.error("Invalid token format");
+      return null;
+    }
+    const payload = JSON.parse(atob(tokenParts[1]));
+    const userId =
+      payload.sub ||
+      payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
+
+    if (typeof userId === 'string' && userId.trim() !== '') {
+      return userId;
+    } else {
+      console.error("UserID is missing or empty in token");
+      return null;
+    }
+
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+}
 
 }

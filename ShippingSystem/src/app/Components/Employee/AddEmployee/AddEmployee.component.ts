@@ -76,7 +76,7 @@ export class AddEmployeeComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern('^01[0125][0-9]{8}$')],
       ],
-      branchId: [null, [Validators.required, Validators.min(1)]],
+      branchId: ['', [Validators.required, Validators.min(1)]],
       specificRole: ['', [Validators.required, Validators.min(1)]],
     });
   }

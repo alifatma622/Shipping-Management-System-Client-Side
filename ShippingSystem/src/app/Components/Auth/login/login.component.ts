@@ -57,18 +57,28 @@ export class LoginComponent {
           console.log('Token:', token);
           console.log('Role:', role);
           // هنا هيضاف Role ال باقيه وكمان عنضبط ليهم Route In App.routes
-          if (role[0] === 'Admin' && role[1] === 'Employee') {
+          if (Array.isArray(role)) {
+          if (role.includes('Admin') && role.includes('Employee')) {
             this._router.navigate(['/dashboard/overview']);
-          } else if (role === 'Seller') {
-            this._router.navigate(['/dashboard']);
-          }
-
-          else if (role === 'DeliveryAgent') {
+          } else if (role.includes('Seller')) {
+            this._router.navigate(['/dashboard/seller-dashboard']);
+          } else if (role.includes('DeliveryAgent')) {
             this._router.navigate(['/dashboard/deliveryman']);
-          }
-          else {
+          } else {
             this._router.navigate(['/']);
           }
+        } else {
+          if (role === 'Employee') {
+            this._router.navigate(['/dashboard/overview']);
+          } else if (role === 'Seller') {
+            this._router.navigate(['/dashboard/seller-dashboard']);
+          } else if (role === 'DeliveryAgent') {
+            this._router.navigate(['/dashboard/deliveryman']);
+          } else {
+            this._router.navigate(['/']);
+          }
+        }
+
         },
         error: (err) => {
           this.errorMessage = err.error?.message || 'Unexpected error occurred';

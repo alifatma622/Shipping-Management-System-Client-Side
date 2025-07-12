@@ -58,7 +58,7 @@ html, body {
   max-width: 1400px;
   /* margin: 32px auto 0 auto; */
   /* background: var(--glass); */
-  border-radius: 22px;
+  border-radius: 22px !important;
   /* box-shadow: 0 8px 32px #05586618, 0 2px 8px #daf87a22; */
   padding: 38px 28px 24px 28px;
   display: flex;
@@ -130,7 +130,7 @@ html, body {
     border-radius: 10px;
     padding: 7px 16px;
     box-shadow: 0 2px 8px #969985;
-    width: 350px;
+    width: 500px;
     border: .5px solid var(--border);
     transition: box-shadow 0.18s, border 0.18s;
     margin: 0;
@@ -170,12 +170,13 @@ html, body {
 
 .delivery-table {
   padding: 30px;
-  border: 2.5px;
-  border-radius: 14px;
+  border: 2.5px  ;
   overflow: hidden;
+  border-radius: 14px !important;
   background: var(--main-gray);
   box-shadow: 0 4px 18px #05586622;
   margin: 18px 0 0 0;
+  
 }
 
 .delivery-table th {

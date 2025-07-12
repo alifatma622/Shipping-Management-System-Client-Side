@@ -1,1 +1,135 @@
-<p>deliveryman-orders works!</p>
+<div class="all-delivery-men-container">
+  <div class="header">
+    <h2>Orders</h2>
+  </div>
+
+  <div class="search-bar-row">
+    <div class="search-bar">
+
+      <input
+        type="text"
+        placeholder="Search by anything"
+        [(ngModel)]="searchString"
+        (ngModelChange)="onSearchChange($event)"
+      />
+      <button class="search-btn">
+
+        <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+      </button>
+    </div>
+
+    <select
+      class="status-select"
+      [(ngModel)]="selectedStatus"
+      (change)="onStatusChange()"
+    >
+      <option value="">All Statuses</option>
+      <option *ngFor="let status of orderStatuses" [value]="status.toString()">
+        {{ getStatusText(status) }}
+      </option>
+    </select>
+
+  </div>
+
+  @if (isLoading) {
+  <div class="loading">Loading...</div>
+  }
+  @if (errorMsg) {
+  <div class="error">{{ errorMsg }}</div>
+  }
+
+
+  @if (!isLoading && filteredOrders.length) {
+  <!-- Pagination select number -->
+  <div class="pagination-controls">
+    <label>
+      Show
+      <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange(itemsPerPage)">
+        <option *ngFor="let opt of itemsPerPageOptions" [value]="opt">{{ opt }}</option>
+      </select>
+      entries
+    </label>
+  </div>
+  <!--  -->
+
+  <table class="delivery-table" style="overflow:visible ;" >
+    <thead>
+      <tr>
+        <th>Order id</th>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Weight</th>
+        <th>Cost</th>
+        <th>Address</th>
+        <th>Branch</th>
+        <th style="width: 80px;">Status</th>
+        <th style="width: 100px;">Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (order of pagedOrders; track order.orderID) {
+      <tr>
+        <td>{{ order.orderID }}</td>
+        <td>{{order.customerName}}</td>
+        <td>{{order.customerPhone}}</td>
+        <td>{{order.totalWeight+' Kg'}}</td>
+        <td>{{ order.totalCost+' LE' }}</td>
+        <td>{{ order.address }}</td>
+        <td>
+          <span class="branch-link">{{ order.branchName }}</span>
+        </td>
+        <td>
+          <div class="status-dropdown" style="position: relative;">
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)"
+              (click)="order.showStatusDropdown = !order.showStatusDropdown" style="cursor:pointer;">
+              {{ getStatusText(order.status) }}
+              <svg style="margin-left: 4px;" width="10" height="10" viewBox="0 0 10 10">
+                <path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" />
+              </svg>
+            </span>
+            <ul *ngIf="order.showStatusDropdown" class="status-dropdown-list"
+              style="position: absolute; z-index: 10; background: #fff; border: 1px solid #ccc; list-style: none; padding: 0; margin: 4px 0 0 0; min-width: 120px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+              <li *ngFor="let status of orderStatuses"
+                (click)="updateOrderStatus(order,status); order.showStatusDropdown = false"
+                [ngClass]="{'active': order.status === status}" style="padding: 8px 12px; cursor: pointer;">
+                {{ getStatusText(status) }}
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <button class="details-btn" (click)="viewDetails(order.orderID)" title="View Details">
+            <svg width="18" height="18" fill="none" stroke="#3A3362" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            Details
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <!-- Pagination control -->
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
+    <button *ngFor="let page of [].constructor(totalPages); let i = index" (click)="onPageChange(i + 1)"
+      [class.active]="currentPage === i + 1">
+      {{ i + 1 }}
+    </button>
+    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">&raquo;</button>
+  </div>
+  <!--  -->
+  }
+
+  @if (!isLoading && !filteredOrders.length) {
+  <div class="no-data">
+    No orders found.
+  </div>
+  }
+
+</div>

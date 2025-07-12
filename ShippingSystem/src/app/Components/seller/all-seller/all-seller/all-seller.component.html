@@ -27,7 +27,8 @@
         <th>Store</th>
         <th>Address</th>
         <th>Cancelled %</th>
-        <th>Actions</th>
+        <th style="width: 80px;">Status</th>
+        <th style="width: 90px;">Setting</th>
       </tr>
     </thead>
     <tbody>
@@ -41,6 +42,14 @@
         <td>{{ seller.storeName }}</td>
         <td>{{ seller.address }}</td>
         <td>{{ seller.cancelledOrderPercentage * 100 | number: '1.0-2' }}%</td>
+        <td>
+          <span [ngClass]="{
+            'status-active': !seller.isDeleted,
+            'status-inactive': seller.isDeleted
+          }">
+            {{ seller.isDeleted ? 'Inactive' : 'Active' }}
+          </span>
+        </td>
         <td>
           <button class="edit-btn" title="Edit" (click)="edit(seller.id)">
             <svg width="18" height="18" fill="none" stroke="#2c7be5" stroke-width="2" viewBox="0 0 24 24">

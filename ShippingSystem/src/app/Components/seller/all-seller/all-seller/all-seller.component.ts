@@ -18,7 +18,7 @@ export class AllSellerComponent implements OnInit {
 
 
   pageNumber = 1;
-  pageSize = 5;
+  pageSize = 10;
   totalPages = 0;
   itemsPerPageOptions = [5, 10, 20, 50];
 

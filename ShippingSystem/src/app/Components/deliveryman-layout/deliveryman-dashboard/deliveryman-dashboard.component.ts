@@ -24,7 +24,7 @@ export class DeliverymanDashboardComponent implements OnInit {
   error: string | null = null;
   statusList = [
     { key: 'new', label: 'New', icon: 'fiber_new', color: '#3B82F6' },
-    { key: 'pending', label: 'Pending', icon: 'hourglass_empty', color: '#F59E0B' },
+    { key: 'Assiend Ordes', label: 'Assiend Order', icon: 'hourglass_empty', color: '#F59E0B' },
     { key: 'deliveredToAgent', label: 'Delivered to Agent', icon: 'local_shipping', color: '#8B5CF6' },
     { key: 'delivered', label: 'Delivered', icon: 'check_circle', color: '#10B981' },
     { key: 'cancelledByReceiver', label: 'Cancelled by Receiver', icon: 'cancel', color: '#EF4444' },
