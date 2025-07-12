@@ -15,6 +15,7 @@
           </span>
         </div>
 
+
         <div class="card-body" *ngIf="section.open">
           <div class="info-box">
             <ng-container [ngSwitch]="section.key">
@@ -44,7 +45,7 @@
                 <p><strong>Seller City:</strong> {{ orderDetails?.sellerCityName }}</p>
                 <p><strong>Branch:</strong> {{ orderDetails?.branchName }}</p>
               </ng-container>
-              
+
             </ng-container>
             
           </div>

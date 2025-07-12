@@ -87,9 +87,30 @@ updateOrder(order : UpdateOrderDTO): Observable<any> {
     return this.http.put(`${this.apiUrl}/${order.id}`, order);
 }
 
-// order.service.ts
-getOrdersBySellerId(sellerId: number, page: number, pageSize: number) {
-  return this.http.get<any>(`${environment.baseUrl}/api/Order/GetOrdersBySeller/${sellerId}?PageNumber=${page}&PageSize=${pageSize}`);
-}
+
+// Get orders by delivery agent ID
+ getOrdersByDeliveryAgent(deliveryAgentId: number, pageNumber:number,pageSize:number): Observable<OrderResponse> {
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<OrderResponse>(
+      `${this.apiUrl}/GetOrdersByDeliveryAgent/${deliveryAgentId}`,
+      { params }
+    );
+  }
+
+  // Get orders by seller ID
+  getOrdersBySeller(sellerId: number, pageNumber:number,pageSize:number): Observable<OrderResponse> {
+    let params = new HttpParams()
+      .set('pageNumber', pageNumber.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<OrderResponse>(
+      `${this.apiUrl}/GetOrdersBySeller/${sellerId}`,
+      { params }
+    );
+  }
+
 
 }

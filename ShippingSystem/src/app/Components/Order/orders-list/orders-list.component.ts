@@ -262,6 +262,7 @@ export class OrdersListComponent implements OnInit {
 
   //#endregion
 
+
   printOrderDetails(): void {
     const data = document.getElementById('order-details-content');
     if (data) {
@@ -276,5 +277,6 @@ export class OrdersListComponent implements OnInit {
       });
     }
   }
+
 }
 

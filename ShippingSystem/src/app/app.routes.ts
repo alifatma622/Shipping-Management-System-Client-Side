@@ -32,8 +32,12 @@ import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.co
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
 import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
+
+import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deliveryman-orders/deliveryman-orders.component';
+
 import { AddOrderSellerComponent } from './Components/Seller-layout/add-order-seller/add-order-seller.component';
 import { OrderSellerComponent } from './Components/Seller-layout/order-seller/order-seller.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -59,7 +63,7 @@ export const routes: Routes = [
       { path: 'order/add', component: AddOrderComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
       { path: 'employee/add', component: AddEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
       { path: 'employee/edit/:id', component: EditEmployeeComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
-      { path: 'order', component: OrdersListComponent , canActivate:[authGuard], data : {roles: ['Employee' , 'Seller' , 'DeliveryAgent']}},
+      { path: 'order', component: OrdersListComponent , canActivate:[authGuard], data : {roles: ['Employee' ]}},
       { path: 'Order/Details/:id', component: OrderDetailsComponent , canActivate:[authGuard], data : {roles: ['Employee' , 'Seller', 'DeliveryAgent']}},
       {path: 'Order/Edit/:id', component: EditOrderComponent, canActivate:[authGuard], data : {roles: ['Employee']}},
       { path: 'Allcity', component: AllCityComponent , canActivate:[authGuard], data : {roles: ['Employee']}},
@@ -76,6 +80,7 @@ export const routes: Routes = [
       { path: 'seller', component: AllSellerComponent , canActivate:[authGuard], data : {roles: ['Employee']} },
      
       { path: 'deliveryman', component: DeliverymanDashboardComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
+      { path: 'order-delivery', component: DeliverymanOrdersComponent, canActivate: [authGuard], data: { roles: ['DeliveryAgent'] } },
 
       { path: 'overview', component: AdminDashboardComponent , canActivate:[authGuard], data : {roles: ['Employee']}}
 
