@@ -44,8 +44,14 @@ export class GovernratesService {
   }
 
   deleteGovernrate(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/HardDelete/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/SoftDelete/${id}`);
   }
+
+
+  activateGovernorate(id: number): Observable<any> {
+  return this.http.put<any>(`${this.baseUrl}/Activate/${id}`, null);
+}
+
 }
 
 
