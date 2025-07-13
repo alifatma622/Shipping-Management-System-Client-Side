@@ -25,8 +25,8 @@ export class AllDeliveryMenComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
-  selectedManId:number =0;
-  constructor(private deliveryManService: DeliveryManService, private router: Router) {}
+  selectedManId: number = 0;
+  constructor(private deliveryManService: DeliveryManService, private router: Router) { }
 
   ngOnInit(): void {
     // this.getAllDeliveryMen();
@@ -47,7 +47,7 @@ export class AllDeliveryMenComponent implements OnInit {
   //   });
   // }
 
-  getPaginatedDelivery(){
+  getPaginatedDelivery() {
     this.isLoading = true;
     this.deliveryManService.getAllPaginated(this.currentPage,
       this.itemsPerPage).subscribe({
@@ -67,17 +67,17 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    // Swal.fire({
-    //   title: 'Are you sure?',
-    //   text: "You won't be able to revert this! This will permanently delete the delivery agent from the database.",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#d33',
-    //   cancelButtonColor: '#3085d6',
-    //   confirmButtonText: 'Yes, delete it!',
-    //   cancelButtonText: 'Cancel'
-    // }).then((result) => {
-      // if (result.isConfirmed) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This delivery agent will be deactivated!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, deactivate it',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.deliveryManService.softDelete(id).subscribe({
           next: () => {
             Swal.fire({
@@ -98,8 +98,8 @@ export class AllDeliveryMenComponent implements OnInit {
           }
         });
       }
-    // });
-  // }
+    });
+  }
 
   onAdd() {
     this.router.navigate(['dashboard/delivery-men/add']);

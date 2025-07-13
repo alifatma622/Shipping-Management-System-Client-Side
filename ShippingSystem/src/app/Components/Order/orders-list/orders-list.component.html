@@ -51,7 +51,8 @@
     </label>
   </div>
   <!--  -->
-  <table class="delivery-table" style="overflow:visible ;">
+  <div class="table-responsive" style="overflow:visible ;">
+  <table class="delivery-table" style="overflow:visible ;" >
     <thead>
       <tr>
         <th>Order id</th>
@@ -132,7 +133,7 @@
       }
     </tbody>
   </table>
-
+</div>
   <!-- Pagination control -->
   <div class="pagination-controls" *ngIf="totalPages > 1">
     <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>

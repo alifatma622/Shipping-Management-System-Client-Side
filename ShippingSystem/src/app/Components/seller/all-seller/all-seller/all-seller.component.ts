@@ -91,7 +91,40 @@ export class AllSellerComponent implements OnInit {
       }
     }))
   }
-}
 
+  onDelete(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This seller will be deactivated!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#055866',
+      confirmButtonText: 'Yes, deactivate it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.sellerService.deleteSeller(id).subscribe(({
+          next: () => {
+            Swal.fire({
+              title: 'Deactivated!',
+              text: 'Seller has been deactivated.',
+              icon: 'success',
+              confirmButtonColor: '#055866',
+            });
+            this.getAllSellers();
+          },
+          error: (err) => {
+            Swal.fire({
+              title: 'Error!',
+              text: err?.error?.message || 'Failed to deactivate seller. Please try again.',
+              icon: 'error',
+              confirmButtonColor: '#d33',
+            });
+          },
+        }));
+      }
+    });
+  }
+}
 
 

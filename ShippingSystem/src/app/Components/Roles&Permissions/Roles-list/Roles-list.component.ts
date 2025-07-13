@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RoleService } from '../../../Services/Role-Services/Role.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-Roles-list',
   imports: [FormsModule, CommonModule, ReactiveFormsModule, RouterModule ],
@@ -119,13 +119,44 @@ export class RolesListComponent implements OnInit {
     });
   }
 
-  onDelete(roleName: string): void {
-    if (confirm('Are you sure you want to delete this role?')) {
-      this.roleService.hardDeleteRole(roleName).subscribe(() => {
-        this.getRoles();
+
+
+onDelete(roleName: string): void {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `This will permanently delete the role "${roleName}".`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#055866',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'Cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.roleService.hardDeleteRole(roleName).subscribe({
+        next: () => {
+          this.getRoles();
+          Swal.fire({
+            title: 'Deleted!',
+            text: `Role "${roleName}" was successfully deleted.`,
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        },
+        error: () => {
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to delete the role.',
+            icon: 'error',
+            confirmButtonColor: '#d33'
+          });
+        }
       });
     }
-  }
+  });
+}
+
 
 oldRoleName: string | null = null;
 newRoleName: string = '';

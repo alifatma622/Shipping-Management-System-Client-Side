@@ -13,12 +13,12 @@
 }
 
 .edit-btn {
-  background-color: var(--main-dark);
+  background-color: #055866;
   color: var(--main-white);
 }
 .edit-btn:hover {
   background-color: var(--main-accent);
-  color: var(--main-dark);
+  color: #055866;
   transform: translateY(-2px) scale(1.05);
 }
 
@@ -47,7 +47,7 @@
 input[type="checkbox"] {
   transform: scale(1.3);
   cursor: pointer;
-  accent-color: var(--main-dark); /* modern browser support */
+  accent-color: #055866; /* modern browser support */
   transition: transform 0.15s ease;
 }
 
@@ -78,7 +78,7 @@ input[type="checkbox"]:disabled {
 .permission-container h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--main-dark);
+  color: #055866;
   border-bottom: 3px solid var(--main-accent);
   display: inline-block;
   padding-bottom: 6px;
@@ -97,13 +97,13 @@ input[type="checkbox"]:disabled {
 }
 
 .role-selector label {
-  color: var(--main-dark);
+  color: #055866;
   font-weight: 600;
 }
 
 .role-display {
   background: #eaf7f7;
-  color: var(--main-dark);
+  color: #055866;
   padding: 6px 14px;
   border-radius: 10px;
   font-size: 1rem;
@@ -127,13 +127,13 @@ input[type="checkbox"]:disabled {
 }
 
 .edit-btn {
-  background: var(--main-dark);
+  background: #055866;
   color: var(--main-white);
 }
 
 .edit-btn:hover {
   background: var(--main-accent);
-  color: var(--main-dark);
+  color:#055866;
   transform: translateY(-2px) scale(1.05);
 }
 
@@ -159,11 +159,11 @@ input[type="checkbox"]:disabled {
 
 .permission-container th {
   background: #fff;
-  color: var(--main-dark);
+  color: #055866;
   font-weight: 600;
   padding: 16px 12px;
   font-size: 1.05rem;
-  border-bottom: 3px solid var(--main-dark);
+  border-bottom: 3px solid #055866;
   letter-spacing: 0.8px;
   text-align: center;
 }
@@ -216,7 +216,7 @@ input[type="checkbox"]:disabled {
 input[type="checkbox"] {
   transform: scale(1.3);
   cursor: pointer;
-  accent-color: var(--main-dark);
+  accent-color: #055866;
   transition: transform 0.15s ease;
 }
 

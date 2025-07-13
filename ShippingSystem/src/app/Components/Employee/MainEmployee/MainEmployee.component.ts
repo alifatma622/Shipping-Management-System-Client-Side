@@ -64,6 +64,16 @@ export class MainEmployeeComponent implements OnInit {
   }
 
   onDelete(id: number) {
+     Swal.fire({
+          title: 'Are you sure?',
+          text: 'This employee will be deactivated!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#055866',
+          confirmButtonText: 'Yes, deactivate it!',
+        }).then((result) => {
+          if (result.isConfirmed) {
     this.EmployeeService.softDeleteEmployee(id).subscribe({
       next: () => {
         Swal.fire({
@@ -81,10 +91,11 @@ export class MainEmployeeComponent implements OnInit {
           icon: 'error',
           confirmButtonColor: '#d33',
         });
+          },
+        });
       }
     });
   }
-
 
   onAdd() {
     this.router.navigate(['dashboard/employee/add']);

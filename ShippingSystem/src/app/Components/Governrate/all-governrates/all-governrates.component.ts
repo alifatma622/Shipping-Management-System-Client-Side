@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GovernratesService, Governrate } from '../../../Services/Governrates/governrates.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-governrates-list',
@@ -115,31 +116,49 @@ export class GovernratesListComponent implements OnInit {
     });
   }
 
-  toggleStatus(gov: Governrate): void {
-  const action = gov.isDeleted ? 'activate' : 'deactivate';
-  if (confirm(`Are you sure you want to ${action} this governorate?`)) {
-    this.governratesService.activateGovernorate(gov.id).subscribe({
-      next: () => {
-        gov.isDeleted = !gov.isDeleted; // Toggle status locally
-        this.successMessage = `Governorate ${gov.isDeleted ? 'deactivated' : 'activated'} successfully!`;
-        setTimeout(() => this.successMessage = '', 3000);
-      },
-      error: () => {
-        this.errorMessage = 'Failed to change status.';
-        setTimeout(() => this.errorMessage = '', 3000);
-      }
-    });
-  }
+editedGovernorateStatus: { [id: number]: boolean } = {};
+
+toggleStatus(gov: Governrate): void {
+  // Just toggle the local copy for visual feedback
+  this.editedGovernorateStatus[gov.id] = !this.getEditedStatus(gov);
 }
 
 
   onDelete(id: number): void {
-    if (confirm('Are you sure you want to delete this governorate?')) {
-      this.governratesService.deleteGovernrate(id).subscribe(() => {
-        this.getGovernrates();
-      });
-    }
-  }
+   Swal.fire({
+         title: 'Are you sure?',
+         text: "This governorate will be deactivated!",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#d33',
+         cancelButtonColor: '#055866',
+         confirmButtonText: 'Yes, deactivate it',
+         cancelButtonText: 'Cancel'
+       }).then((result) => {
+         if (result.isConfirmed) {
+           this.governratesService.deleteGovernrate(id).subscribe({
+             next: () => {
+               Swal.fire({
+                 title: 'Deactivated!',
+                 text: 'Governorate has been deactivated.',
+                 icon: 'success',
+                 confirmButtonColor: '#055866',
+               });
+               this.getGovernrates();
+             },
+             error: (err) => {
+               Swal.fire({
+                 title: 'Error!',
+                 text: err?.error?.message || 'Failed to governorate agent. Please try again.',
+                 icon: 'error',
+                 confirmButtonColor: '#d33',
+               });
+             }
+           });
+         }
+       });
+     }
+   
 
   editingId: number | null = null;
 
@@ -151,17 +170,59 @@ cancelEdit(): void {
   this.editingId = null;
 }
 
-saveEdit(governorate: Governrate): void {
-  const updatedGov = { name: governorate.name };
+// saveEdit(governorate: Governrate): void {
+//   const updatedGov = { name: governorate.name };
 
-  this.governratesService.updateGovernrate(governorate.id, updatedGov).subscribe({
+//   this.governratesService.updateGovernrate(governorate.id, updatedGov).subscribe({
+//     next: () => {
+//       this.successMessage = 'Governorate updated successfully!';
+//       this.editingId = null;
+//       setTimeout(() => this.successMessage = '', 3000);
+//     },
+//     error: () => {
+//       this.errorMessage = 'Failed to update governorate.';
+//       setTimeout(() => this.errorMessage = '', 3000);
+//     }
+//   });
+// }
+saveEdit(gov: Governrate): void {
+  const updatedName = gov.name.trim();
+  const originalStatus = gov.isDeleted;
+  const newStatus = this.getEditedStatus(gov);
+
+  // Validation
+  if (!updatedName || updatedName.length < 2 || updatedName.length > 100) {
+    this.errorMessage = 'Governorate name is invalid.';
+    return;
+  }
+
+  // Call update endpoint
+  this.governratesService.updateGovernrate(gov.id, { name: updatedName }).subscribe({
     next: () => {
-      this.successMessage = 'Governorate updated successfully!';
+      gov.name = updatedName;
+
+      if (originalStatus !== newStatus) {
+        this.governratesService.activateGovernorate(gov.id).subscribe({
+          next: () => {
+            gov.isDeleted = newStatus;
+            this.successMessage = `Governorate updated successfully.`;
+            setTimeout(() => this.successMessage = '', 3000);
+          },
+          error: () => {
+            this.errorMessage = 'Status change failed.';
+            setTimeout(() => this.errorMessage = '', 3000);
+          }
+        });
+      } else {
+        this.successMessage = `Governorate updated successfully.`;
+        setTimeout(() => this.successMessage = '', 3000);
+      }
+
       this.editingId = null;
-      setTimeout(() => this.successMessage = '', 3000);
+      delete this.editedGovernorateStatus[gov.id];
     },
     error: () => {
-      this.errorMessage = 'Failed to update governorate.';
+      this.errorMessage = 'Update failed.';
       setTimeout(() => this.errorMessage = '', 3000);
     }
   });
@@ -173,6 +234,9 @@ saveEdit(governorate: Governrate): void {
     });
   }
 
+getEditedStatus(gov: Governrate): boolean {
+  return this.editedGovernorateStatus[gov.id] ?? gov.isDeleted;
+}
 
 }
 
