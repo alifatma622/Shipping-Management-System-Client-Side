@@ -115,6 +115,24 @@ export class GovernratesListComponent implements OnInit {
     });
   }
 
+  toggleStatus(gov: Governrate): void {
+  const action = gov.isDeleted ? 'activate' : 'deactivate';
+  if (confirm(`Are you sure you want to ${action} this governorate?`)) {
+    this.governratesService.activateGovernorate(gov.id).subscribe({
+      next: () => {
+        gov.isDeleted = !gov.isDeleted; // Toggle status locally
+        this.successMessage = `Governorate ${gov.isDeleted ? 'deactivated' : 'activated'} successfully!`;
+        setTimeout(() => this.successMessage = '', 3000);
+      },
+      error: () => {
+        this.errorMessage = 'Failed to change status.';
+        setTimeout(() => this.errorMessage = '', 3000);
+      }
+    });
+  }
+}
+
+
   onDelete(id: number): void {
     if (confirm('Are you sure you want to delete this governorate?')) {
       this.governratesService.deleteGovernrate(id).subscribe(() => {
@@ -154,5 +172,7 @@ saveEdit(governorate: Governrate): void {
       control.markAsTouched();
     });
   }
+
+
 }
 

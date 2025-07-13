@@ -73,32 +73,41 @@
               <td>{{ i + 1 }}</td>
               <td>{{ gov.name }}</td>
               <td>
-                <i
-                  [ngClass]="gov.isDeleted ? 'bi bi-x-circle text-danger' : 'bi bi-check-circle text-success'"
-                  [title]="gov.isDeleted ? 'Inactive' : 'Active'">
-                </i>
-              </td>
+  <button
+    class="activate-btn"
+    (click)="toggleStatus(gov)"
+    [disabled]="!gov.isDeleted"
+    [title]="gov.isDeleted ? 'Activate' : 'Already Active'">
+    <i [ngClass]="gov.isDeleted ? 'bi bi-toggle-off text-danger' : 'bi bi-toggle-on text-success'"></i>
+  </button>
+</td>
+
               <td>
-                @if (editingId === gov.id) {
-                  <input [(ngModel)]="gov.name" class="inline-edit" />
-                  <button (click)="saveEdit(gov)">💾</button>
-                  <button (click)="cancelEdit()">❌</button>
-                } @else {
-                  <button class="edit-btn" (click)="startEdit(gov.id)" title="Edit">
-                    <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
-                      <path d="M12 20h9"/>
-                      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/>
-                    </svg>
-                  </button>
-                  <button class="delete-btn" (click)="onDelete(gov.id)" title="Delete">
-                    <svg width="18" height="18" fill="none" stroke="#c62828" stroke-width="2" viewBox="0 0 24 24">
-                      <rect x="3" y="6" width="18" height="15" rx="2"/>
-                      <path d="M9 10v6M15 10v6"/>
-                      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                    </svg>
-                  </button>
-                }
-              </td>
+  @if (editingId === gov.id) {
+    <input [(ngModel)]="gov.name" class="inline-edit" />
+    <button (click)="saveEdit(gov)">💾</button>
+    <button (click)="cancelEdit()">❌</button>
+  } @else {
+    <button class="edit-btn" (click)="startEdit(gov.id)" title="Edit">
+      <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 20h9"/>
+        <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/>
+      </svg>
+    </button>
+
+    <!-- Show Delete button only if governorate is active -->
+    @if (!gov.isDeleted) {
+      <button class="delete-btn" (click)="onDelete(gov.id)" title="Delete">
+        <svg width="18" height="18" fill="none" stroke="#c62828" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="6" width="18" height="15" rx="2"/>
+          <path d="M9 10v6M15 10v6"/>
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        </svg>
+      </button>
+    }
+  }
+</td>
+
             </tr>
           }
         </tbody>
