@@ -1,7 +1,7 @@
 import { AuthServiceService } from './../../Services/Auth_Services/auth-service.service';
 import { Component, OnInit, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface MenuItem {
   routeLink?: string;
@@ -37,7 +37,7 @@ export class SidebarComponent implements OnInit {
     routeLink: 'logout',
     icon: 'fal fa-sign-out',
     isOpen: false,
-    label: 'Log out'
+    label: 'Log out',
   };
 
   constructor(private router: Router, public authService: AuthServiceService) {}
@@ -49,7 +49,7 @@ export class SidebarComponent implements OnInit {
 
   private initializeUserRoles(): void {
     this.userRole = this.authService.getRole();
-    console.log("✅ User roles:", this.userRole);
+    console.log('✅ User roles:', this.userRole);
 
     if (this.authService.hasRole('Admin')) {
       this.orderListRouteLink = 'order';
@@ -119,11 +119,15 @@ export class SidebarComponent implements OnInit {
         visibleFor: ['Employee', 'Admin', 'Seller', 'DeliveryAgent'],
         subItems: [
           { label: 'Orders list', routeLink: this.orderListRouteLink },
-          ...(this.newOrderRouteLink ? [{
-            label: 'New order',
-            routeLink: this.newOrderRouteLink,
-            visibleFor: ['Employee', 'Admin', 'Seller']
-          }] : [])
+          ...(this.newOrderRouteLink
+            ? [
+                {
+                  label: 'New order',
+                  routeLink: this.newOrderRouteLink,
+                  visibleFor: ['Employee', 'Admin', 'Seller'],
+                },
+              ]
+            : []),
         ],
       },
       {
@@ -131,9 +135,7 @@ export class SidebarComponent implements OnInit {
         label: 'Governorates',
         isOpen: false,
         visibleFor: ['Employee', 'Admin'],
-        subItems: [
-          { label: 'Governorates', routeLink: 'governrates' },
-        ],
+        subItems: [{ label: 'Governorates', routeLink: 'governrates' }],
       },
       {
         icon: 'fal fa-city',

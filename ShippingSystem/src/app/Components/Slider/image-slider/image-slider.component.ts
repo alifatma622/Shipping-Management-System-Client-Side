@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-image-slider',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './image-slider.component.html',
   styleUrl: './image-slider.component.css',
 })
@@ -35,8 +36,8 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
       buttonText: 'Learn More'
     },
     {
-      title: 'All Types of Cargo',
-      subtitle: 'We handle all types of cargo with high professionalism',
+      title: 'All Types of Carvex',
+      subtitle: 'We handle all types of Carvex with high professionalism',
       buttonText: 'Our Services'
     },
     {
@@ -80,7 +81,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   private startAutoSlide(): void {
     this.autoSlideInterval = setInterval(() => {
       if (this.isPlaying) {
-        this.nextImage(); 
+        this.nextImage();
       }
     }, 4000);
   }
