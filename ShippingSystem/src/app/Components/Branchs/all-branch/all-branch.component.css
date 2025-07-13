@@ -53,12 +53,13 @@
 }
 
 .status-badge {
-  padding: 4px 10px;
+  /* padding: 2px 10px; */
   border-radius: 12px;
   font-size: 0.8rem;
   font-weight: bold;
   display: inline-block;
   text-align: center;
+  margin-left: -50px;
 }
 
 .status-active {
@@ -89,4 +90,5 @@ td:nth-child(4) {
   text-align: center;
   min-width: 80px;
 }
+
 
