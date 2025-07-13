@@ -19,7 +19,8 @@ export class AllCityComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   itemsPerPageOptions: number[] = [5, 10, 15];
-
+  selectedCityId:number=0;
+  
   constructor(
     private _cityService: CityServiceService,
     private _router: Router

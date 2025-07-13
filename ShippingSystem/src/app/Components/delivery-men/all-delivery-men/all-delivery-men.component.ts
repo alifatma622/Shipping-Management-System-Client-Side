@@ -25,6 +25,7 @@ export class AllDeliveryMenComponent implements OnInit {
   itemsPerPage = 10;
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
+  selectedManId:number =0;
   constructor(private deliveryManService: DeliveryManService, private router: Router) {}
 
   ngOnInit(): void {
@@ -66,22 +67,22 @@ export class AllDeliveryMenComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this! This will permanently delete the delivery agent from the database.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.deliveryManService.hardDelete(id).subscribe({
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this! This will permanently delete the delivery agent from the database.",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#d33',
+    //   cancelButtonColor: '#3085d6',
+    //   confirmButtonText: 'Yes, delete it!',
+    //   cancelButtonText: 'Cancel'
+    // }).then((result) => {
+      // if (result.isConfirmed) {
+        this.deliveryManService.softDelete(id).subscribe({
           next: () => {
             Swal.fire({
-              title: 'Deleted!',
-              text: 'Delivery agent has been permanently deleted.',
+              title: 'Deactivated!',
+              text: 'Delivery agent has been deactivated.',
               icon: 'success',
               confirmButtonColor: '#055866',
             });
@@ -90,15 +91,15 @@ export class AllDeliveryMenComponent implements OnInit {
           error: (err) => {
             Swal.fire({
               title: 'Error!',
-              text: err?.error?.message || 'Failed to delete delivery agent. Please try again.',
+              text: err?.error?.message || 'Failed to deactivate delivery agent. Please try again.',
               icon: 'error',
               confirmButtonColor: '#d33',
             });
           }
         });
       }
-    });
-  }
+    // });
+  // }
 
   onAdd() {
     this.router.navigate(['dashboard/delivery-men/add']);

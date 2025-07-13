@@ -160,7 +160,12 @@ export class SidebarComponent implements OnInit {
         icon: 'fal fa-cog',
         label: 'Settings',
         visibleFor: ['Employee', 'Admin'],
-      },
+      },{
+        routeLink: 'roles',
+        icon: 'fal fa-shield-halved',
+        label: 'Authorization',
+        visibleFor: ['Admin'],
+      }
     ];
   }
 

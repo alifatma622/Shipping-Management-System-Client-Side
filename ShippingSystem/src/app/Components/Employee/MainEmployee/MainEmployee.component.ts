@@ -4,6 +4,7 @@ import { ReadEmployeeDTO } from '../../../Models/IEmployee';
 import { EmployeeService } from '../../../Services/Employee-Services/Employee.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-MainEmployee',
@@ -28,19 +29,19 @@ export class MainEmployeeComponent implements OnInit {
     this.getPaginatedEmployees();
   }
 
-  getAllEmployees() {
-    this.isLoading = true;
-    this.EmployeeService.getAllEmployees().subscribe({
-      next: (data) => {
-        this.employees = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.errorMsg = 'Error loading employees!';
-        this.isLoading = false;
-      }
-    });
-  }
+  // getAllEmployees() {
+  //   this.isLoading = true;
+  //   this.EmployeeService.getAllEmployees().subscribe({
+  //     next: (data) => {
+  //       this.employees = data;
+  //       this.isLoading = false;
+  //     },
+  //     error: (err) => {
+  //       this.errorMsg = 'Error loading employees!';
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
 
   getPaginatedEmployees() {
     this.isLoading = true;
@@ -63,8 +64,27 @@ export class MainEmployeeComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    this.EmployeeService.hardDeleteEmployee(id).subscribe(() => this.getAllEmployees());
+    this.EmployeeService.softDeleteEmployee(id).subscribe({
+      next: () => {
+        Swal.fire({
+          title: 'Deactivated!',
+          text: 'Employee has been deactivated.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
+        });
+        this.getPaginatedEmployees();
+      },
+      error: (err) => {
+        Swal.fire({
+          title: 'Error!',
+          text: err?.error?.message || 'Failed to deactivate employee. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#d33',
+        });
+      }
+    });
   }
+
 
   onAdd() {
     this.router.navigate(['dashboard/employee/add']);
