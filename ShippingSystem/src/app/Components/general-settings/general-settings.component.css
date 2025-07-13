@@ -189,6 +189,13 @@
   box-shadow: none;
 }
 
+/* Disabled button visual feedback */
+.update-btn[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
 .loading {
   text-align: center;
   padding: 40px;

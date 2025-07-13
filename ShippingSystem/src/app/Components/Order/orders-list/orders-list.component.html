@@ -1,7 +1,7 @@
 <div class="all-delivery-men-container">
   <div class="header">
     <h2>Orders</h2>
-    <button class="add-btn" (click)="onAdd()">Add Order</button>
+    <button class="add-btn" (click)="onAdd()" [disabled]="!canAdd()">Add Order</button>
   </div>
   <div class="search-bar-row">
     <div class="search-bar">
@@ -111,14 +111,14 @@
           </button>
         </td>
         <td>
-          <button class="edit-btn" (click)="onEdit(order.orderID)" title="Edit">
+          <button class="edit-btn" (click)="onEdit(order.orderID)" title="Edit" [disabled]="!canEdit()">
             <!-- SVG edit icon -->
             <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
               <path d="M12 20h9" />
               <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z" />
             </svg>
           </button>
-          <button class="delete-btn"  [disabled]="order.isDeleted" title="Delete" data-bs-toggle="modal"
+          <button class="delete-btn"  [disabled]="order.isDeleted || !canDelete()" title="Delete" data-bs-toggle="modal"
             data-bs-target="#deleteConfirmModal" (click)="deletedOrderId = order.orderID">
             <!-- SVG delete icon -->
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

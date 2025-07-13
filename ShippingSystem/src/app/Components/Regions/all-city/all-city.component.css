@@ -71,6 +71,15 @@
   transform: translateY(-2px) scale(1.04);
 }
 
+/* Disabled button visual feedback */
+.add-btn[disabled],
+.edit-btn[disabled],
+.delete-btn[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
 .pagination-controls {
   margin-top: 20px;
   display: flex;

@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthServiceService, PermissionModel } from '../../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-all-seller',
@@ -22,10 +25,58 @@ export class AllSellerComponent implements OnInit {
   totalPages = 0;
   itemsPerPageOptions = [5, 10, 20, 50];
 
-  constructor(private sellerService: SellerServiceService, private router: Router) { }
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
+
+  constructor(private sellerService: SellerServiceService, private router: Router, private authService: AuthServiceService) { }
 
   ngOnInit(): void {
-    this.getAllSellers();
+    this.initializeUserRolesAndPermissions();
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.getAllSellers();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.getAllSellers();
+      }, err => {
+        // Optionally handle error
+        this.getAllSellers();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.getAllSellers();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Sellers]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Sellers]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Sellers]?.delete ?? false;
   }
 
 

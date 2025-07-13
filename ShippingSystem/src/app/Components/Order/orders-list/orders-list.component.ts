@@ -13,6 +13,9 @@ import jsPDF from 'jspdf';
 // @ts-ignore
 import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-orders-list',
@@ -42,16 +45,18 @@ export class OrdersListComponent implements OnInit {
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
 
   deletedOrderId:number=0;
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
   constructor(
     private orderService: OrderService,
     private router: Router,
     private deliveryService: DeliveryManService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.loadOrders();
-
+    this.initializeUserRolesAndPermissions();
     this.deliveryService.getAllDeliveryMen().subscribe({
       next: (data) => {
         this.deliveryAgents = data.filter((agent) => !agent.isDeleted);
@@ -60,6 +65,50 @@ export class OrdersListComponent implements OnInit {
         console.error('Error loading delivery agents:', err);
       },
     });
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.loadOrders();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.loadOrders();
+      }, err => {
+        this.loadOrders();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.loadOrders();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.delete ?? false;
   }
 
   loadOrders() {
