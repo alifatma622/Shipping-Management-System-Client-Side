@@ -14,6 +14,19 @@
   align-items: center;
   margin-bottom: 30px;
 }
+.activate-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+  font-size: 30px; /* حجم أكبر للنص أو الأيقونة */
+  padding: 8px 12px; /* زيادة في المساحة الداخلية */
+  transition: transform 0.2s ease;
+}
+
+.activate-btn:hover {
+  transform: scale(1.1); /* تكبير بسيط عند التحويم */
+}
 
 .governorate-title {
   font-size: 1.8rem;
