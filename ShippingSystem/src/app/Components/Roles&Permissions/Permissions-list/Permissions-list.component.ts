@@ -44,7 +44,8 @@ export class PermissionsListComponent implements OnInit {
     
     this.permissionService.getAllRolePermissions(this.selectedRole).subscribe({
       next: (data) => {
-        this.permissions = data;
+         const validDepartments = Object.values(Department).filter(val => typeof val === 'number') as number[];
+      this.permissions = data.filter(p => validDepartments.includes(p.department));
         this.isLoading = false;
       },
       error: (err) => {
