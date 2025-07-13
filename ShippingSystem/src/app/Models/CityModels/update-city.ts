@@ -4,4 +4,5 @@ export interface UpdateCity {
   normalPrice: number;
   pickupPrice: number;
   governorateId: number;
+  isDeleted: boolean;
 }

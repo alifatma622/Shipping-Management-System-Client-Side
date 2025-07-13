@@ -5,57 +5,36 @@ import Swal from 'sweetalert2';
 import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { Router } from '@angular/router';
 import { AllBranch } from '../../../Models/Branch/all-branch';
+
 @Component({
   selector: 'app-all-branch',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './all-branch.component.html',
   styleUrl: './all-branch.component.css',
 })
 export class AllBranchComponent implements OnInit {
-  branches: AllBranch[] = [];
+  allBranches: AllBranch[] = [];
+  filteredBranches: AllBranch[] = [];
+
   searchTerm: string = '';
-  constructor(private _branchService: BranchService, private _router: Router) {}
-
-  // for test pagination before API Working
-
   currentPage: number = 1;
   itemsPerPage: number = 5;
+  totalItems: number = 0;
   itemsPerPageOptions: number[] = [5, 10, 15];
 
-  get pagedBranches(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredBranches().slice(start, start + this.itemsPerPage);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.filteredBranches().length / this.itemsPerPage);
-  }
-
-  onPageChange(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
-  onItemsPerPageChange(): void {
-    this.currentPage = 1;
-  }
-
-  onSearch(event?: Event) {
-    if (event) event.preventDefault();
-    this.currentPage = 1;
-  }
-
-  /* /// this Is Removing When API Working //// */
+  constructor(private _branchService: BranchService, private _router: Router) {}
 
   ngOnInit(): void {
     this.getBranches();
   }
 
-  getBranches() {
-    this._branchService.getAllBranch().subscribe({
+  getBranches(): void {
+    this._branchService.getAllBranchesPagination(this.currentPage, this.itemsPerPage).subscribe({
       next: (res) => {
-        this.branches = res;
+        this.allBranches = res.items;
+        this.totalItems = res.totalCount;
+        this.applyFilter(); // فلترة الصفحة الحالية
       },
       error: (err) => {
         console.error('Error fetching branches:', err);
@@ -63,21 +42,45 @@ export class AllBranchComponent implements OnInit {
     });
   }
 
-  filteredBranches(): AllBranch[] {
-    return this.branches.filter((branch) =>
-      branch.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  applyFilter(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredBranches = [...this.allBranches];
+    } else {
+      this.filteredBranches = this.allBranches.filter(branch =>
+        branch.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
 
-  onAddBranch() {
+  onSearch(): void {
+    this.applyFilter();
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.getBranches();
+    }
+  }
+
+  onItemsPerPageChange(): void {
+    this.currentPage = 1;
+    this.getBranches();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onAddBranch(): void {
     this._router.navigate(['dashboard/AddBranch']);
   }
 
-  onEdit(branch: AllBranch) {
+  onEdit(branch: AllBranch): void {
     this._router.navigate(['dashboard/UpdateBranch', branch.id]);
   }
 
-  onDelete(id: number) {
+  onDelete(id: number): void {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to revert this!',
@@ -88,7 +91,7 @@ export class AllBranchComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this._branchService.hardDeleteBranch(id).subscribe({
+        this._branchService.deleteBranch(id).subscribe({
           next: () => {
             this.getBranches();
             Swal.fire({
