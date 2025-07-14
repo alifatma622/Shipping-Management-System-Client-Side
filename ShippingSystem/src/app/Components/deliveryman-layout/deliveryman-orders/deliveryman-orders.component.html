@@ -54,7 +54,7 @@
     </label>
   </div>
   <!--  -->
-
+<div class="table-responsive" style="overflow:visible ;">
   <table class="delivery-table" style="overflow:visible ;" >
     <thead>
       <tr>
@@ -113,7 +113,7 @@
       }
     </tbody>
   </table>
-
+</div>
   <!-- Pagination control -->
   <div class="pagination-controls" *ngIf="totalPages > 1">
     <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">&laquo;</button>
