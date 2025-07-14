@@ -8,7 +8,7 @@ import { ShippingType } from '../../../Enum/ShippingType';
 import { PaymentType } from '../../../Enum/PaymentType';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { OrderType } from '../../../Enum/OrderType';
-
+import { Location } from '@angular/common';
 import {
   ReadOneOrderDTO,
   UpdateOrderDTO,
@@ -16,6 +16,8 @@ import {
 } from '../../../Models/IOrder';
 
 import { OrderService } from './../../../Services/Order-Services/Order.service';
+import { CityService, ICity } from '../../../Services/city.service';
+import { BranchService, IBranch } from '../../../Services/branch.service';
 
 @Component({
   selector: 'app-edit-order',
@@ -32,6 +34,8 @@ export class EditOrderComponent implements OnInit {
   orderForm!: FormGroup;
   productForm!: FormGroup;
 
+
+
   OrderStatuses: OrderStatus[] = [];
   ShippingTypes: { value: number, label: string }[] = [];
   PaymentTypes: { value: number, label: string }[] = [];
@@ -41,10 +45,16 @@ export class EditOrderComponent implements OnInit {
   errorMsg: string = '';
   isSubmitting = false;
 
+  cities: ICity[] = [];
+  branches: IBranch[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private OrderService: OrderService,
     private fb: FormBuilder,
+    private branchService: BranchService,
+    private cityService: CityService,
+    private location:Location,
     private router: Router
   ) {
     this.route.params.subscribe((params) => {
@@ -59,6 +69,8 @@ export class EditOrderComponent implements OnInit {
       shippingTypes: this.OrderService.getShippingTypes(),
       orderTypes: this.OrderService.getOrderTypes(),
       paymentTypes: this.OrderService.getPaymentTypes(),
+      cities: this.cityService.getAllCities(),
+      branches: this.branchService.getAllBranches() // <-- And this
     }).subscribe({
       next: ({
         order,
@@ -66,11 +78,19 @@ export class EditOrderComponent implements OnInit {
         shippingTypes,
         paymentTypes,
         orderTypes,
+        cities,
+        branches
       }) => {
         this.LoadedOrder = order;
         this.ProductList = order.products;
         this.OrderStatuses = statuses;
+        this.cities = cities;
+        this.branches = branches;
         // Set select options first
+        console.log('orderTypeId = ', order.orderTypeId);
+        console.log('typeof orderTypeId = ', typeof order.orderTypeId);
+        console.log('OrderTypes list = ', this.OrderTypes);
+
         this.ShippingTypes = Object.keys(ShippingType)
           .filter(key => !isNaN(Number((ShippingType as any)[key])))
           .map(key => ({ value: Number((ShippingType as any)[key]), label: key }));
@@ -95,7 +115,16 @@ export class EditOrderComponent implements OnInit {
           paymentType: Number(order.paymentTypeId),
           isPickup: [order.isPickup],
           isActive: [order.isActive],
-          deliveryManId: [order.deliverManId ?? null]
+          deliveryManId: [order.deliverManId ?? null],
+          cityId: [
+              this.cities.find(c => c.name === order.customerCityName)?.id ?? null,
+              Validators.required
+            ],
+            branchId: [
+              this.branches.find(b => b.name === order.branchName)?.id ?? null,
+              Validators.required
+            ]
+
         });
 
         this.productForm = this.fb.group({
@@ -157,6 +186,8 @@ export class EditOrderComponent implements OnInit {
       isPickup: formData.isPickup,
       isActive: formData.isActive,
       deliveryManId: this.LoadedOrder.deliverManId ?? 0, // <-- use 'deliveryManId'
+      cityId: Number(formData.cityId),
+      branchId: Number(formData.branchId),
       products: this.ProductList.map((p) => ({
         name: p.name,
         price: p.price,
@@ -165,6 +196,8 @@ export class EditOrderComponent implements OnInit {
         orderId: this.orderId,
       })),
     };
+
+    console.log('Submitting updated order:', updatedOrder);
 
     this.isSubmitting = true;
     this.successMsg = '';
@@ -184,6 +217,7 @@ export class EditOrderComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/dashboard/order']);
+    //this.router.navigate(['/dashboard/order']);
+    this.location.back();
   }
 }

@@ -4,4 +4,6 @@ export interface CityModel {
   normalPrice: number;
   pickupPrice: number;
   governorateName: string;
+  isDeleted: boolean;
+
 }

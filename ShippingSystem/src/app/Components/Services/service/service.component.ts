@@ -25,17 +25,16 @@ export class ServiceComponent {
     },
     {
       id: 2,
-      icon: 'fas fa-shield-alt',
-      title: 'Secure Payment',
-      description:
-        'Your payment information is protected with advanced encryption technology.',
+      icon: 'fas fa-city',
+      title: 'Multi-City Delivery',
+      description: 'We cover a wide range of cities and governorates.',
     },
     {
       id: 3,
-      icon: 'fas fa-undo-alt',
-      title: 'Easy Returns',
+      icon: 'fas fa-user-check',
+      title: 'Delivery Agent Assignment',
       description:
-        '30-day return policy. No questions asked, hassle-free returns and exchanges.',
+        'Orders are automatically assigned to the nearest available agent.',
     },
     {
       id: 4,
@@ -53,10 +52,9 @@ export class ServiceComponent {
     },
     {
       id: 6,
-      icon: 'fas fa-gift',
-      title: 'Gift Wrapping',
-      description:
-        'Beautiful gift wrapping service available for special occasions.',
+      icon: 'fas fa-building',
+      title: 'Branch Management',
+      description: 'Manage all your shipping branches in one place.',
     },
   ];
 

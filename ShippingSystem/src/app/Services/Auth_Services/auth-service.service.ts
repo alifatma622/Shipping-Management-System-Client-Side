@@ -4,10 +4,20 @@ import { RegisterModel } from '../../Models/Auht-Models/register-model';
 import { Observable } from 'rxjs';
 import { LoginModel } from '../../Models/Auht-Models/login-model';
 import { environment } from '../../../environments/environment.development';
+export interface PermissionModel {
+  roleName: string;
+  department: number;
+  view: boolean;
+  add: boolean;
+  edit: boolean;
+  delete: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
+
+
 export class AuthServiceService {
   constructor(private _httpClient: HttpClient) {}
 
@@ -21,7 +31,7 @@ export class AuthServiceService {
 
   login(data: LoginModel): Observable<any> {
   console.log('Sending request to login:', data);
-  return this._httpClient.post(`${this.apiUrl}`, data);
+  return this._httpClient.post(`${this.apiUrl}/login`, data);
 }
 
 logout() {
@@ -97,5 +107,39 @@ getUserId(): string | null {
     return null;
   }
 }
+
+getPermissions(): { [key: string]: string[] } {
+  const token = this.getToken();
+  if (!token) return {};
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const permissionsJson = payload['permissions'];
+
+    if (!permissionsJson) return {};
+
+    return JSON.parse(permissionsJson);
+  } catch (e) {
+    console.error("Error decoding permissions from token:", e);
+    return {};
+  }
+}
+
+hasPermission(department: string, action: string): boolean {
+  const permissions = this.getPermissions();
+
+  const departmentPermissions = permissions[department];
+  if (!departmentPermissions) return false;
+
+  return departmentPermissions.includes(action);
+}
+
+getPermissionFromApi(roleName: string, departmentId: number): Observable<PermissionModel> {
+  return this._httpClient.get<PermissionModel>(
+    `https://localhost:44361/api/Permission/${roleName}/${departmentId}`
+  );
+}
+
+
 
 }

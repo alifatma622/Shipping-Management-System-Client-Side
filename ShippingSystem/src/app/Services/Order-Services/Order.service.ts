@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AddOrderDTO, OrderResponse, ReadOrderDTO , ReadOneOrderDTO , UpdateOrderDTO , UpdateProductDTO } from '../../Models/IOrder';
+import {
+  AddOrderDTO,
+  OrderResponse,
+  ReadOrderDTO,
+  ReadOneOrderDTO,
+  UpdateOrderDTO,
+  UpdateProductDTO,
+} from '../../Models/IOrder';
 import { delay, Observable, of } from 'rxjs';
 import { ShippingType } from '../../Enum/ShippingType';
 import { PaymentType } from '../../Enum/PaymentType';
@@ -11,7 +18,7 @@ import { AddOrder } from '../../Models/orders_models/add-order';
 import { OrderType } from '../../Enum/OrderType';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   private apiUrl = `${environment.baseUrl}/api/Order`;

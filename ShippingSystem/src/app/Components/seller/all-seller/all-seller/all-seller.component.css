@@ -266,3 +266,12 @@ body {
   border-bottom: 3px solid #055866;
   position: relative;
 }
+/* Disabled button visual feedback */
+.add-btn[disabled],
+.edit-btn[disabled],
+.delete-btn[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: auto;
+}
+

@@ -13,6 +13,9 @@ import jsPDF from 'jspdf';
 // @ts-ignore
 import html2canvas from 'html2canvas';
 import Swal from 'sweetalert2';
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-orders-list',
@@ -21,7 +24,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
-
   orders: ReadOrderDTO[] = [];
   isLoading = true;
   errorMsg = '';
@@ -42,16 +44,17 @@ export class OrdersListComponent implements OnInit {
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
 
   deletedOrderId:number=0;
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
   constructor(
     private orderService: OrderService,
     private router: Router,
     private deliveryService: DeliveryManService,
-    private cdr: ChangeDetectorRef
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.loadOrders();
-
+    this.initializeUserRolesAndPermissions();
     this.deliveryService.getAllDeliveryMen().subscribe({
       next: (data) => {
         this.deliveryAgents = data.filter((agent) => !agent.isDeleted);
@@ -60,6 +63,50 @@ export class OrdersListComponent implements OnInit {
         console.error('Error loading delivery agents:', err);
       },
     });
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.loadOrders();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.loadOrders();
+      }, err => {
+        this.loadOrders();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.loadOrders();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Orders]?.delete ?? false;
   }
 
   loadOrders() {
@@ -96,10 +143,20 @@ export class OrdersListComponent implements OnInit {
   }
 
   onDelete(id: number) {
+    Swal.fire({
+              title: 'Are you sure?',
+              text: 'This order will be deleted!',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#055866',
+              confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+              if (result.isConfirmed) {
       this.orderService.softDelete(id).subscribe({
             next: () => {
               Swal.fire({
-                title: 'Deleted!',
+                title: 'Canceled!',
                 text: 'Order has been deleted.',
                 icon: 'success',
                 confirmButtonColor: '#055866',
@@ -113,8 +170,10 @@ export class OrdersListComponent implements OnInit {
                 icon: 'error',
                 confirmButtonColor: '#d33',
               });
-            }
-          });;
+          },
+        });
+      }
+    });
   }
 
   onAdd() {
@@ -144,9 +203,7 @@ export class OrdersListComponent implements OnInit {
         o.customerCityName
       ].filter(f => f);
 
-      return fieldsToSearch.some(f =>
-        f.toLowerCase().includes(searchTerm)
-      );
+      return fieldsToSearch.some((f) => f.toLowerCase().includes(searchTerm));
     });
   }
   onSearchChange(value: string) {
@@ -155,44 +212,68 @@ export class OrdersListComponent implements OnInit {
 
   getStatusText(status: any): string {
     switch (status) {
-      case 1: return 'Pending';
-      case 2: return 'Accepted';
-      case 3: return 'Rejected';
-      case 4: return 'Delivered';
-      case 5: return 'With Agent';
-      case 6: return 'Unreachable';
-      case 7: return 'Postponed';
-      case 8: return 'Partial';
-      case 9: return 'Canceled';
-      case 10: return 'Rejected (Paid)';
-      case 11: return 'Rejected (Unpaid)';
-      case 12: return 'Rejected (Partial)';
-      default: return 'Unknown';
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Accepted';
+      case 3:
+        return 'Rejected';
+      case 4:
+        return 'Delivered';
+      case 5:
+        return 'With Agent';
+      case 6:
+        return 'Unreachable';
+      case 7:
+        return 'Postponed';
+      case 8:
+        return 'Partial';
+      case 9:
+        return 'Canceled';
+      case 10:
+        return 'Rejected (Paid)';
+      case 11:
+        return 'Rejected (Unpaid)';
+      case 12:
+        return 'Rejected (Partial)';
+      default:
+        return 'Unknown';
     }
   }
 
   getStatusClass(status: any): string {
     switch (status) {
-      case 1: return 'status-pending';
-      case 2: return 'status-accepted';
+      case 1:
+        return 'status-pending';
+      case 2:
+        return 'status-accepted';
       case 3:
       case 10:
       case 11:
       case 12:
         return 'status-rejected';
-      case 4: return 'status-delivered';
-      case 5: return 'status-with-agent';
-      case 6: return 'status-unreachable';
-      case 7: return 'status-postponed';
-      case 8: return 'status-partial';
-      case 9: return 'status-canceled';
-      default: return 'status-unknown';
+      case 4:
+        return 'status-delivered';
+      case 5:
+        return 'status-with-agent';
+      case 6:
+        return 'status-unreachable';
+      case 7:
+        return 'status-postponed';
+      case 8:
+        return 'status-partial';
+      case 9:
+        return 'status-canceled';
+      default:
+        return 'status-unknown';
     }
   }
 
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
-    return this.filteredAgents = this.deliveryAgents.filter(agent => agent.cities?.includes(cityName));
+    return (this.filteredAgents = this.deliveryAgents.filter((agent) =>
+      agent.cities?.includes(cityName)
+    ));
   }
 
   selectAgent(agent: IReadDeliveryMan): void {
@@ -200,16 +281,18 @@ export class OrdersListComponent implements OnInit {
   }
 
   assignOrder(orderId: number): void {
-    this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
-      next: (response) => {
-        console.log('Agent assigned successfully', response);
-        this.selectedAgent = null;
-        this.loadOrders();
-      },
-      error: (error) => {
-        console.error('Error assigning agent', error);
-      }
-    });
+    this.orderService
+      .assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0)
+      .subscribe({
+        next: (response) => {
+          console.log('Agent assigned successfully', response);
+          this.selectedAgent = null;
+          this.loadOrders();
+        },
+        error: (error) => {
+          console.error('Error assigning agent', error);
+        },
+      });
   }
 
   get pagedOrders() {
@@ -237,7 +320,7 @@ export class OrdersListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating order status:', err);
-      }
+      },
     });
   }
   getStatusNumberFromName(status: string | number): number {
@@ -270,8 +353,6 @@ export class OrdersListComponent implements OnInit {
       });
     }
   }
-
-
 }
 
 

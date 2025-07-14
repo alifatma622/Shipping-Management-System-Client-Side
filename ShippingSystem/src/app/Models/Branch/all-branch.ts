@@ -3,4 +3,5 @@ export interface AllBranch {
   name: string;
   city: string;
   creationDate: string;
+  isDeleted: boolean;
 }

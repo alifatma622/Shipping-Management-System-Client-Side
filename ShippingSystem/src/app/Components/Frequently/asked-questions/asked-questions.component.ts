@@ -16,14 +16,13 @@ export class AskedQuestionsComponent {
         'Carves handles a wide range of cargo types including industrial, commercial, and personal goods.',
     },
     {
-      question: 'How can I track my shipment with Carves?',
+      question: 'What areas does Carves deliver to?',
       answer:
-        'You can track your shipment through our tracking system using your shipment ID.',
+        'Carves currently delivers across all major cities and governorates in Egypt.',
     },
     {
       question: 'Does Carves offer international shipping services?',
-      answer:
-        'Yes, Carves provides international logistics and shipping services worldwide.',
+      answer: 'Not yet, currently we operate only within Egypt.',
     },
     {
       question: 'How secure are Carves warehouse facilities?',

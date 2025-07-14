@@ -136,8 +136,12 @@ export interface UpdateOrderDTO
   shippingType: number;
   orderType: number;
   paymentType: number;
+  cityId: number,
+  branchId: number,
   isPickup: boolean;
   isActive: boolean;
   deliveryManId?: number;
   products: UpdateProductDTO[];
 }
+
+

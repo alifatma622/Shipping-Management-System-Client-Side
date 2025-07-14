@@ -1,82 +1,111 @@
-<div class="add-delivery-man-container">
-  <div class="header">
-    <h2>Update City</h2>
-  </div>
-  <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="delivery-form">
+
+ <div class="edit-seller-container">
+  <h2>Edit City</h2>
+
+  <form [formGroup]="cityForm" (ngSubmit)="onSubmit()" class="seller-form">
+    <!-- City Name -->
     <div class="form-group">
       <label for="name">City Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        [(ngModel)]="cityData.name"
-        required
-        minlength="2"
-        #nameRef="ngModel"
-        [class.invalid]="nameRef.invalid && nameRef.touched"
-      />
-      <div *ngIf="nameRef.invalid && nameRef.touched" class="error">
-        <small *ngIf="nameRef.errors?.['required']">Name is required.</small>
-        <small *ngIf="nameRef.errors?.['minlength']">Minimum 2 characters.</small>
+      <input id="name" formControlName="name" />
+      <div class="error" *ngIf="cityForm.get('name')?.touched && cityForm.get('name')?.invalid">
+        Name is required (min 2 chars).
       </div>
     </div>
+
+    <!-- Normal Price -->
     <div class="form-group">
       <label for="normalPrice">Normal Price</label>
-      <input
-        type="number"
-        id="normalPrice"
-        name="normalPrice"
-        [(ngModel)]="cityData.normalPrice"
-        required
-        min="1"
-        #npRef="ngModel"
-        [class.invalid]="npRef.invalid && npRef.touched"
-      />
-      <div *ngIf="npRef.invalid && npRef.touched" class="error">
-        <small *ngIf="npRef.errors?.['required']">Required.</small>
-        <small *ngIf="npRef.errors?.['min']">Must be > 0.</small>
+      <input id="normalPrice" type="number" formControlName="normalPrice" />
+      <div class="error" *ngIf="cityForm.get('normalPrice')?.touched && cityForm.get('normalPrice')?.invalid">
+        Required. Must be > 0.
       </div>
     </div>
+
+    <!-- Pickup Price -->
     <div class="form-group">
       <label for="pickupPrice">Pickup Price</label>
-      <input
-        type="number"
-        id="pickupPrice"
-        name="pickupPrice"
-        [(ngModel)]="cityData.pickupPrice"
-        required
-        min="1"
-        #ppRef="ngModel"
-        [class.invalid]="ppRef.invalid && ppRef.touched"
-      />
-      <div *ngIf="ppRef.invalid && ppRef.touched" class="error">
-        <small *ngIf="ppRef.errors?.['required']">Required.</small>
-        <small *ngIf="ppRef.errors?.['min']">Must be > 0.</small>
+      <input id="pickupPrice" type="number" formControlName="pickupPrice" />
+      <div class="error" *ngIf="cityForm.get('pickupPrice')?.touched && cityForm.get('pickupPrice')?.invalid">
+        Required. Must be > 0.
       </div>
     </div>
+
+    <!-- Governorate -->
     <div class="form-group">
       <label for="governorateId">Governorate</label>
-      <select
-        id="governorateId"
-        name="governorateId"
-        [(ngModel)]="cityData.governorateId"
-        required
-        #govRef="ngModel"
-        [class.invalid]="govRef.invalid && govRef.touched"
-      >
-        <option value="" disabled selected>Select Governorate</option>
-        <option *ngFor="let gov of governorates" [value]="gov.id">
-          {{ gov.name }}
-        </option>
+      <select id="governorateId" formControlName="governorateId">
+        <option value="" disabled>Select governorate</option>
+        <option *ngFor="let gov of governorates" [value]="gov.id">{{ gov.name }}</option>
       </select>
-      <div *ngIf="govRef.invalid && govRef.touched" class="error">
-        <small>Governorate is required.</small>
+      <div class="error" *ngIf="cityForm.get('governorateId')?.touched && cityForm.get('governorateId')?.invalid">
+        Governorate is required.
       </div>
     </div>
+
+    <!-- Status Toggle -->
+    <!-- <div class="form-group status-group">
+      <label for="isDeleted">Status</label>
+      <div class="status-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" formControlName="isDeleted" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="status-text">
+          {{ cityForm.get('isDeleted')?.value ? 'Inactive (Deleted)' : 'Active' }}
+        </span>
+      </div>
+    </div> -->
+
+    <!-- Status Toggle -->
+<!-- <div class="form-group status-group">
+  <label for="isActive">Status</label>
+  <div class="status-toggle">
+    <label class="toggle-switch">
+      <input
+        type="checkbox"
+        formControlName="isActive"
+        id="isActive"
+        [disabled]="isSubmitting"
+      />
+      <span class="toggle-slider"></span>
+    </label>
+    <span class="status-text">
+      {{ cityForm.get('isActive')?.value ? 'Active' : 'Inactive (Deleted)' }}
+    </span>
+  </div>
+  <small class="help-text">
+    {{ cityForm.get('isActive')?.value ? 'City is currently active.' : 'City is inactive. You can reactivate it.' }}
+  </small>
+</div> -->
+
+
+<div class="form-group status-group">
+      <label for="isActive">Status</label>
+      <div class="status-toggle">
+        <label class="toggle-switch">
+          <input
+            type="checkbox"
+            formControlName="isActive"
+            [disabled]="isSubmitting"
+            id="isActive" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="status-text">
+          {{ cityForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+      <small class="help-text">
+        {{ cityForm.get('isActive')?.value ? 'Seller is currently active.' : 'Seller is inactive.' }}
+      </small>
+    </div>
+
+
+    <!-- Submit Button -->
     <div class="form-actions">
-      <button type="submit" class="add-btn" [disabled]="form.invalid">
-        Update City
+      <button type="submit" class="add-btn" [disabled]="cityForm.invalid || isSubmitting">
+        {{ isSubmitting ? 'Saving...' : 'Update City' }}
       </button>
     </div>
   </form>
 </div>
+

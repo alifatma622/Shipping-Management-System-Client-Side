@@ -54,6 +54,15 @@
   opacity: 0.7;
 }
 
+/* Disabled button visual feedback */
+.add-btn[disabled],
+.edit-btn[disabled],
+.delete-btn[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: auto;
+}
+
 /* Adjust action buttons container */
 .delivery-table td:last-child {
   /* display: flex; */

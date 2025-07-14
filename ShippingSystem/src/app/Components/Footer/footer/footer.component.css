@@ -1,7 +1,7 @@
 :root {
   --main-white: #ffffff;
-  --main-gray: #3a3362;
-  --main-dark: #055866;
+  /* --main-gray: #3a3362; */
+  --main-dark: #247f90;
   --main-accent: #daf87a;
   --border: #dcdcdc;
   --light-bg: #f9fafa;
@@ -39,7 +39,7 @@ body {
   background: linear-gradient(
     135deg,
     var(--main-dark) 0%,
-    var(--main-gray) 100%
+   #0c505d 100%
   );
   color: var(--main-white);
   position: relative;
@@ -67,7 +67,7 @@ body {
   top: -50%;
   right: -20%;
   width: 600px;
-  height: 600px;
+  height: 400px;
   background: radial-gradient(
     circle,
     rgba(218, 248, 122, 0.08) 0%,
@@ -316,13 +316,13 @@ body {
     var(--main-accent),
     transparent
   );
-  margin: 3rem 0 1.5rem 0;
+  /* margin: 3rem 0 1.5rem 0; */
   opacity: 0.6;
 }
 
 .footer-bottom {
   background: rgba(0, 0, 0, 0.2);
-  padding: 1.5rem 0;
+  padding: .5rem 0;
   margin-top: 1.5rem;
   border-radius: 12px 12px 0 0;
 }

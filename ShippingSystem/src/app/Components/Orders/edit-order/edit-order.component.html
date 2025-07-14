@@ -1,4 +1,6 @@
-<div class="edit-order-container">
+
+
+  <div class="edit-order-container">
 
   <div class="header">
     <h2>Edit Order</h2>
@@ -6,7 +8,11 @@
   <div style="display: flex; justify-content: flex-end; margin-bottom: 10px;">
     <button type="button" class="add-btn" (click)="goBack()">Go Back</button>
   </div>
-  <form [formGroup]="orderForm" (ngSubmit)="submit()" class="order-form" autocomplete="off">
+
+
+  <form *ngIf="orderForm" [formGroup]="orderForm" (ngSubmit)="submit()" class="order-form" autocomplete="off">
+
+
     <!-- Customer Name -->
     <div class="form-group">
       <label for="customerName">Customer Name</label>
@@ -53,8 +59,8 @@
       </div>
     </div>
 
-    <!-- Order Type -->
-    <!-- <div class="form-group">
+
+     <div class="form-group">
       <label for="orderType">Order Type</label>
       <select id="orderType" formControlName="orderType"
         [class.invalid]="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
@@ -64,7 +70,7 @@
       <div class="error" *ngIf="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
         Please select an order type.
       </div>
-    </div> -->
+    </div>
 
     <!-- Payment Type -->
     <div class="form-group">
@@ -78,6 +84,32 @@
         Please select a payment type.
       </div>
     </div>
+
+
+      <div class="form-group">
+        <label for="cityId">City</label>
+        <select id="cityId" formControlName="cityId">
+          <option [value]="null" disabled>Select city</option>
+          <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="branchId">Branch</label>
+        <select id="branchId" formControlName="branchId">
+          <option [value]="null" disabled>Select branch</option>
+          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4"></textarea>
+      </div>
+
+
      <!-- Move Notes and Checkboxes to the bottom, before products -->
     <!-- Notes and Checkboxes in one row: Notes left, checkboxes right, checkboxes horizontally aligned -->
 
@@ -91,10 +123,7 @@
     <input type="checkbox" formControlName="isPickup" /> Pickup
   </label>
 </div>
-<div class="form-group">
-  <label for="notes">Notes</label>
-  <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4"></textarea>
-</div>
+
 
 
     <!-- Products -->

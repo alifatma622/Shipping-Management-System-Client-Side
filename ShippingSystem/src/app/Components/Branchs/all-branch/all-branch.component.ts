@@ -5,57 +5,87 @@ import Swal from 'sweetalert2';
 import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { Router } from '@angular/router';
 import { AllBranch } from '../../../Models/Branch/all-branch';
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-all-branch',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './all-branch.component.html',
   styleUrl: './all-branch.component.css',
 })
 export class AllBranchComponent implements OnInit {
-  branches: AllBranch[] = [];
+  allBranches: AllBranch[] = [];
+  filteredBranches: AllBranch[] = [];
+
   searchTerm: string = '';
-  constructor(private _branchService: BranchService, private _router: Router) {}
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
+  constructor(private _branchService: BranchService, private _router: Router, private authService: AuthServiceService) {}
 
   // for test pagination before API Working
 
   currentPage: number = 1;
   itemsPerPage: number = 5;
+  totalItems: number = 0;
   itemsPerPageOptions: number[] = [5, 10, 15];
 
-  get pagedBranches(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredBranches().slice(start, start + this.itemsPerPage);
+
+  ngOnInit(): void {
+    this.initializeUserRolesAndPermissions();
   }
 
-  get totalPages(): number {
-    return Math.ceil(this.filteredBranches().length / this.itemsPerPage);
-  }
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
 
-  onPageChange(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+    if (isAdmin) {
+      this.getBranches();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.getBranches();
+      }, err => {
+        this.getBranches();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.getBranches();
     }
   }
 
-  onItemsPerPageChange(): void {
-    this.currentPage = 1;
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.add ?? false;
   }
 
-  onSearch(event?: Event) {
-    if (event) event.preventDefault();
-    this.currentPage = 1;
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.edit ?? false;
   }
 
-  /* /// this Is Removing When API Working //// */
-
-  ngOnInit(): void {
-    this.getBranches();
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.delete ?? false;
   }
 
-  getBranches() {
-    this._branchService.getAllBranch().subscribe({
+  getBranches(): void {
+    this._branchService.getAllBranchesPagination(this.currentPage, this.itemsPerPage).subscribe({
       next: (res) => {
-        this.branches = res;
+        this.allBranches = res.items;
+        this.totalItems = res.totalCount;
+        this.applyFilter(); // فلترة الصفحة الحالية
       },
       error: (err) => {
         console.error('Error fetching branches:', err);
@@ -63,21 +93,45 @@ export class AllBranchComponent implements OnInit {
     });
   }
 
-  filteredBranches(): AllBranch[] {
-    return this.branches.filter((branch) =>
-      branch.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
+  applyFilter(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredBranches = [...this.allBranches];
+    } else {
+      this.filteredBranches = this.allBranches.filter(branch =>
+        branch.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
   }
 
-  onAddBranch() {
+  onSearch(): void {
+    this.applyFilter();
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.getBranches();
+    }
+  }
+
+  onItemsPerPageChange(): void {
+    this.currentPage = 1;
+    this.getBranches();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  onAddBranch(): void {
     this._router.navigate(['dashboard/AddBranch']);
   }
 
-  onEdit(branch: AllBranch) {
+  onEdit(branch: AllBranch): void {
     this._router.navigate(['dashboard/UpdateBranch', branch.id]);
   }
 
-  onDelete(id: number) {
+  onDelete(id: number): void {
     Swal.fire({
      title: 'Are you sure?',
           text: 'This branch will be deactivated!',
@@ -88,7 +142,7 @@ export class AllBranchComponent implements OnInit {
           confirmButtonText: 'Yes, deactivate it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this._branchService.hardDeleteBranch(id).subscribe({
+        this._branchService.deleteBranch(id).subscribe({
           next: () => {
             this.getBranches();
             Swal.fire({

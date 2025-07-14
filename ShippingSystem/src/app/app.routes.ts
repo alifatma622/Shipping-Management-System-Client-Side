@@ -4,7 +4,7 @@ import { UpdateCityComponent } from './Components/Regions/update-city/update-cit
 import { AllBranchComponent } from './Components/Branchs/all-branch/all-branch.component';
 import { UpdateBranchComponent } from './Components/Branchs/update-branch/update-branch.component';
 import { AddBranchComponent } from './Components/Branchs/add-branch/add-branch.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './Components/Auth/login/login.component';
 import { RegisterComponent } from './Components/Auth/register/register.component';
@@ -32,6 +32,7 @@ import { EditOrderComponent } from './Components/Orders/edit-order/edit-order.co
 import { AdminDashboardComponent } from './Components/admin-dashboard/admin-dashboard.component';
 import { DeliverymanDashboardComponent } from './Components/deliveryman-layout/deliveryman-dashboard/deliveryman-dashboard.component';
 import { SellerDashboardComponent } from './Components/Seller-layout/seller-dashboard/seller-dashboard.component';
+import { OrderListSellerComponent } from './Components/Test/order-list-seller/order-list-seller.component';
 
 import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deliveryman-orders/deliveryman-orders.component';
 
@@ -40,9 +41,9 @@ import { OrderSellerComponent } from './Components/Seller-layout/order-seller/or
 import { PermissionsListComponent } from './Components/Roles&Permissions/Permissions-list/Permissions-list.component';
 import { RolesListComponent } from './Components/Roles&Permissions/Roles-list/Roles-list.component';
 
-
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: 'test', component: OrderListSellerComponent },
   { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -95,18 +96,62 @@ export const routes: Routes = [
       { path: 'add-order-seller', component: AddOrderSellerComponent, canActivate: [authGuard], data: { roles: ['Seller'] } },
       { path: 'orders-seller', component: OrderSellerComponent, canActivate: [authGuard], data: { roles: ['Seller'] } },
 
+      {
+        path: 'deliveryman',
+        component: DeliverymanDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['DeliveryAgent'] },
+      },
+      {
+        path: 'order-delivery',
+        component: DeliverymanOrdersComponent,
+        canActivate: [authGuard],
+        data: { roles: ['DeliveryAgent'] },
+      },
 
-    ]
+      {
+        path: 'overview',
+        component: AdminDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller-dashboard',
+        component: SellerDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+      {
+        path: 'add-order-seller',
+        component: AddOrderSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+      {
+        path: 'orders-seller',
+        component: OrderSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+
+      {
+        path: 'overview',
+        component: AdminDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+    ],
   },
-
-
-
-
 ];
 
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      anchorScrolling: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      scrollOffset: [0, 70],
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }
