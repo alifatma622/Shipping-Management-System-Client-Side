@@ -172,13 +172,19 @@ html, body {
   padding: 30px;
   border: 2.5px  ;
   overflow: hidden;
-  border-radius: 14px !important;
+  /* border-radius: 14px !important; */
   background: var(--main-gray);
-  box-shadow: 0 4px 18px #05586622;
-  margin: 18px 0 0 0;
-  
-}
+  width: 100%;
 
+}
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border: 2.5px  ;
+   box-shadow: 0 4px 18px #05586622;
+    border-radius: 14px !important;
+     margin: 18px 0 0 0;
+}
 .delivery-table th {
   background: #fff;
   color: #055866;
@@ -662,4 +668,475 @@ html, body {
 
 
 
+/*=======================
+  Root Variables
+=======================*/
+:root {
+  --main-white: #ffffff;
+  --main-gray: #4f4f4f;
+  --main-dark: #1e1e1e;
+  --main-accent: #daf87a;
+  --border: #e3f2f5;
+}
 
+/*=======================
+  Governorate Container
+=======================*/
+.governorate-container {
+  background: var(--main-white);
+  padding: 30px;
+  border-radius: 14px;
+  margin-top: 18px;
+  box-shadow: 0 4px 18px rgba(5, 88, 102, 0.08);
+}
+
+/*=======================
+  Header Section
+=======================*/
+.governorate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.governorate-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--main-dark);
+  margin: 0;
+}
+
+/*=======================
+  Add Button
+=======================*/
+.add-btn {
+  background: #055866;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 1.08rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #daf87a33;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.add-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-btn:hover:not(:disabled) {
+  background: var(--main-accent);
+  color: #055866;
+  box-shadow: 0 4px 18px #daf87a55;
+  transform: translateY(-2px) scale(1.04);
+}
+
+/*=======================
+  Governorate Form
+=======================*/
+.governorate-form {
+  background: var(--main-white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px #05586611;
+}
+
+.governorate-form .form-group {
+  margin-bottom: 18px;
+}
+
+.governorate-form label {
+  font-weight: 600;
+  color: var(--main-dark);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.governorate-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--main-white);
+  color: var(--main-gray);
+  outline: none;
+  transition: all 0.18s;
+}
+
+.governorate-form input[type="text"]:focus {
+  border-color: var(--main-accent);
+  box-shadow: 0 0 0 2px #daf87a55;
+}
+
+.governorate-form .form-actions {
+  margin-top: 12px;
+  text-align: right;
+}
+
+/*=======================
+  Error and Alerts
+=======================*/
+.error {
+  color: #c62828;
+  background-color: #ffebee;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+.success {
+  color: #155724;
+  background-color: #d4edda;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 4px;
+}
+
+/*=======================
+  Search Box
+=======================*/
+.search-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px 12px 45px;
+  border: 2px solid var(--border);
+  border-radius: 25px;
+  font-size: 0.95rem;
+  background: var(--main-white);
+  color: var(--main-gray);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.18s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--main-accent);
+  box-shadow: 0 0 0 3px rgba(218, 248, 122, 0.2);
+}
+
+.search-box::before {
+  content: '🔍';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9e9e9e;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/*=======================
+  Table Styling
+=======================*/
+.agent-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--main-white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+}
+
+.agent-table th {
+  background: #f8fbfd;
+  color: var(--main-dark);
+  font-weight: 600;
+  padding: 16px 12px;
+  font-size: 0.95rem;
+  border: none;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+
+.agent-table td {
+  background: var(--main-white);
+  color: var(--main-gray);
+  padding: 14px 12px;
+  font-size: 0.93rem;
+  border-bottom: 1px solid #f5f8fa;
+  vertical-align: middle;
+}
+
+.agent-table tr:hover td {
+  background: #f8fbfd;
+  transition: background 0.2s ease-in-out;
+}
+
+/*=======================
+  Action Buttons
+=======================*/
+.inline-edit {
+  padding: 6px 10px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--main-white);
+  color: var(--main-gray);
+  margin-right: 6px;
+  outline: none;
+  transition: all 0.18s ease;
+}
+
+.inline-edit:focus {
+  border-color: var(--main-accent);
+  box-shadow: 0 0 0 2px #daf87a55;
+}
+
+.inline-edit + button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 4px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.inline-edit + button:hover {
+  background: #e3f2f5;
+}
+
+.activate-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.activate-btn:hover {
+  background: #e3f2f5;
+  transform: scale(1.1);
+}
+
+/*=======================
+  Pagination
+=======================*/
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 4px;
+}
+
+.page-link {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  background: var(--main-white);
+  color: var(--main-gray);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.18s ease;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background: #f8fbfd;
+  border-color: var(--main-accent);
+}
+
+.page-item.active .page-link {
+  background: var(--main-accent);
+  color: var(--main-dark);
+  border-color: var(--main-accent);
+  font-weight: 600;
+}
+
+.page-item.disabled .page-link {
+  background: #f5f8fa;
+  color: #9e9e9e;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.page-size-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+}
+
+.page-size-select label {
+  font-size: 0.9rem;
+  color: var(--main-gray);
+  font-weight: 500;
+}
+
+.page-size-select select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--main-white);
+  color: var(--main-gray);
+}
+
+/*=======================
+  Empty States
+=======================*/
+.loading, .no-data {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: var(--main-gray);
+}
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 6px;
+  margin-right: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  background: #e3f2f5;
+  transform: scale(1.1);
+}
+
+.save-btn svg {
+  stroke: var(--main-dark);
+}
+
+.cancel-btn svg {
+  stroke: #c62828;
+}
+.status-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.status-toggle:disabled {
+  /* opacity: 0.6; */
+  /* cursor: not-allowed; */
+}
+
+.toggle-switch {
+  width: 42px;
+  height: 22px;
+  background: #ccc;
+  border-radius: 20px;
+  position: relative;
+  display: inline-block;
+  transition: background 0.3s;
+}
+
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.toggle-switch.on {
+  background: #055866;
+}
+
+.toggle-switch.on::before {
+  transform: translateX(20px);
+}
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.save-btn {
+  background-color: #daf87a;
+  color: #055866;
+}
+
+.cancel-btn {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.save-btn:hover {
+  background-color: #d4f56a;
+  transform: scale(1.05);
+}
+
+.cancel-btn:hover {
+  background-color: #ffcdd2;
+  transform: scale(1.05);
+}
+.status-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-toggle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.permissions-btn {
+  display: inline-flex;                /* inline with edit/delete */
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #055866;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.permissions-btn:hover {
+  background-color: #daf87a55;       /* brighter background */
+  color: #03363d;                    /* darker hover font color for better visibility */
+  transform: translateY(-1px);
+}

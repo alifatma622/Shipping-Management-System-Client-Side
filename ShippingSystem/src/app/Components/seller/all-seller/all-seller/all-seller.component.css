@@ -18,7 +18,7 @@ body {
 
 
 .all-sellers-container {
-  max-width: 1400px important;
+  /* max-width: 1400px important; */
   height: 700px important;
   /* margin: 40px auto 0 auto; */
   padding: 38px 28px 24px 28px;
@@ -43,7 +43,7 @@ body {
 
 
 
-.header {
+/* .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,7 +65,7 @@ body {
   background: transparent;
   box-shadow: none;
   border-radius: 0;
-}
+} */
 
 .add-btn {
   background: var(--main-accent);
@@ -93,7 +93,7 @@ body {
   overflow-x: auto;
 }
 
-.seller-table {
+/* .seller-table {
   width: 100%;
   border-collapse: collapse;
   margin: 0 auto;
@@ -126,7 +126,7 @@ body {
 
 .seller-table tr:hover td {
   background: #f8fbfd;
-}
+} */
 
 .status-active,
 .status-inactive {
@@ -253,3 +253,16 @@ body {
   }
 }
 
+.delivery-table th {
+  background: #fff;
+  color: #055866;
+  font-weight: 600;
+  padding: 16px 12px;
+  font-size: 1.11rem;
+  border: none;
+  letter-spacing: 1px;
+  text-align: left;
+  box-shadow: 0 2px 12px #daf87a22;
+  border-bottom: 3px solid #055866;
+  position: relative;
+}

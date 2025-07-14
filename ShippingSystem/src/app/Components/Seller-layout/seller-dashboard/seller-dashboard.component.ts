@@ -10,7 +10,7 @@ import { SidebarComponent } from "../../Sidebar/Sidebar.component";
 
 @Component({
   selector: 'app-seller-dashboard',
-  imports: [CommonModule, MatCardModule, MatIconModule, RouterOutlet, MainComponent, SidebarComponent],
+  imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './seller-dashboard.component.html',
   styleUrl: './seller-dashboard.component.css'
 })

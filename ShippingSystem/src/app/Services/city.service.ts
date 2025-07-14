@@ -6,6 +6,9 @@ import { environment } from '../../environments/environment.development';
 export interface ICity {
   id: number;
   name: string;
+  normalPrice: number;
+  pickupPrice: number;
+  governorateName: string;
 }
 
 @Injectable({ providedIn: 'root' })

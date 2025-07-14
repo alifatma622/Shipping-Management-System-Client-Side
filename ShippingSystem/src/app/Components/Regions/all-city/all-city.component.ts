@@ -19,7 +19,8 @@ export class AllCityComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   itemsPerPageOptions: number[] = [5, 10, 15];
-
+  selectedCityId:number=0;
+  
   constructor(
     private _cityService: CityServiceService,
     private _router: Router
@@ -74,7 +75,7 @@ export class AllCityComponent implements OnInit {
   onDelete(id: number) {
     Swal.fire({
       title: 'Are you sure?',
-      text: 'This city will be deleted permanently!',
+      text: 'This city will be deactivated!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -86,8 +87,8 @@ export class AllCityComponent implements OnInit {
           next: () => {
             Swal.fire({
               icon: 'success',
-              title: 'Deleted!',
-              text: 'City has been deleted.',
+              title: 'Deactivated!',
+              text: 'City has been deactivated.',
               confirmButtonColor: '#055866',
             });
             this.getCities();

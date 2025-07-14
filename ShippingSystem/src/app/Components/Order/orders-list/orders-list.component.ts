@@ -12,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import jsPDF from 'jspdf';
 // @ts-ignore
 import html2canvas from 'html2canvas';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-orders-list',
@@ -39,6 +40,7 @@ export class OrdersListComponent implements OnInit {
   OrderStatus = OrderStatus;
   orderStatuses = Object.values(OrderStatus).filter(v => !isNaN(Number(v))) as number[];
 
+  deletedOrderId:number=0;
   constructor(
     private orderService: OrderService,
     private router: Router,
@@ -93,7 +95,25 @@ export class OrdersListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    //   this.orderService.softDelete(id).subscribe(() => this.getAllOrders());
+      this.orderService.softDelete(id).subscribe({
+            next: () => {
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Order has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#055866',
+              });
+              this.loadOrders();
+            },
+            error: (err) => {
+              Swal.fire({
+                title: 'Error!',
+                text: err?.error?.message || 'Failed to delete order. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#d33',
+              });
+            }
+          });;
   }
 
   onAdd() {

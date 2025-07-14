@@ -124,5 +124,7 @@ export class OrderService {
     );
   }
 
-
+ softDelete(orderId:number):Observable<any>{
+  return this.http.delete<any>(`${this.apiUrl}/soft/${orderId}`)
+ }
 }

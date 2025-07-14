@@ -40,9 +40,19 @@
     </div>
   </nav>
 </div> -->
+<!-- زر فتح الشات -->
+<button class="chat-toggle-btn" (click)="toggleChatbot()">
+  💬
+</button>
+
+<!-- نافذة الشات المنبثقة -->
+<div class="chat-popup" *ngIf="showChatbot">
+  <app-chatbot></app-chatbot>
+  <button class="close-btn" (click)="toggleChatbot()">✖</button>
+</div>
 
 <app-image-slider></app-image-slider>
 <app-service></app-service>
-<app-asked-questions></app-asked-questions>
+<app-chatbot></app-chatbot>
 <app-about-us></app-about-us>
 <app-footer></app-footer>

@@ -82,33 +82,33 @@ export class AllBranchComponent implements OnInit {
 
   onDelete(id: number): void {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to revert this!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#dc3545',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Yes, delete it!',
+     title: 'Are you sure?',
+          text: 'This branch will be deactivated!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#055866',
+          confirmButtonText: 'Yes, deactivate it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this._branchService.deleteBranch(id).subscribe({
           next: () => {
             this.getBranches();
             Swal.fire({
-              title: 'Deleted!',
-              text: 'Branch has been deleted.',
-              icon: 'success',
-              timer: 1500,
-              showConfirmButton: false,
+               title: 'Deactivated!',
+          text: 'Branch has been deactivated.',
+          icon: 'success',
+          confirmButtonColor: '#055866',
             });
           },
           error: (err) => {
             Swal.fire({
-              title: 'Error!',
-              text: 'An error occurred while deleting the branch.',
-              icon: 'error',
+               title: 'Error!',
+          text: err?.error?.message || 'Failed to deactivate branch. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#d33',
             });
-            console.error('Delete failed:', err);
+            console.error('Deactivation failed:', err);
           },
         });
       }
