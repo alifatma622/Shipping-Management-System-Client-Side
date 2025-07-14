@@ -1,7 +1,8 @@
 .back-to-top {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  left: 30px; /* ⬅️ على الشمال */
+  right: auto; /* ⛔ مهم علشان ما يدخلش في conflict */
   z-index: 1000;
   background-color: #daf87a;
   color: #3a3362;
