@@ -17,11 +17,10 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   public isPlaying = true;
 
   images = [
-    'https://picsum.photos/id/1015/1200/600',
-    'https://picsum.photos/id/1011/1200/600',
-    'https://picsum.photos/id/1005/1200/600',
-    'https://picsum.photos/id/1040/1200/600',
-    'https://picsum.photos/id/1018/1200/600'
+    
+    'assets/Images/3.jpg',
+    'assets/Images/6.jpg',
+    'assets/Images/bg.webp'
   ];
 
   sliderTexts = [

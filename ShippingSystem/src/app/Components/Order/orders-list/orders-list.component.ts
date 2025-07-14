@@ -143,10 +143,20 @@ export class OrdersListComponent implements OnInit {
   }
 
   onDelete(id: number) {
+    Swal.fire({
+              title: 'Are you sure?',
+              text: 'This order will be deleted!',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#d33',
+              cancelButtonColor: '#055866',
+              confirmButtonText: 'Yes, delete it!',
+            }).then((result) => {
+              if (result.isConfirmed) {
       this.orderService.softDelete(id).subscribe({
             next: () => {
               Swal.fire({
-                title: 'Deleted!',
+                title: 'Canceled!',
                 text: 'Order has been deleted.',
                 icon: 'success',
                 confirmButtonColor: '#055866',
@@ -160,8 +170,10 @@ export class OrdersListComponent implements OnInit {
                 icon: 'error',
                 confirmButtonColor: '#d33',
               });
-            }
-          });;
+          },
+        });
+      }
+    });
   }
 
   onAdd() {

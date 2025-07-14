@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthServiceService } from '../../../Services/Auth_Services/auth-service.service';
 import { SellerServiceService } from '../../../Services/Seller_Service/seller-service.service';
 import { OrderStatus } from '../../../Enum/OrderStatus';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-seller',
@@ -228,4 +229,38 @@ export class OrderSellerComponent implements OnInit {
     if (enumEntry) return enumEntry[1] as number;
     return 0; // or another fallback value
   }
+
+  onDelete(id: number) {
+      Swal.fire({
+                title: 'Are you sure?',
+                text: 'This order will be canceled!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#055866',
+                confirmButtonText: 'Yes, cancel it!',
+              }).then((result) => {
+                if (result.isConfirmed) {
+        this.orderService.changeOrderStatus(id, OrderStatus.CanceledByCustomer).subscribe({
+      next: () => {
+                Swal.fire({
+                  title: 'Canceled!',
+                  text: 'Order has been canceled.',
+                  icon: 'success',
+                  confirmButtonColor: '#055866',
+                });
+                this.fetchSellerOrders();
+              },
+              error: (err) => {
+                Swal.fire({
+                  title: 'Error!',
+                  text: err?.error?.message || 'Failed to cancel order. Please try again.',
+                  icon: 'error',
+                  confirmButtonColor: '#d33',
+                });
+            },
+          });
+        }
+      });
+    }
 }

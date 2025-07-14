@@ -50,34 +50,13 @@
   font-weight: bold;
 }
 
-.status-badge {
-  /* padding: 2px 10px; */
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  display: inline-block;
-  text-align: center;
-  margin-left: -50px;
-}
-
-.status-active {
-  background: #e6f9e6;
-  color: #218838;
-  border-color: #b2e5b2;
-}
-.status-inactive {
-  background: #fff3e6;
-  color: #d35400;
-  border-color: #ffd6b3;
-}
-
 
 td:nth-child(4) {
   text-align: center;
   vertical-align: middle;
 }
 
-.status-badge,
+/* .status-badge,
 .status-active,
 .status-inactive {
   padding: 4px 10px;
@@ -87,7 +66,7 @@ td:nth-child(4) {
   display: inline-block;
   text-align: center;
   min-width: 80px;
-}
+} */
 
 
 /* Disabled button visual feedback */

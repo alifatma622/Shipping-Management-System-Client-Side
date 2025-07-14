@@ -30,8 +30,8 @@
           <th>Name</th>
           <th>City</th>
           <th>Creation Date</th>
-          <th>Status</th>
-          <th style="width: 120px">Action</th>
+          <th >Status</th>
+          <th style="width: 120px">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -41,8 +41,7 @@
           <td>{{ branch.creationDate | date: 'shortDate' }}</td>
 
           <td >
-              <span
-                class="status-badge"
+              <span style="margin-left:0px;"
                 [ngClass]="{ 'status-active': !branch.isDeleted, 'status-inactive': branch.isDeleted }"
               >
                 {{ branch.isDeleted ? 'Inactive' : 'Active' }}

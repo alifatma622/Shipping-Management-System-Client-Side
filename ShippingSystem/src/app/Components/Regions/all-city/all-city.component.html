@@ -37,6 +37,7 @@
           <th>Normal Price</th>
           <th>Pickup Price</th>
           <th>Governorate</th>
+          <th>Status</th>
           <th style="width: 120px;">Actions</th>
         </tr>
       </thead>
@@ -46,8 +47,8 @@
           <td>{{ city.normalPrice }}</td>
           <td>{{ city.pickupPrice }}</td>
           <td>{{ city.governorateName }}</td>
-          <td>
-            <span
+          <td  >
+            <span style="margin-left:0px;"
               [ngClass]="{
                 'status-active': !city.isDeleted,
                 'status-inactive': city.isDeleted
