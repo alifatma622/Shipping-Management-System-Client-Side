@@ -1,7 +1,9 @@
-import { AuthServiceService } from './../../Services/Auth_Services/auth-service.service';
+import { AuthServiceService , PermissionModel } from './../../Services/Auth_Services/auth-service.service';
 import { Component, OnInit, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Department } from '../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 interface MenuItem {
   routeLink?: string;
@@ -9,6 +11,7 @@ interface MenuItem {
   label: string;
   isOpen?: boolean;
   visibleFor?: string[];
+  visible?: boolean; // Fixed typo: visable -> visible
   subItems?: SubMenuItem[];
 }
 
@@ -29,6 +32,7 @@ export class SidebarComponent implements OnInit {
   orderListRouteLink: string = '';
   newOrderRouteLink: string = '';
   items: MenuItem[] = [];
+  permissions: { [departmentId: number]: PermissionModel } = {};
 
   isLeftSidebarCollapsed = input.required<boolean>();
   changeIsLeftSidebarCollapsed = output<boolean>();
@@ -44,21 +48,57 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeUserRoles();
-    this.items = this.getMenuItems();
   }
 
   private initializeUserRoles(): void {
     this.userRole = this.authService.getRole();
-    console.log('✅ User roles:', this.userRole);
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
 
-    if (this.authService.hasRole('Admin')) {
+    if (isAdmin) {
       this.orderListRouteLink = 'order';
       this.newOrderRouteLink = 'order/add';
-    } else if (this.authService.hasRole('DeliveryAgent')) {
+      this.items = this.getMenuItems(); // Admin can view everything
+      return;
+    }
+
+    if (this.authService.hasRole('DeliveryAgent')) {
       this.orderListRouteLink = 'order-delivery';
-    } else if (this.authService.hasRole('Seller')) {
+      this.items = this.getMenuItems();
+      return;
+    }
+
+    if (this.authService.hasRole('Seller')) {
       this.orderListRouteLink = 'orders-seller';
       this.newOrderRouteLink = 'add-order-seller';
+      this.items = this.getMenuItems();
+      return;
+    }
+
+    // For other roles (like HR), fetch permissions first
+    if (role && role !== 'Employee') {
+  const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+  const permissionCalls = departmentIds.map(depId =>
+    this.authService.getPermissionFromApi(role, depId)
+  );
+
+  forkJoin(permissionCalls).subscribe(results => {
+    console.log('✅ Permissions from API:', results);
+
+    results.forEach(p => {
+      this.permissions[p.department] = p;
+    });
+
+    this.orderListRouteLink = 'order';
+    this.newOrderRouteLink = 'order/add';
+
+    this.items = this.getMenuItems();
+    console.log('✅ Generated menu items:', this.items);
+  });
+}
+ else {
+      // For Employee role without specific permissions
+      this.items = this.getMenuItems();
     }
   }
 
@@ -86,7 +126,8 @@ export class SidebarComponent implements OnInit {
         icon: 'fal fa-user-tie',
         label: 'Employees',
         isOpen: false,
-        visibleFor: ['Employee', 'Admin'],
+        visibleFor: ['Employee', 'Admin'], // Allow Employee role to see this
+        visible: this.canView(Department.Employees),
         subItems: [
           { label: 'Employees list', routeLink: 'employee' },
           { label: 'New employee', routeLink: 'employee/add' },
@@ -96,7 +137,8 @@ export class SidebarComponent implements OnInit {
         icon: 'fal fa-store',
         label: 'Sellers',
         isOpen: false,
-        visibleFor: ['Employee', 'Admin'],
+        visibleFor: ['Employee', 'Admin'], // Allow Employee role to see this
+        visible: this.canView(Department.Sellers),
         subItems: [
           { label: 'Sellers list', routeLink: 'seller' },
           { label: 'New seller', routeLink: 'seller/add' },
@@ -106,7 +148,8 @@ export class SidebarComponent implements OnInit {
         icon: 'fal fa-truck',
         label: 'Delivery Agents',
         isOpen: false,
-        visibleFor: ['Employee', 'Admin'],
+        visibleFor: ['Employee', 'Admin'], // Allow Employee role to see this
+        visible: this.canView(Department.DeliveryMen),
         subItems: [
           { label: 'Delivery Agents', routeLink: 'delivery-men' },
           { label: 'New delivery agent', routeLink: 'delivery-men/add' },
@@ -117,31 +160,32 @@ export class SidebarComponent implements OnInit {
         label: 'Orders',
         isOpen: false,
         visibleFor: ['Employee', 'Admin', 'Seller', 'DeliveryAgent'],
+        visible: this.canView(Department.Orders),
         subItems: [
           { label: 'Orders list', routeLink: this.orderListRouteLink },
-          ...(this.newOrderRouteLink
-            ? [
-                {
-                  label: 'New order',
-                  routeLink: this.newOrderRouteLink,
-                  visibleFor: ['Employee', 'Admin', 'Seller'],
-                },
-              ]
-            : []),
+          ...(this.newOrderRouteLink ? [{
+            label: 'New order',
+            routeLink: this.newOrderRouteLink,
+            visibleFor: ['Admin', 'Seller']
+          }] : [])
         ],
       },
       {
         icon: 'fal fa-globe',
         label: 'Governorates',
         isOpen: false,
-        visibleFor: ['Employee', 'Admin'],
-        subItems: [{ label: 'Governorates', routeLink: 'governrates' }],
+        visible: this.canView(Department.Governorates),
+        visibleFor: ['Employee', 'Admin'], // Allow Employee role to see this
+        subItems: [
+          { label: 'Governorates', routeLink: 'governrates' },
+        ],
       },
       {
         icon: 'fal fa-city',
         label: 'Cities',
         isOpen: false,
         visibleFor: ['Employee', 'Admin'],
+        visible: this.canView(Department.Cities),
         subItems: [
           { label: 'Cities list', routeLink: 'Allcity' },
           { label: 'New City', routeLink: 'Addcity' },
@@ -152,6 +196,7 @@ export class SidebarComponent implements OnInit {
         label: 'Branches',
         isOpen: false,
         visibleFor: ['Employee', 'Admin'],
+        visible: this.canView(Department.Branches),
         subItems: [
           { label: 'Branches list', routeLink: 'AllBranch' },
           { label: 'New Branch', routeLink: 'AddBranch' },
@@ -162,7 +207,14 @@ export class SidebarComponent implements OnInit {
         icon: 'fal fa-cog',
         label: 'Settings',
         visibleFor: ['Employee', 'Admin'],
+        visible: this.canView(Department.GeneralSetting)
       },
+      {
+        routeLink: 'roles',
+        icon: 'fal fa-shield-halved',
+        label: 'Authorization',
+        visibleFor: ['Admin'],
+      }
     ];
   }
 
@@ -170,8 +222,28 @@ export class SidebarComponent implements OnInit {
     this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
   }
 
-  closeSidenav(): void {
-    this.changeIsLeftSidebarCollapsed.emit(true);
+  canView(departmentId: number): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    if (departmentId === Department.Orders &&
+      (this.authService.hasRole('Seller') || this.authService.hasRole('DeliveryAgent'))) {
+    return true;
+  }
+    return this.permissions[departmentId]?.view ?? false;
+  }
+
+  shouldShowMenuItem(item: MenuItem): boolean {
+    // Check role-based visibility first
+    if (item.visibleFor && !this.authService.hasAnyRole(item.visibleFor)) {
+      return false;
+    }
+
+    // If item has a visible property, check it
+    if (item.visible !== undefined) {
+      return item.visible;
+    }
+
+    // If no visible property, default to true (show the item)
+    return true;
   }
 
   toggleSubItems(selectedItem: MenuItem): void {

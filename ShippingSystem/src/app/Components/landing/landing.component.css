@@ -1,8 +1,8 @@
 .back-to-top {
   position: fixed;
   bottom: 30px;
-  left: 30px; /* ⬅️ على الشمال */
-  right: auto; /* ⛔ مهم علشان ما يدخلش في conflict */
+  left: 30px;
+  right: auto;
   z-index: 1000;
   background-color: #daf87a;
   color: #3a3362;
@@ -38,4 +38,68 @@
     opacity: 0.9;
     transform: translateY(0);
   }
+}
+
+.chat-toggle-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background-color: #055866;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.chat-popup {
+  position: fixed;
+  bottom: 90px;
+  right: 25px;
+  width: 380px;
+  max-height: 600px;
+  background-color: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  overflow: hidden;
+}
+
+.close-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: red;
+  cursor: pointer;
+}
+.chat-toggle-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #daf87a;
+  color: #055866;
+  padding: 14px 18px;
+  border: 3px solid #055866;
+  border-radius: 50%;
+  font-size: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 1000;
 }

@@ -1,0 +1,7 @@
+export interface GeneralSetting {
+  defaultWeight: number;
+  extraPriceKg: number;
+  extraPriceVillage: number;
+  fast: number;
+  express: number;
+}

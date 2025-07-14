@@ -7,10 +7,17 @@ import { AskedQuestionsComponent } from '../Frequently/asked-questions/asked-que
 import { AboutUsComponent } from '../About/about-us/about-us.component';
 import { FooterComponent } from '../Footer/footer/footer.component';
 import { CommonModule, ViewportScroller } from '@angular/common';
+import { ChatbotComponent } from '../chat-bot/chat-bot.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
+  standalone: true,
   selector: 'app-landing',
   imports: [
+    CommonModule,
+    FormsModule,
+    ChatbotComponent,
     RouterModule,
     NavbarComponent,
     ImageSliderComponent,
@@ -25,9 +32,12 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 })
 export class LandingComponent implements OnInit, OnDestroy {
   showBackToTop: boolean = false;
+  showChatbot = false;
+
   constructor(
     private route: ActivatedRoute,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -57,5 +67,18 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     window.removeEventListener('scroll', this.checkScroll);
+  }
+
+  toggleChatbot(): void {
+    this.showChatbot = !this.showChatbot;
+  }
+
+  openChatbot(): void {
+    this.dialog.open(ChatbotComponent, {
+      width: '600px',
+      maxHeight: '90vh',
+      autoFocus: false,
+      panelClass: 'chatbot-dialog-panel',
+    });
   }
 }

@@ -30,7 +30,7 @@ getPaginatedEmployees(pageNumber: number, pageSize: number): Observable<Employee
   // Add new employee
   addEmployee(employee: AddEmployeeDTO): Observable<void> {
 
-    employee.specificRole ='Admin';
+    employee.specificRole =employee.specificRole;
     return this.http.post<void>(this.apiUrl, employee);
   }
 

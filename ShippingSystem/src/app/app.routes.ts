@@ -38,6 +38,8 @@ import { DeliverymanOrdersComponent } from './Components/deliveryman-layout/deli
 
 import { AddOrderSellerComponent } from './Components/Seller-layout/add-order-seller/add-order-seller.component';
 import { OrderSellerComponent } from './Components/Seller-layout/order-seller/order-seller.component';
+import { PermissionsListComponent } from './Components/Roles&Permissions/Permissions-list/Permissions-list.component';
+import { RolesListComponent } from './Components/Roles&Permissions/Roles-list/Roles-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -203,6 +205,45 @@ export const routes: Routes = [
         component: AllSellerComponent,
         canActivate: [authGuard],
         data: { roles: ['Employee'] },
+      },
+      { path: 'roles', component: RolesListComponent },
+      { path: 'permissions/:roleName', component: PermissionsListComponent },
+      {
+        path: 'deliveryman',
+        component: DeliverymanDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['DeliveryAgent'] },
+      },
+      {
+        path: 'order-delivery',
+        component: DeliverymanOrdersComponent,
+        canActivate: [authGuard],
+        data: { roles: ['DeliveryAgent'] },
+      },
+
+      {
+        path: 'overview',
+        component: AdminDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Employee'] },
+      },
+      {
+        path: 'seller-dashboard',
+        component: SellerDashboardComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+      {
+        path: 'add-order-seller',
+        component: AddOrderSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
+      },
+      {
+        path: 'orders-seller',
+        component: OrderSellerComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Seller'] },
       },
 
       {

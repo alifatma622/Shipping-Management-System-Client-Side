@@ -3,9 +3,13 @@
   <div class="all-delivery-men-container">
     <div class="header unified-header">
       <h2 class="unified-title">Branch List</h2>
+<<<<<<< HEAD
       <button class="add-btn unified-add-btn" (click)="onAddBranch()">
         Add Branch
       </button>
+=======
+      <button class="add-btn unified-add-btn" (click)="onAddBranch()" [disabled]="!canAdd()">Add Branch</button>
+>>>>>>> origin/salem
     </div>
 
     <div class="search-bar-row">

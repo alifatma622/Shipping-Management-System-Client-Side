@@ -14,19 +14,6 @@
   align-items: center;
   margin-bottom: 30px;
 }
-.activate-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  margin-left: 8px;
-  font-size: 30px; /* حجم أكبر للنص أو الأيقونة */
-  padding: 8px 12px; /* زيادة في المساحة الداخلية */
-  transition: transform 0.2s ease;
-}
-
-.activate-btn:hover {
-  transform: scale(1.1); /* تكبير بسيط عند التحويم */
-}
 
 .governorate-title {
   font-size: 1.8rem;
@@ -381,13 +368,4 @@
   color: #055866;
   box-shadow: 0 4px 18px #daf87a55;
   transform: translateY(-2px) scale(1.04);
-}
-
-/* Disabled button visual feedback */
-.add-btn[disabled],
-.edit-btn[disabled],
-.delete-btn[disabled] {
-  cursor: not-allowed !important;
-  opacity: 0.6;
-  pointer-events: auto;
 }

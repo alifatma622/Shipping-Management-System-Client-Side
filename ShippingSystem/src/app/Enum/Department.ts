@@ -6,6 +6,5 @@ export enum Department {
   Governorates,
   Cities,
   Orders,
-  OrdersReports,
   GeneralSetting,
 }

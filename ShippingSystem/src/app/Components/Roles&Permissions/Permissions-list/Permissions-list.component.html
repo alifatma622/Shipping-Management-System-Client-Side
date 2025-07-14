@@ -1,0 +1,64 @@
+<div class="permission-container">
+  <h2>Role Permissions</h2>
+  
+  <div class="role-selector">
+  <label for="roleSelect">Role:</label>
+  <span class="role-display">{{ selectedRole }}</span>
+
+  <button (click)="toggleEdit()" class="edit-btn">
+    {{ isEditing ? 'Cancel' : 'Edit Permissions' }}
+  </button>
+
+  <button *ngIf="isEditing" (click)="saveChanges()" class="save-btn">
+    Save Changes
+  </button>
+</div>
+
+
+
+  <div *ngIf="isLoading" class="loading">Loading permissions...</div>
+  
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+
+  <table *ngIf="permissions.length > 0 && !isLoading">
+    <thead>
+      <tr>
+        <th>Department</th>
+        <th>View</th>
+        <th>Add</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let perm of permissions">
+        <td>{{ getDepartmentName(perm.department) }}</td>
+        <td>
+          <input type="checkbox" 
+                 [checked]="isEditing ? editedPermissions[perm.roleName + '_' + perm.department].view : perm.view" 
+                 (change)="onPermissionChange(perm, 'view')"
+                 [disabled]="!isEditing">
+        </td>
+        <td>
+          <input type="checkbox" 
+                 [checked]="isEditing ? editedPermissions[perm.roleName + '_' + perm.department].add : perm.add" 
+                 (change)="onPermissionChange(perm, 'add')"
+                 [disabled]="!isEditing">
+        </td>
+        <td>
+          <input type="checkbox" 
+                 [checked]="isEditing ? editedPermissions[perm.roleName + '_' + perm.department].edit : perm.edit" 
+                 (change)="onPermissionChange(perm, 'edit')"
+                 [disabled]="!isEditing">
+        </td>
+        <td>
+          <input type="checkbox" 
+                 [checked]="isEditing ? editedPermissions[perm.roleName + '_' + perm.department].delete : perm.delete" 
+                 (change)="onPermissionChange(perm, 'delete')"
+                 [disabled]="!isEditing">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-all-city',
@@ -19,14 +22,62 @@ export class AllCityComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 5;
   itemsPerPageOptions: number[] = [5, 10, 15];
-
+  selectedCityId:number=0;
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
+  
   constructor(
     private _cityService: CityServiceService,
-    private _router: Router
+    private _router: Router,
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
-    this.getCities();
+    this.initializeUserRolesAndPermissions();
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.getCities();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.getCities();
+      }, err => {
+        this.getCities();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.getCities();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Cities]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Cities]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Cities]?.delete ?? false;
   }
 
   getCities(): void {

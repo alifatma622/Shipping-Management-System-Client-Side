@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GovernratesService, Governrate } from '../../../Services/Governrates/governrates.service';
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-governrates-list',
@@ -29,15 +32,67 @@ export class GovernratesListComponent implements OnInit {
   itemsPerPageOptions = [5, 10, 20, 50];
   totalCount = 0;
 
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
+
   constructor(
     private governratesService: GovernratesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthServiceService
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-    this.getGovernrates();
+    this.initializeUserRolesAndPermissions();
   }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.initForm();
+      this.getGovernrates();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.initForm();
+        this.getGovernrates();
+      }, err => {
+        this.initForm();
+        this.getGovernrates();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.initForm();
+      this.getGovernrates();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Governorates]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Governorates]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Governorates]?.delete ?? false;
+  }
+
   onPageChange(page: number): void {
   this.currentPage = page;
   this.getGovernrates();
@@ -115,6 +170,24 @@ export class GovernratesListComponent implements OnInit {
     });
   }
 
+  toggleStatus(gov: Governrate): void {
+  const action = gov.isDeleted ? 'activate' : 'deactivate';
+  if (confirm(`Are you sure you want to ${action} this governorate?`)) {
+    this.governratesService.activateGovernorate(gov.id).subscribe({
+      next: () => {
+        gov.isDeleted = !gov.isDeleted; // Toggle status locally
+        this.successMessage = `Governorate ${gov.isDeleted ? 'deactivated' : 'activated'} successfully!`;
+        setTimeout(() => this.successMessage = '', 3000);
+      },
+      error: () => {
+        this.errorMessage = 'Failed to change status.';
+        setTimeout(() => this.errorMessage = '', 3000);
+      }
+    });
+  }
+}
+
+
   onDelete(id: number): void {
     if (confirm('Are you sure you want to delete this governorate?')) {
       this.governratesService.deleteGovernrate(id).subscribe(() => {
@@ -154,5 +227,7 @@ saveEdit(governorate: Governrate): void {
       control.markAsTouched();
     });
   }
+
+
 }
 

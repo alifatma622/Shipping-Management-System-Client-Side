@@ -1,0 +1,16 @@
+<div class="chatbot-container">
+  <h3>Ask about our Shipping Service</h3>
+
+  <div class="chat-box">
+    <textarea [(ngModel)]="question" placeholder="Ask about delivery prices, cities, or shipping options..."></textarea>
+    <button (click)="ask()" [disabled]="isLoading">
+      {{ isLoading ? 'Thinking...' : 'Ask' }}
+    </button>
+  </div>
+
+  <div class="response-container" *ngIf="response">
+    <div class="response-bubble">
+      {{ response }}
+    </div>
+  </div>
+</div>

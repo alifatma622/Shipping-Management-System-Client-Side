@@ -41,6 +41,16 @@
   </nav>
 </div> -->
 
+<button class="chat-toggle-btn" (click)="toggleChatbot()">
+  💬
+</button>
+
+
+<div class="chat-popup" *ngIf="showChatbot">
+  <app-chatbot></app-chatbot>
+  <button class="close-btn" (click)="toggleChatbot()">✖</button>
+</div>
+
 <button
   class="back-to-top"
   title="Back to Top"
@@ -52,6 +62,6 @@
 
 <app-image-slider></app-image-slider>
 <app-service></app-service>
-<app-asked-questions></app-asked-questions>
+<app-chatbot></app-chatbot>
 <app-about-us></app-about-us>
 <app-footer></app-footer>
