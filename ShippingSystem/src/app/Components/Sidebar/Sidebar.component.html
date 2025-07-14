@@ -15,7 +15,7 @@
   <div class="sidenav-nav-wrapper">
     <div class="sidenav-nav">
       @for (item of items; track $index) {
-        @if (!item.visibleFor || authService.hasAnyRole(item.visibleFor)) {
+        @if (this.shouldShowMenuItem(item)) {
           <li class="sidenav-nav-item" [class.open]="item.isOpen">
             <a
               class="sidenav-nav-link"

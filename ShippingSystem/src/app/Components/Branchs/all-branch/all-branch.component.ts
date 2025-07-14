@@ -5,7 +5,9 @@ import Swal from 'sweetalert2';
 import { BranchService } from '../../../Services/Branch-Services/branch.service';
 import { Router } from '@angular/router';
 import { AllBranch } from '../../../Models/Branch/all-branch';
-
+import { AuthServiceService, PermissionModel } from '../../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../../Enum/Department';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-all-branch',
   standalone: true,
@@ -18,15 +20,64 @@ export class AllBranchComponent implements OnInit {
   filteredBranches: AllBranch[] = [];
 
   searchTerm: string = '';
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
+  constructor(private _branchService: BranchService, private _router: Router, private authService: AuthServiceService) {}
+
+  // for test pagination before API Working
+
   currentPage: number = 1;
   itemsPerPage: number = 5;
   totalItems: number = 0;
   itemsPerPageOptions: number[] = [5, 10, 15];
 
-  constructor(private _branchService: BranchService, private _router: Router) {}
 
   ngOnInit(): void {
-    this.getBranches();
+    this.initializeUserRolesAndPermissions();
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.getBranches();
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.getBranches();
+      }, err => {
+        this.getBranches();
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.getBranches();
+    }
+  }
+
+  canAdd(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.add ?? false;
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.edit ?? false;
+  }
+
+  canDelete(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.Branches]?.delete ?? false;
   }
 
   getBranches(): void {

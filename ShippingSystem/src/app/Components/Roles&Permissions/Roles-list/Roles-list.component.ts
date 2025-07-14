@@ -63,8 +63,8 @@ export class RolesListComponent implements OnInit {
   getRoles(): void {
     this.roleService.getRolesPaginated(this.currentPage, this.itemsPerPage).subscribe({
       next: (data) => {
-        this.roles = data.items;
-        this.filteredRoles = data.items;
+        this.roles = data.items.filter((r)=> r!='Employee');
+        this.filteredRoles = data.items.filter((r)=> r!='Employee');
         this.totalCount = data.totalCount;
         this.isLoading = false;
         console.log(this.roles)

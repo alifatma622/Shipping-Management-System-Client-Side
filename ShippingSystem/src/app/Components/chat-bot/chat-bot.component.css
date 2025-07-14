@@ -77,17 +77,3 @@ button:disabled {
   white-space: pre-wrap;
 }
 
-.chat-toggle-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background-color: #055866;
-  color: white;
-  padding: 14px 18px;
-  border: none;
-  border-radius: 50%;
-  font-size: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  z-index: 1000;
-}

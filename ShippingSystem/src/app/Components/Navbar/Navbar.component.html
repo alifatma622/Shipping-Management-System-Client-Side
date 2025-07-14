@@ -1,16 +1,13 @@
 <div class="container-fluid" style="background-color: #055866">
-  <nav class="navbar navbar-expand-lg" >
+  <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a
-        class="navbar-brand d-flex align-items-center text-white fw-bold"
-        href="#"
-      >
-        <!-- <i class="fas fa-bars menu-icon"></i> -->
-  <img src="assets/Images/logo-Pica.png" class="carvex-logo" alt="Carvex Logo" />
-
-        <span class="system-name" style="text-transform: lowercase;">arvex</span>
-
-
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <img
+          src="assets/Images/logo-Pica.png"
+          class="carvex-logo me-2"
+          alt="Carvex Logo"
+        />
+        <span class="system-name">arvex</span>
       </a>
 
       <button
@@ -25,14 +22,45 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="btn btn-outline-light me-2" routerLink="/login">Login</a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mx-auto transform">
+          <li class="nav-item ">
+            <a
+              class="nav-link text-white fw-semibold"
+              [routerLink]="['/landing']"
+              fragment="services"
+              >Services</a
+            >
           </li>
           <li class="nav-item">
             <a
-              class="btn"
+              class="nav-link text-white fw-semibold"
+              [routerLink]="['/landing']"
+              fragment="faq"
+              >FAQ</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-white fw-semibold"
+              [routerLink]="['/landing']"
+              fragment="about-us"
+              >About Us</a
+            >
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a
+              class="btn btn-outline-light me-2 px-4 fw-bold"
+              routerLink="/login"
+              >Login</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="btn px-4 fw-bold"
               style="background-color: #daf87a; color: #3a3362"
               routerLink="/register"
               >Register</a

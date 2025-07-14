@@ -6,8 +6,8 @@
         class="navbar-brand d-flex align-items-center text-white fw-bold"
         href="#"
       > -->
-        <!-- <img src="" alt="Logo" width="40" height="40" class="me-2" /> -->
-        <!-- ShippingSystem
+<!-- <img src="" alt="Logo" width="40" height="40" class="me-2" /> -->
+<!-- ShippingSystem
       </a>
 
       <button
@@ -51,8 +51,17 @@
   <button class="close-btn" (click)="toggleChatbot()">✖</button>
 </div>
 
+<button
+  class="back-to-top"
+  title="Back to Top"
+  *ngIf="showBackToTop"
+  (click)="scrollToTop()"
+>
+  ⬆
+</button>
+
 <app-image-slider></app-image-slider>
 <app-service></app-service>
-<app-chatbot></app-chatbot>
+<app-asked-questions></app-asked-questions>
 <app-about-us></app-about-us>
 <app-footer></app-footer>
