@@ -8,7 +8,7 @@ import { ShippingType } from '../../../Enum/ShippingType';
 import { PaymentType } from '../../../Enum/PaymentType';
 import { OrderStatus } from '../../../Enum/OrderStatus';
 import { OrderType } from '../../../Enum/OrderType';
-
+import { Location } from '@angular/common';
 import {
   ReadOneOrderDTO,
   UpdateOrderDTO,
@@ -54,7 +54,7 @@ export class EditOrderComponent implements OnInit {
     private fb: FormBuilder,
     private branchService: BranchService,
     private cityService: CityService,
-
+    private location:Location,
     private router: Router
   ) {
     this.route.params.subscribe((params) => {
@@ -217,6 +217,7 @@ export class EditOrderComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/dashboard/order']);
+    //this.router.navigate(['/dashboard/order']);
+    this.location.back();
   }
 }

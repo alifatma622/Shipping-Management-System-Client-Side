@@ -57,7 +57,7 @@ export class LoginComponent {
           console.log('Token:', token);
           console.log('Role:', role);
           // هنا هيضاف Role ال باقيه وكمان عنضبط ليهم Route In App.routes
-          if (role[1] === 'Employee') {
+          if (role[0] === 'Employee' || role[1] === 'Employee') {
             this._router.navigate(['/dashboard/overview']);
           } else if (role === 'Seller') {
 
