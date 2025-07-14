@@ -21,7 +21,7 @@ export class AuthServiceService {
 
   login(data: LoginModel): Observable<any> {
   console.log('Sending request to login:', data);
-  return this._httpClient.post(`${this.apiUrl}`, data);
+  return this._httpClient.post(`${this.apiUrl}/login`, data);
 }
 
 logout() {

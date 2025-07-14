@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <!-- Row 2: Shipping Type | Order Type | Payment Type -->
+    <!-- Row 2: Shipping Type | Branch | Payment Type -->
     <div class="row">
       <div class="form-group">
         <label for="shippingType">Shipping Type</label>
@@ -47,17 +47,22 @@
           Please select a shipping type.
         </div>
       </div>
+
+
       <div class="form-group">
-        <label for="orderType">Order Type</label>
-        <select id="orderType" formControlName="orderType"
-          [class.invalid]="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
-          <option [value]="null" disabled>Select order type</option>
-          <option *ngFor="let type of orderTypes" [value]="type">{{ orderTypeLabels[type] }}</option>
+        <label for="branchId">Branch</label>
+        <select id="branchId" formControlName="branchId"
+          [class.invalid]="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
+          <option [value]="null" disabled>Select a branch</option>
+          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
         </select>
-        <div class="error" *ngIf="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
-          Please select an order type.
+        <div class="error" *ngIf="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
+          Please select a branch.
         </div>
       </div>
+
+
+
       <div class="form-group">
         <label for="paymentType">Payment Type</label>
         <select id="paymentType" formControlName="paymentType"
@@ -71,7 +76,7 @@
       </div>
     </div>
 
-    <!-- Row 3: City | Seller | Branch -->
+    <!-- Row 3: City | Seller | notes -->
     <div class="row">
       <div class="form-group">
         <label for="cityId">City</label>
@@ -95,24 +100,17 @@
           Please select a seller.
         </div>
       </div>
-      <div class="form-group">
-        <label for="branchId">Branch</label>
-        <select id="branchId" formControlName="branchId"
-          [class.invalid]="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
-          <option [value]="null" disabled>Select a branch</option>
-          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
-        </select>
-        <div class="error" *ngIf="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
-          Please select a branch.
+
+
+        <!-- Notes -->
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="2"></textarea>
         </div>
-      </div>
+
     </div>
 
-    <!-- Notes -->
-    <div class="form-group">
-      <label for="notes">Notes</label>
-      <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="2"></textarea>
-    </div>
+
 
     <!-- Is Shipped To Village -->
     <div class="form-group">

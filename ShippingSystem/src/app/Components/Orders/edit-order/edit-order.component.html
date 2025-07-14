@@ -60,7 +60,7 @@
     </div>
 
 
-     <div class="form-group">
+     <!-- <div class="form-group">
       <label for="orderType">Order Type</label>
       <select id="orderType" formControlName="orderType"
         [class.invalid]="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
@@ -70,7 +70,7 @@
       <div class="error" *ngIf="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
         Please select an order type.
       </div>
-    </div>
+    </div> -->
 
     <!-- Payment Type -->
     <div class="form-group">
@@ -104,25 +104,27 @@
       </div>
 
 
-      <div class="form-group">
-        <label for="notes">Notes</label>
-        <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4"></textarea>
-      </div>
+
 
 
      <!-- Move Notes and Checkboxes to the bottom, before products -->
     <!-- Notes and Checkboxes in one row: Notes left, checkboxes right, checkboxes horizontally aligned -->
 
-<div class="form-group">
+<div class="form-group mt-5">
   <label>
     <input type="checkbox" formControlName="isShippedToVillage" /> Shipped to Village
   </label>
 </div>
-<div class="form-group">
+<div class="form-group mt-5">
   <label>
     <input type="checkbox" formControlName="isPickup" /> Pickup
   </label>
 </div>
+
+      <div class="form-group">
+        <label for="notes">Notes</label>
+        <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="4"></textarea>
+      </div>
 
 
 
