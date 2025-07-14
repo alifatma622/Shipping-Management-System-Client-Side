@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GeneralSettingsServiceTsService } from '../../Services/GeneralSettings/general-settings.service';
+import { AuthServiceService, PermissionModel } from '../../Services/Auth_Services/auth-service.service';
+import { Department } from '../../Enum/Department';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-general-settings',
@@ -15,19 +18,74 @@ export class GeneralSettingsComponent implements OnInit {
   originalSettings: any = null; // Store original values to display in the card
   isLoading: boolean = false;
   showSuccessMessage: boolean = false;
+  permissions: { [departmentId: number]: PermissionModel } = {};
+  userRole: string[] = [];
 
-  constructor(private settingsService: GeneralSettingsServiceTsService) {}
+  constructor(private settingsService: GeneralSettingsServiceTsService, private authService: AuthServiceService) {}
 
   ngOnInit(): void {
-    this.settingsService.getSettings().subscribe({
-      next: (data) => {
-        this.settings = { ...data }; // For form editing
-        this.originalSettings = { ...data }; // For display (won't change)
-      },
-      error: (err) => {
-        console.error('Error loading settings:', err);
-      }
-    });
+    this.initializeUserRolesAndPermissions();
+  }
+
+  private initializeUserRolesAndPermissions(): void {
+    this.userRole = this.authService.getRole();
+    const isAdmin = this.authService.hasRole('Admin');
+    const role = this.userRole?.find(r => r !== 'Employee') ?? '';
+
+    if (isAdmin) {
+      this.settingsService.getSettings().subscribe({
+        next: (data) => {
+          this.settings = { ...data };
+          this.originalSettings = { ...data };
+        },
+        error: (err) => {
+          console.error('Error loading settings:', err);
+        }
+      });
+      return;
+    }
+
+    if (role && role !== 'Employee') {
+      const departmentIds = Object.values(Department).filter(v => typeof v === 'number') as number[];
+      const permissionCalls = departmentIds.map(depId =>
+        this.authService.getPermissionFromApi(role, depId)
+      );
+      forkJoin(permissionCalls).subscribe(results => {
+        results.forEach(p => {
+          this.permissions[p.department] = p;
+        });
+        this.settingsService.getSettings().subscribe({
+          next: (data) => {
+            this.settings = { ...data };
+            this.originalSettings = { ...data };
+          },
+          error: (err) => {
+            console.error('Error loading settings:', err);
+          }
+        });
+      }, err => {
+        this.settingsService.getSettings().subscribe({
+          next: (data) => {
+            this.settings = { ...data };
+            this.originalSettings = { ...data };
+          },
+          error: (err) => {
+            console.error('Error loading settings:', err);
+          }
+        });
+      });
+    } else {
+      // For Employee role without specific permissions
+      this.settingsService.getSettings().subscribe({
+        next: (data) => {
+          this.settings = { ...data };
+          this.originalSettings = { ...data };
+        },
+        error: (err) => {
+          console.error('Error loading settings:', err);
+        }
+      });
+    }
   }
 
   onSubmit() {
@@ -60,6 +118,11 @@ export class GeneralSettingsComponent implements OnInit {
         console.error('Error updating settings:', err);
       }
     });
+  }
+
+  canEdit(): boolean {
+    if (this.authService.hasRole('Admin')) return true;
+    return this.permissions[Department.GeneralSetting]?.edit ?? false;
   }
 
   // Helper method to format numbers for display

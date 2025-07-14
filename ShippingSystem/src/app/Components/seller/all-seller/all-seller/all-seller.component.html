@@ -1,7 +1,7 @@
 <div class="all-sellers-container">
   <div class="header">
     <h2>Sellers</h2>
-    <button class="add-btn" (click)="Add()">Add Seller</button>
+    <button class="add-btn" (click)="Add()" [disabled]="!canAdd()">Add Seller</button>
   </div>
 
   <div class="pagination-controls">
@@ -51,14 +51,14 @@
           </span>
         </td>
         <td>
-          <button class="edit-btn" title="Edit" (click)="edit(seller.id)">
+          <button class="edit-btn" title="Edit" (click)="edit(seller.id)" [disabled]="!canEdit()">
           <svg width="18" height="18" fill="none" stroke="#055866" stroke-width="2" viewBox="0 0 24 24">
               <path d="M12 20h9" />
               <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z" />
             </svg>
           </button>
           <button class="delete-btn" title="Delete"  
-          title="Delete" [disabled]="seller.isDeleted"
+          title="Delete" [disabled]="seller.isDeleted || !canDelete() "
               (click)="onDelete(seller.id)">
               <!-- SVG delete icon -->
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

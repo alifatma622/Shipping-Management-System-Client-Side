@@ -449,3 +449,12 @@
   align-items: center;
   gap: 2px;
 }
+
+/* Disabled button visual feedback */
+.add-btn[disabled],
+.edit-btn[disabled],
+.delete-btn[disabled] {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+  pointer-events: auto;
+}

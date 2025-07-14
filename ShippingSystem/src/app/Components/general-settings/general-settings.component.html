@@ -133,7 +133,7 @@
                       </div>
                       <button type="submit"
                         class="update-btn"
-                        [disabled]="!settingsForm.valid || isLoading">
+                        [disabled]="!settingsForm.valid || isLoading || !canEdit()">
                         <i class="fas" [class.fa-save]="!isLoading" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"></i>
                         {{ isLoading ? 'Updating...' : 'Update Settings' }}
                       </button>
