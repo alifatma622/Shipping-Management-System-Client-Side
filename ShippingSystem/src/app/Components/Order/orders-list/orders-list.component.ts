@@ -21,7 +21,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['./orders-list.component.css'],
 })
 export class OrdersListComponent implements OnInit {
-
   orders: ReadOrderDTO[] = [];
   isLoading = true;
   errorMsg = '';
@@ -47,7 +46,7 @@ export class OrdersListComponent implements OnInit {
     private router: Router,
     private deliveryService: DeliveryManService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -144,9 +143,7 @@ export class OrdersListComponent implements OnInit {
         o.customerCityName
       ].filter(f => f);
 
-      return fieldsToSearch.some(f =>
-        f.toLowerCase().includes(searchTerm)
-      );
+      return fieldsToSearch.some((f) => f.toLowerCase().includes(searchTerm));
     });
   }
   onSearchChange(value: string) {
@@ -155,44 +152,68 @@ export class OrdersListComponent implements OnInit {
 
   getStatusText(status: any): string {
     switch (status) {
-      case 1: return 'Pending';
-      case 2: return 'Accepted';
-      case 3: return 'Rejected';
-      case 4: return 'Delivered';
-      case 5: return 'With Agent';
-      case 6: return 'Unreachable';
-      case 7: return 'Postponed';
-      case 8: return 'Partial';
-      case 9: return 'Canceled';
-      case 10: return 'Rejected (Paid)';
-      case 11: return 'Rejected (Unpaid)';
-      case 12: return 'Rejected (Partial)';
-      default: return 'Unknown';
+      case 1:
+        return 'Pending';
+      case 2:
+        return 'Accepted';
+      case 3:
+        return 'Rejected';
+      case 4:
+        return 'Delivered';
+      case 5:
+        return 'With Agent';
+      case 6:
+        return 'Unreachable';
+      case 7:
+        return 'Postponed';
+      case 8:
+        return 'Partial';
+      case 9:
+        return 'Canceled';
+      case 10:
+        return 'Rejected (Paid)';
+      case 11:
+        return 'Rejected (Unpaid)';
+      case 12:
+        return 'Rejected (Partial)';
+      default:
+        return 'Unknown';
     }
   }
 
   getStatusClass(status: any): string {
     switch (status) {
-      case 1: return 'status-pending';
-      case 2: return 'status-accepted';
+      case 1:
+        return 'status-pending';
+      case 2:
+        return 'status-accepted';
       case 3:
       case 10:
       case 11:
       case 12:
         return 'status-rejected';
-      case 4: return 'status-delivered';
-      case 5: return 'status-with-agent';
-      case 6: return 'status-unreachable';
-      case 7: return 'status-postponed';
-      case 8: return 'status-partial';
-      case 9: return 'status-canceled';
-      default: return 'status-unknown';
+      case 4:
+        return 'status-delivered';
+      case 5:
+        return 'status-with-agent';
+      case 6:
+        return 'status-unreachable';
+      case 7:
+        return 'status-postponed';
+      case 8:
+        return 'status-partial';
+      case 9:
+        return 'status-canceled';
+      default:
+        return 'status-unknown';
     }
   }
 
   filterDeliveryAgents(order: ReadOrderDTO): IReadDeliveryMan[] {
     const cityName = order.customerCityName ?? '';
-    return this.filteredAgents = this.deliveryAgents.filter(agent => agent.cities?.includes(cityName));
+    return (this.filteredAgents = this.deliveryAgents.filter((agent) =>
+      agent.cities?.includes(cityName)
+    ));
   }
 
   selectAgent(agent: IReadDeliveryMan): void {
@@ -200,16 +221,18 @@ export class OrdersListComponent implements OnInit {
   }
 
   assignOrder(orderId: number): void {
-    this.orderService.assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0).subscribe({
-      next: (response) => {
-        console.log('Agent assigned successfully', response);
-        this.selectedAgent = null;
-        this.loadOrders();
-      },
-      error: (error) => {
-        console.error('Error assigning agent', error);
-      }
-    });
+    this.orderService
+      .assignDeliveryAgent(orderId, this.selectedAgent?.id ?? 0)
+      .subscribe({
+        next: (response) => {
+          console.log('Agent assigned successfully', response);
+          this.selectedAgent = null;
+          this.loadOrders();
+        },
+        error: (error) => {
+          console.error('Error assigning agent', error);
+        },
+      });
   }
 
   get pagedOrders() {
@@ -237,7 +260,7 @@ export class OrdersListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error updating order status:', err);
-      }
+      },
     });
   }
   getStatusNumberFromName(status: string | number): number {
@@ -270,8 +293,6 @@ export class OrdersListComponent implements OnInit {
       });
     }
   }
-
-
 }
 
 

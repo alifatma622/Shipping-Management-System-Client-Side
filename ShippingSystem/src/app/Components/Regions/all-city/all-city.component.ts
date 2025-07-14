@@ -31,17 +31,18 @@ export class AllCityComponent implements OnInit {
   }
 
   getCities(): void {
-    this._cityService.getAllCities(this.currentPage, this.itemsPerPage).subscribe({
-      next: (data) => {
-        this.cities = data.items;
-        this.totalCount = data.totalCount;
-      },
-      error: (err) => {
-        this.cities = [];
-        this.totalCount = 0;
-        // ممكن تعرض رسالة خطأ هنا
-      }
-    });
+    this._cityService
+      .getAllCities(this.currentPage, this.itemsPerPage)
+      .subscribe({
+        next: (data) => {
+          this.cities = data.items;
+          this.totalCount = data.totalCount;
+        },
+        error: (err) => {
+          this.cities = [];
+          this.totalCount = 0;
+        },
+      });
   }
 
   get totalPages(): number {
@@ -65,7 +66,6 @@ export class AllCityComponent implements OnInit {
     this.currentPage = 1;
     // لو عايز تبحث من السيرفر، ابعت searchTerm في params هنا
     // حالياً البحث محلي فقط
-
   }
 
   onEdit(city: CityModel) {

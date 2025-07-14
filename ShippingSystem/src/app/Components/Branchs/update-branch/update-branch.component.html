@@ -39,6 +39,28 @@
       }
     </div>
 
+    <!-- Toggle Switch for isActive -->
+<div class="form-group status-group">
+  <label for="isActive">Status</label>
+  <div class="status-toggle">
+    <label class="toggle-switch">
+      <input
+        type="checkbox"
+        formControlName="isActive"
+        id="isActive"
+      />
+      <span class="toggle-slider"></span>
+    </label>
+    <span class="status-text">
+      {{ branchForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+    </span>
+  </div>
+  <small class="help-text">
+    {{ branchForm.get('isActive')?.value ? 'Branch is currently active.' : 'Branch is inactive. You can reactivate it.' }}
+  </small>
+</div>
+
+
     <div class="form-actions">
       <button class="add-btn" type="submit" [disabled]="branchForm.invalid">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
