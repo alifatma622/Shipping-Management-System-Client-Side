@@ -49,6 +49,7 @@
       </div>
 
 
+
       <div class="form-group">
         <label for="branchId">Branch</label>
         <select id="branchId" formControlName="branchId"
@@ -61,8 +62,6 @@
         </div>
       </div>
 
-
-
       <div class="form-group">
         <label for="paymentType">Payment Type</label>
         <select id="paymentType" formControlName="paymentType"
@@ -73,6 +72,18 @@
         <div class="error" *ngIf="orderForm.get('paymentType')?.invalid && orderForm.get('paymentType')?.touched">
           Please select a payment type.
         </div>
+      </div>
+      <div class="form-group">
+        <!-- <label for="orderType">Order Type</label> -->
+        <!-- <select id="orderType" formControlName="orderType"
+          [class.invalid]="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
+          <option [value]="null" disabled>Select order type</option>
+          <option *ngFor="let type of orderTypes" [value]="type">{{ orderTypeLabels[type] }}</option>
+        </select> -->
+        <div class="error" *ngIf="orderForm.get('orderType')?.invalid && orderForm.get('orderType')?.touched">
+          Please select an order type.
+        </div>
+
       </div>
     </div>
 

@@ -19,12 +19,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './deliveryman-dashboard.component.css'
 })
 export class DeliverymanDashboardComponent implements OnInit {
-  statusCounts?: OrderStatusCountsDTO;  
+  statusCounts?: OrderStatusCountsDTO;
   isLoading = true;
   error: string | null = null;
   statusList = [
     { key: 'new', label: 'New', icon: 'fiber_new', color: '#3B82F6' },
-    { key: 'Assiend Ordes', label: 'Assiend Order', icon: 'hourglass_empty', color: '#F59E0B' },
+    // { key: 'AcceptedByDeliveryCompany', label: 'Assigned Order', icon: 'hourglass_empty', color: '#F59E0B' },
     { key: 'deliveredToAgent', label: 'Delivered to Agent', icon: 'local_shipping', color: '#8B5CF6' },
     { key: 'delivered', label: 'Delivered', icon: 'check_circle', color: '#10B981' },
     { key: 'cancelledByReceiver', label: 'Cancelled by Receiver', icon: 'cancel', color: '#EF4444' },

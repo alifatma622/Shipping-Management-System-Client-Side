@@ -1,16 +1,116 @@
-<div class="chatbot-container" id="#faq">
-  <h3>Ask about our Shipping Service</h3>
 
-  <div class="chat-box">
-    <textarea [(ngModel)]="question" placeholder="Ask about delivery prices, cities, or shipping options..."></textarea>
-    <button (click)="ask()" [disabled]="isLoading">
-      {{ isLoading ? 'Thinking...' : 'Ask' }}
-    </button>
-  </div>
-
-  <div class="response-container" *ngIf="response">
-    <div class="response-bubble">
-      {{ response }}
+<div style="max-height: 90vh; overflow-y: auto;" class="chatbot-scroll-wrapper">
+  <div class="chatbot-container" id="faq">
+  <div class="chat-header">
+    <h3>Ask about our Shipping Service</h3>
+    <div class="header-actions">
+      <button
+        class="toggle-btn"
+        (click)="toggleHistory()"
+        [class.active]="showHistory"
+        title="Toggle chat history">
+        💬
+      </button>
+      <button
+        class="clear-btn"
+        (click)="clearHistory()"
+        title="Clear chat">
+        🗑️
+      </button>
     </div>
   </div>
+
+  <!-- Quick Suggestions -->
+  <div class="quick-suggestions" *ngIf="!showHistory">
+    <div class="suggestions-header">
+      <span>💡 Quick questions:</span>
+    </div>
+    <div class="suggestions-container">
+      <button
+        *ngFor="let suggestion of quickSuggestions"
+        class="suggestion-btn"
+        (click)="useSuggestion(suggestion)"
+        [disabled]="isLoading">
+        <span class="suggestion-icon">{{ suggestion.icon }}</span>
+        <span class="suggestion-text">{{ suggestion.text }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chat History -->
+  <div class="chat-history" *ngIf="showHistory" #chatMessages>
+    <div class="history-header">
+      <span>📝 Chat History</span>
+    </div>
+    <div class="history-messages" *ngIf="chatHistory.length > 0">
+      <div
+        *ngFor="let message of chatHistory"
+        class="history-message"
+        [class.user-message]="message.isUser"
+        [class.bot-message]="!message.isUser">
+        <div class="message-content">
+          <div class="message-text">{{ message.text }}</div>
+          <div class="message-time">{{ formatTime(message.timestamp) }}</div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="chatHistory.length === 0" class="empty-history">
+      <span>💬 No chat history yet. Start asking questions!</span>
+    </div>
+  </div>
+
+  <!-- Chat Input -->
+  <div class="chat-box">
+    <div class="input-container">
+      <textarea
+        [(ngModel)]="question"
+        #questionInput
+        placeholder="Ask about delivery prices, cities, or shipping options..."
+        (keypress)="onKeyPress($event)"
+        [disabled]="isLoading"
+        rows="3"></textarea>
+
+      <button
+        (click)="ask()"
+        [disabled]="isLoading || !question.trim()"
+        class="ask-btn">
+        <span *ngIf="!isLoading">📤 Ask</span>
+        <span *ngIf="isLoading" class="loading-text">
+          <span class="spinner">⏳</span> Thinking...
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Response -->
+  <div class="response-container" *ngIf="response">
+    <div class="response-bubble">
+      <div class="response-text">{{ response }}</div>
+      <div class="response-actions">
+        <button
+          class="action-btn"
+          (click)="question = 'Can you tell me more about this?'"
+          title="Ask for more details">
+          🔍 More details
+        </button>
+        <button
+          class="action-btn"
+          (click)="question = 'What else can you help me with?'"
+          title="Get more help">
+          ❓ More help
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Indicator -->
+  <div class="status-indicator" *ngIf="isLoading">
+    <div class="typing-indicator">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span class="status-text">Getting your answer...</span>
+  </div>
+</div>
 </div>
