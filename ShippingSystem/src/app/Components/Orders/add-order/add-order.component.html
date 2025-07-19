@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <!-- Row 2: Shipping Type | Order Type | Payment Type -->
+    <!-- Row 2: Shipping Type | Branch | Payment Type -->
     <div class="row">
       <div class="form-group">
         <label for="shippingType">Shipping Type</label>
@@ -45,6 +45,20 @@
         </select>
         <div class="error" *ngIf="orderForm.get('shippingType')?.invalid && orderForm.get('shippingType')?.touched">
           Please select a shipping type.
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="branchId">Branch</label>
+        <select id="branchId" formControlName="branchId"
+          [class.invalid]="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
+          <option [value]="null" disabled>Select a branch</option>
+          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
+        </select>
+        <div class="error" *ngIf="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
+          Please select a branch.
         </div>
       </div>
 
@@ -73,7 +87,7 @@
       </div>
     </div>
 
-    <!-- Row 3: City | Seller | Branch -->
+    <!-- Row 3: City | Seller | notes -->
     <div class="row">
       <div class="form-group">
         <label for="cityId">City</label>
@@ -97,24 +111,17 @@
           Please select a seller.
         </div>
       </div>
-      <div class="form-group">
-        <label for="branchId">Branch</label>
-        <select id="branchId" formControlName="branchId"
-          [class.invalid]="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
-          <option [value]="null" disabled>Select a branch</option>
-          <option *ngFor="let branch of branches" [value]="branch.id">{{ branch.name }}</option>
-        </select>
-        <div class="error" *ngIf="orderForm.get('branchId')?.invalid && orderForm.get('branchId')?.touched">
-          Please select a branch.
+
+
+        <!-- Notes -->
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="2"></textarea>
         </div>
-      </div>
+
     </div>
 
-    <!-- Notes -->
-    <div class="form-group">
-      <label for="notes">Notes</label>
-      <textarea id="notes" formControlName="notes" placeholder="Optional notes" rows="2"></textarea>
-    </div>
+
 
     <!-- Is Shipped To Village -->
     <div class="form-group">
